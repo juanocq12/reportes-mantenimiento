@@ -5,85 +5,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IPS Interconsultas - Solicitudes de Mantenimiento</title>
   <style>
+    /* Fuente moderna */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
     body {
       margin: 0;
-      padding: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Montserrat', sans-serif;
+      background: #ffffff;
+      color: #333;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #fff;
+      justify-content: center;
+      height: 100vh;
       overflow: hidden;
     }
 
     .container {
       text-align: center;
+      padding: 20px;
+      max-width: 600px;
       animation: fadeIn 2s ease-in-out;
     }
 
+    /* Logo */
     .logo {
-      width: 80px;
+      width: 120px;
+      margin-bottom: 15px;
+      animation: float 3s infinite ease-in-out;
+    }
+
+    /* Título */
+    h1 {
+      font-size: 1.8rem;
       margin-bottom: 10px;
+      color: #004aad;
+      font-weight: 700;
     }
 
-    .title {
-      font-size: 2rem;
-      font-weight: bold;
-      color: white;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-      animation: blink 2s infinite;
-    }
-
-    .subtitle {
-      margin-top: 15px;
+    /* Subtítulo parpadeante */
+    .blink {
       font-size: 1.1rem;
-      color: #ddd;
-      letter-spacing: 1px;
+      font-weight: 600;
+      color: #ff0000;
+      animation: blink 1.2s infinite;
     }
 
+    /* Botón profesional */
     .btn {
       display: inline-block;
-      margin-top: 25px;
-      padding: 15px 30px;
-      font-size: 1.2rem;
+      margin-top: 20px;
+      padding: 14px 30px;
+      font-size: 1rem;
       font-weight: bold;
-      color: #fff;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      text-transform: uppercase;
+      color: white;
+      background: linear-gradient(45deg, #004aad, #0077ff);
       border: none;
-      border-radius: 40px;
-      cursor: pointer;
+      border-radius: 30px;
       text-decoration: none;
-      box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
-      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 15px rgba(0, 74, 173, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: pulse 2s infinite;
     }
 
     .btn:hover {
-      background: linear-gradient(90deg, #0072ff, #00c6ff);
       transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
+      box-shadow: 0 6px 20px rgba(0, 74, 173, 0.5);
     }
 
+    /* Pie de página */
+    footer {
+      margin-top: 25px;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* Animaciones */
     @keyframes blink {
       0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0.3; }
+      25%, 75% { opacity: 0; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="https://www.ipsinterconsultas.com/wp-content/uploads/2021/09/cropped-ips-interconsultas-logo.png" alt="Logo IPS Interconsultas" class="logo">
-    <h1 class="title">IPS Interconsultas</h1>
-    <p class="subtitle">Gestión de solicitudes de mantenimiento</p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" class="btn" target="_blank">
-      Solicitud a Mantenimiento (Locativo y Biomédico)
+    <!-- Logo IPS -->
+    <img src="https://www.ipsinterconsultas.com/wp-content/uploads/2021/01/LOGO-INTERCONSULTAS.png" alt="Logo IPS Interconsultas" class="logo">
+
+    <!-- Título -->
+    <h1>IPS Interconsultas</h1>
+
+    <!-- Texto parpadeante -->
+    <p class="blink">Solicitud de mantenimiento (Locativo y Biomédico)</p>
+
+    <!-- Botón con enlace al formulario -->
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank" class="btn">
+      Solicitar Mantenimiento
     </a>
+
+    <!-- Pie de página -->
+    <footer>
+      © 2025 IPS Interconsultas · Plataforma de solicitudes de mantenimiento
+    </footer>
   </div>
 </body>
 </html>
