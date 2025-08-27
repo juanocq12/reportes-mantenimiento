@@ -3,108 +3,203 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solicitudes de Mantenimiento - Interconsultas</title>
+  <title>Solicitud de Mantenimiento - IPS Interconsultas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f6f8;
-      color: #333;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    header {
-      background: #003366;
-      color: white;
-      padding: 20px;
+    /* Fondo animado */
+    #particles-js {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #001f3f, #00172e);
     }
 
-    header img {
-      max-height: 70px;
+    /* Loader */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #00172e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
     }
 
-    h1 {
-      margin-top: 10px;
-      font-size: 26px;
+    .spinner {
+      border: 6px solid rgba(255, 255, 255, 0.2);
+      border-top: 6px solid #00c6ff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
     }
 
-    .container {
-      margin: 30px auto;
-      max-width: 700px;
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
+    @keyframes fadeIn { from { opacity: 0.3;} to { opacity: 1;} }
+
+    /* Contenido */
+    #content {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      padding: 3rem 1.5rem;
+      animation: fadeUp 1.2s ease-out forwards;
+    }
+
+    @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px);} 100% { opacity: 1; transform: translateY(0);} }
+
+    header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 1px; }
+    header h2 {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
     }
 
     .btn {
       display: inline-block;
-      background: #007BFF;
+      background: linear-gradient(90deg, #0072ff, #00c6ff, #00ffb9);
+      background-size: 300% 300%;
+      animation: gradientMove 6s ease infinite;
       color: white;
-      padding: 14px 25px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 18px;
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
       font-weight: bold;
-      transition: 0.3s;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 50px;
+      box-shadow: 0 6px 25px rgba(0, 198, 255, 0.5);
+      transition: transform 0.3s;
+      margin-top: 2rem;
+    }
+    .btn:hover { transform: translateY(-5px) scale(1.05); }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .btn:hover {
-      background: #0056b3;
+    /* Secciones extras */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
     }
-
-    .info {
-      margin-top: 25px;
-      font-size: 15px;
-      line-height: 1.6;
-      text-align: left;
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0, 198, 255, 0.3);
+    }
+    .card h3 { margin-bottom: 1rem; font-size: 1.3rem; color: #00c6ff; }
 
     footer {
-      margin-top: 30px;
-      padding: 20px;
-      background: #003366;
-      color: white;
-      font-size: 14px;
-    }
-
-    footer p {
-      margin: 5px 0;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 1rem;
     }
   </style>
 </head>
 <body>
+  <!-- Fondo animado -->
+  <div id="particles-js"></div>
 
-  <header>
-    <img src="Logo-Interconsultas-01b-500px.png" alt="Logo Interconsultas">
-    <h1>Solicitud de Mantenimiento<br>(Locativo y Biomédico)</h1>
-  </header>
-
-  <div class="container">
-    <p>Bienvenido al portal oficial de solicitudes de mantenimiento.  
-    Por favor haga clic en el siguiente botón para registrar su reporte:</p>
-
-    <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXnw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank">
-      Registrar Solicitud
-    </a>
-
-    <div class="info">
-      <h3>📞 Contacto y Soporte Técnico</h3>
-      <p><strong>Teléfono:</strong> 317 513 2548</p>
-      <p><strong>Horario de atención:</strong><br>
-         Lunes a viernes: 7:00 a.m. – 6:00 p.m.<br>
-         Sábados: 7:00 a.m. – 12:00 p.m.</p>
-      <p><em>Las solicitudes de soporte para equipos críticos recibirán atención prioritaria dentro del horario laboral establecido.</em></p>
-    </div>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
   </div>
 
-  <footer>
-    <p>© 2025 Interconsultas IPS - Área de Mantenimiento</p>
-    <p>Todos los derechos reservados</p>
-  </footer>
+  <!-- Contenido -->
+  <div id="content">
+    <header>
+      <h1>IPS Interconsultas</h1>
+      <h2>Solicitud de Mantenimiento (Locativo y Biomédico)</h2>
+    </header>
 
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank" class="btn">
+      🚀 Ir al Formulario
+    </a>
+
+    <section class="cards">
+      <div class="card">
+        <h3>🔧 Mantenimiento Locativo</h3>
+        <p>Reporta problemas en infraestructura, electricidad, mobiliario o áreas físicas de la institución.</p>
+      </div>
+      <div class="card">
+        <h3>💉 Mantenimiento Biomédico</h3>
+        <p>Solicita soporte en equipos médicos, calibración, revisiones preventivas o correctivas.</p>
+      </div>
+      <div class="card">
+        <h3>📞 Contacto</h3>
+        <p>Soporte disponible en horario laboral. Respuesta prioritaria a equipos críticos.</p>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 IPS Interconsultas · Todos los derechos reservados
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    // Loader
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }, 1800); 
+    });
+
+    // Configuración de partículas
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#00c6ff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.4, "random": true },
+        "size": { "value": 3, "random": true },
+        "line_linked": { "enable": true, "distance": 150, "color": "#0072ff", "opacity": 0.3, "width": 1 },
+        "move": { "enable": true, "speed": 2 }
+      },
+      "interactivity": {
+        "events": { "onhover": { "enable": true, "mode": "grab" } },
+        "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.6 } } }
+      },
+      "retina_detect": true
+    });
+  </script>
 </body>
 </html>
+
 
 
