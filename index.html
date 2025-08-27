@@ -1,129 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>ips Interconsultas S.A.S – Mantenimiento & Equipos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPS Interconsultas</title>
   <style>
-    /* Estilos futuristas con gradientes, glassmorphism, pulsos suaves */
-    :root {
-      --glass-bg: rgba(255,255,255,0.05);
-      --accent: #14b8a6;
-      --text-glow: rgba(20,184,166,0.5);
-    }
+    /* Fondo futurista */
     body {
-      margin:0;
-      font-family: sistema-ui, sans-serif;
-      background: linear-gradient(135deg,#020817,#0f2661);
-      color:#e0e7ff;
-      min-height:100vh;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
     }
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
-      border-radius:1rem;
-      border:1px solid rgba(255,255,255,0.2);
+
+    /* Nombre de la empresa parpadeando */
+    h1 {
+      color: white;
+      font-size: 3.5rem;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      animation: parpadeo 1.2s infinite alternate;
+      text-shadow: 0 0 10px #fff, 0 0 20px #0ff, 0 0 30px #0ff, 0 0 40px #0ff;
     }
-    .neon {
-      color: var(--accent);
-      text-shadow: 0 0 8px var(--text-glow), 0 0 20px var(--text-glow);
+
+    @keyframes parpadeo {
+      from { opacity: 1; }
+      to { opacity: 0.6; }
     }
-    .pulse {
-      animation: pulse 6s infinite alternate;
-    }
-    @keyframes pulse {
-      to { text-shadow: 0 0 12px var(--text-glow), 0 0 28px var(--text-glow); }
-    }
-    header {
-      position: fixed; top:0; width:100%; z-index:100;
-      background:rgba(0,0,0,0.4); backdrop-filter: blur(8px);
-    }
-    header nav a {
-      transition:color .3s;
-    }
-    header nav a:hover {
-      color: var(--accent);
-    }
-    .hero {
-      height:100vh;
-      display:flex; flex-direction:column;
-      justify-content:center; align-items:center;
-      text-align:center; padding:2rem;
-    }
+
+    /* Botón moderno */
     .btn {
-      padding:0.75rem 1.5rem;
-      border-radius:0.75rem;
-      background:var(--accent);
-      color:#fff;
-      text-decoration:none;
-      font-weight:600;
-      transition:transform .2s, box-shadow .3s;
+      display: block;
+      margin: 30px auto;
+      padding: 15px 40px;
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0px 0px 15px #00f2fe;
+      transition: 0.3s;
     }
+
     .btn:hover {
-      transform:scale(1.05);
-      box-shadow:0 0 20px var(--text-glow);
-    }
-    section {
-      padding:4rem 2rem;
-    }
-    footer {
-      padding:2rem; text-align:center;
-      background:rgba(0,0,0,0.5);
-      backdrop-filter:blur(8px);
+      transform: scale(1.1);
+      box-shadow: 0px 0px 25px #4facfe, 0px 0px 35px #00f2fe;
     }
   </style>
 </head>
 <body>
-
-  <header class="glass px-6 py-4">
-    <nav class="max-w-4xl mx-auto flex justify-between items-center">
-      <div class="neon font-bold text-xl pulse">Interconsultas S.A.S</div>
-      <div class="space-x-6 text-sm">
-        <a href="#inicio">Inicio</a>
-        <a href="#mantenimiento">Mantenimiento</a>
-        <a href="#inventario">Inventario</a>
-        <a href="#odontologico">Equipo odontológico</a>
-      </div>
-    </nav>
-  </header>
-
-  <div id="inicio" class="hero">
-    <h1 class="text-5xl font-extrabold neon pulse">Interconsultas S.A.S</h1>
-    <p class="mt-4 text-lg max-w-xl">
-      Plataforma moderna para gestionar mantenimiento,
-    </p>
-    <a href="#mantenimiento" class="btn mt-6">Solicitudes a Mantenimiento</a>
+  <div>
+    <h1>IPS Interconsultas</h1>
+    <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank">
+      Ir al Formulario
+    </a>
   </div>
-
-  <section id="mantenimiento" class="max-w-4xl mx-auto glass p-6 mb-12">
-    <h2 class="text-3xl font-semibold neon">Mantenimiento</h2>
-    <p class="mt-2">
-      Solicite mantenimiento locativo o biomédico mediante nuestro formulario en línea.
-    </p>
-    <a href="https://forms.gle/xxxx" target="_blank" class="btn mt-4">Ir al Formulario</a>
-  </section>
-
-  <section id="inventario" class="max-w-4xl mx-auto glass p-6 mb-12">
-    <h2 class="text-3xl font-semibold neon">Inventario institucional</h2>
-    <p class="mt-2">
-      Consulte los activos disponibles y el inventario actualizado de la institución.
-    </p>
-    <!-- Aquí podría agregarse tabla, gallery o lista dinámica en el futuro -->
-  </section>
-
-  <section id="odontologico" class="max-w-4xl mx-auto glass p-6 mb-12">
-    <h2 class="text-3xl font-semibold neon">Equipo odontológico</h2>
-    <p class="mt-2">
-      Información sobre los equipos y herramientas del área odontológica.
-    </p>
-    <!-- Aquí se podría mostrar un listado con imágenes o fichas técnicas -->
-  </section>
-
-  <footer>
-    <p>© 2025 Interconsultas S.A.S · Diseñado futurista por CorreQ</p>
-  </footer>
-
 </body>
 </html>
 
