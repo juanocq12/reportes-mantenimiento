@@ -3,87 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CorreQ - Gestión de Mantenimiento</title>
+  <title>CorreQ - Interconsultas S.A.S</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-black text-gray-100 font-sans">
 
-  <!-- Encabezado -->
-  <header class="bg-blue-900 text-white p-6 shadow-lg flex justify-between items-center">
-    <h1 class="text-2xl font-bold">CorreQ</h1>
-    <nav>
-      <ul class="flex gap-6">
-        <li><a href="#inicio" class="hover:underline">Inicio</a></li>
-        <li><a href="#reportes" class="hover:underline">Reportes</a></li>
-        <li><a href="#dashboard" class="hover:underline">Dashboard</a></li>
-        <li><a href="#inspecciones" class="hover:underline">Inspecciones</a></li>
-        <li><a href="#contacto" class="hover:underline">Contacto</a></li>
-      </ul>
-    </nav>
+  <!-- Menú de navegación futurista -->
+  <header class="fixed top-0 w-full bg-opacity-30 bg-black backdrop-blur-md shadow-md z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-extrabold tracking-wide text-blue-400">⚡ CorreQ</h1>
+      <nav>
+        <ul class="flex gap-6 text-sm uppercase font-semibold">
+          <li><a href="#inicio" class="hover:text-blue-400 transition">Inicio</a></li>
+          <li><a href="#reportes" class="hover:text-blue-400 transition">Reportes</a></li>
+          <li><a href="#dashboard" class="hover:text-blue-400 transition">Dashboard</a></li>
+          <li><a href="#inspecciones" class="hover:text-blue-400 transition">Inspecciones</a></li>
+          <li><a href="#contacto" class="hover:text-blue-400 transition">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <!-- Sección Inicio -->
-  <section id="inicio" class="p-12 text-center">
-    <h2 class="text-4xl font-bold mb-4">Bienvenido a CorreQ</h2>
-    <p class="text-lg max-w-3xl mx-auto">
-      CorreQ es la solución integral para la gestión de mantenimiento preventivo, correctivo y la analítica de datos en su institución. 
-      Optimice procesos, reduzca costos y acceda a información en tiempo real desde cualquier dispositivo.
+  <!-- Hero principal -->
+  <section id="inicio" class="h-screen flex flex-col justify-center items-center text-center px-6">
+    <h2 class="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg animate-pulse">
+      Bienvenido a CorreQ
+    </h2>
+    <p class="mt-6 text-lg md:text-xl max-w-2xl text-gray-300">
+      Plataforma futurista de gestión de mantenimiento preventivo, correctivo y analítica de datos
+      para <span class="font-bold text-blue-400">Interconsultas S.A.S</span>.
     </p>
+    <p class="mt-2 text-sm text-gray-400 italic">Desarrollado por CorreQ</p>
+    <a href="#reportes" 
+       class="mt-8 px-8 py-3 bg-blue-600 hover:bg-blue-800 rounded-full shadow-lg text-white font-bold transition">
+       🚀 Empezar
+    </a>
   </section>
 
-  <!-- Sección Reportes -->
-  <section id="reportes" class="p-12 bg-white shadow-md rounded-2xl m-6">
-    <h2 class="text-2xl font-bold mb-4">📑 Reportes en línea</h2>
-    <p class="mb-4">Acceda a sus reportes de infraestructura y equipos médicos directamente desde AppSheet.</p>
-    <a href="https://appsheet.com/start/xxxx" target="_blank" 
-       class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-800">Abrir App CorreQ</a>
+  <!-- Reportes -->
+  <section id="reportes" class="p-12 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center text-blue-400">📑 Reportes en línea</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Reporte Infraestructura -->
+      <div class="bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-105 transition">
+        <h3 class="text-xl font-bold mb-2">Infraestructura</h3>
+        <p class="text-gray-300 mb-4">Gestione reportes de infraestructura en tiempo real.</p>
+        <a href="https://docs.google.com/forms/d/xxxx" target="_blank"
+           class="px-6 py-2 bg-blue-500 hover:bg-blue-700 rounded-lg">Abrir Reporte</a>
+      </div>
+      <!-- Reporte Equipos Médicos -->
+      <div class="bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-105 transition">
+        <h3 class="text-xl font-bold mb-2">Equipos Médicos</h3>
+        <p class="text-gray-300 mb-4">Genere reportes y haga seguimiento de equipos biomédicos.</p>
+        <a href="https://docs.google.com/forms/d/yyyy" target="_blank"
+           class="px-6 py-2 bg-blue-500 hover:bg-blue-700 rounded-lg">Abrir Reporte</a>
+      </div>
+    </div>
   </section>
 
-  <!-- Sección Dashboard -->
-  <section id="dashboard" class="p-12 bg-gray-50 rounded-2xl m-6 shadow-md">
-    <h2 class="text-2xl font-bold mb-6 text-center">📊 Dashboard en Tiempo Real</h2>
-    <canvas id="chart1" class="max-w-lg mx-auto"></canvas>
+  <!-- Dashboard -->
+  <section id="dashboard" class="p-12 bg-gray-900 bg-opacity-60 rounded-2xl m-6 max-w-6xl mx-auto shadow-lg">
+    <h2 class="text-3xl font-bold mb-8 text-center text-blue-400">📊 Dashboard en Tiempo Real</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <canvas id="chart1"></canvas>
+      <canvas id="chart2"></canvas>
+    </div>
     <script>
-      const ctx = document.getElementById('chart1');
-      new Chart(ctx, {
+      // Gráfico 1: Solicitudes por tipo
+      new Chart(document.getElementById('chart1'), {
         type: 'bar',
         data: {
           labels: ['Preventivo', 'Correctivo', 'Gestión'],
           datasets: [{
             label: 'Solicitudes',
-            data: [12, 7, 5],
-            borderWidth: 1,
+            data: [15, 9, 6],
             backgroundColor: ['#2563eb','#10b981','#f59e0b']
           }]
         },
-        options: {
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+
+      // Gráfico 2: Estado de solicitudes
+      new Chart(document.getElementById('chart2'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Pendiente','En gestión','Finalizado'],
+          datasets: [{
+            data: [5, 8, 12],
+            backgroundColor: ['#ef4444','#f59e0b','#10b981']
+          }]
+        },
+        options: { responsive: true }
       });
     </script>
   </section>
 
-  <!-- Sección Inspecciones -->
-  <section id="inspecciones" class="p-12 bg-white shadow-md rounded-2xl m-6">
-    <h2 class="text-2xl font-bold mb-4">✅ Inspecciones</h2>
-    <p>Genere listas de chequeo, inspecciones personalizadas y descargue informes técnicos en PDF con firma digital.</p>
-    <a href="https://docs.google.com/forms/d/xxxx" target="_blank" 
-       class="mt-4 inline-block bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-800">Registrar Inspección</a>
+  <!-- Inspecciones -->
+  <section id="inspecciones" class="p-12 max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-6 text-blue-400">✅ Inspecciones</h2>
+    <p class="mb-6 text-gray-300">Cree listas de chequeo y descargue informes técnicos en PDF con firma digital.</p>
+    <a href="https://docs.google.com/forms/d/zzzz" target="_blank" 
+       class="px-8 py-3 bg-green-600 hover:bg-green-800 rounded-full font-bold shadow-md">Registrar Inspección</a>
   </section>
 
-  <!-- Sección Contacto -->
-  <section id="contacto" class="p-12 bg-gray-50 rounded-2xl m-6 shadow-md text-center">
-    <h2 class="text-2xl font-bold mb-4">📬 Contacto</h2>
-    <p class="mb-2">¿Tiene dudas o sugerencias? Escríbanos:</p>
-    <p class="font-semibold">auxiliarmantenimiento.ips@gmail.com</p>
+  <!-- Contacto -->
+  <section id="contacto" class="p-12 bg-gray-800 text-center">
+    <h2 class="text-3xl font-bold mb-4 text-blue-400">📬 Contacto</h2>
+    <p class="mb-4">¿Tiene dudas o sugerencias? Escríbanos:</p>
+    <p class="font-semibold text-gray-200">auxiliarmantenimiento.ips@gmail.com</p>
+    <form class="mt-6 max-w-lg mx-auto bg-gray-900 p-6 rounded-xl shadow-lg">
+      <input type="text" placeholder="Nombre" class="w-full mb-4 p-3 rounded-lg text-black">
+      <input type="email" placeholder="Correo" class="w-full mb-4 p-3 rounded-lg text-black">
+      <textarea placeholder="Mensaje" rows="4" class="w-full mb-4 p-3 rounded-lg text-black"></textarea>
+      <button class="w-full px-6 py-3 bg-blue-600 hover:bg-blue-800 rounded-lg font-bold">Enviar</button>
+    </form>
   </section>
 
-  <!-- Pie de página -->
-  <footer class="bg-blue-900 text-white text-center p-6 mt-12">
-    <p>© 2025 CorreQ - Desarrollado por Juan Manuel Correa Quiceno</p>
+  <!-- Footer -->
+  <footer class="bg-black text-gray-400 text-center p-6 mt-12">
+    <p>© 2025 Interconsultas S.A.S – Desarrollado por <span class="text-blue-400">CorreQ</span></p>
   </footer>
 
 </body>
