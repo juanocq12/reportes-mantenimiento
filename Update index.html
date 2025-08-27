@@ -1,131 +1,727 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CorreQ - Interconsultas S.A.S</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-black text-gray-100 font-sans">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CorreQ - Interconsultas S.A.S · Gestión Biomédica</title>
 
-  <!-- Menú de navegación futurista -->
-  <header class="fixed top-0 w-full bg-opacity-30 bg-black backdrop-blur-md shadow-md z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-      <h1 class="text-2xl font-extrabold tracking-wide text-blue-400">⚡ CorreQ</h1>
-      <nav>
-        <ul class="flex gap-6 text-sm uppercase font-semibold">
-          <li><a href="#inicio" class="hover:text-blue-400 transition">Inicio</a></li>
-          <li><a href="#reportes" class="hover:text-blue-400 transition">Reportes</a></li>
-          <li><a href="#dashboard" class="hover:text-blue-400 transition">Dashboard</a></li>
-          <li><a href="#inspecciones" class="hover:text-blue-400 transition">Inspecciones</a></li>
-          <li><a href="#contacto" class="hover:text-blue-400 transition">Contacto</a></li>
-        </ul>
+  <!-- Tailwind CDN para estilos rápidos -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js para gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- jsPDF para exportar PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- Iconos simples -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <style>
+    /* CSS adicional para efecto futurista y detalles */
+    :root{
+      --glass-bg: rgba(255,255,255,0.04);
+      --accent: #22c1c3;
+      --accent-2: #2563eb;
+      --muted: #94a3b8;
+      --card: rgba(255,255,255,0.03);
+      --blur: 8px;
+    }
+    html,body{height:100%}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(37,99,235,0.12), transparent 10%),
+                  radial-gradient(900px 500px at 90% 90%, rgba(34,193,195,0.08), transparent 10%),
+                  linear-gradient(180deg,#020617 0%,#07183a 40%,#040612 100%);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding-top:72px; /* header height */
+    }
+
+    /* Glass card */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(var(--blur));
+    }
+
+    /* Neon accent */
+    .neon {
+      text-shadow: 0 0 8px rgba(34,193,195,0.18), 0 0 18px rgba(37,99,235,0.12);
+    }
+
+    /* Animated floating background lines */
+    .bg-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.07;
+      background-image: repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 40px);
+      mix-blend-mode: overlay;
+    }
+
+    /* subtle pulse */
+    .pulse-slow {
+      animation: pulse 6s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: translateY(0); opacity: 0.98 }
+      50% { transform: translateY(-6px); opacity: 1 }
+      100% { transform: translateY(0); opacity: 0.98 }
+    }
+
+    /* Modal backdrop */
+    .modal-backdrop{
+      background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+      backdrop-filter: blur(6px);
+    }
+
+    /* small screen fixes for canvas */
+    canvas{max-height:420px}
+    @media(min-width:1024px){
+      canvas{max-height:460px}
+    }
+
+    /* small utility */
+    .kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono";
+      background: rgba(255,255,255,0.03);
+      padding: 2px 6px;
+      border-radius:6px;
+      font-size:12px;
+      color:#b8d0ff;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- decorative lines -->
+  <div class="bg-lines"></div>
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 h-16 z-50">
+    <div class="max-w-7xl mx-auto h-full px-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-teal-400 shadow-lg ring-1 ring-white/10">
+          <span style="font-size:18px">⚡</span>
+        </div>
+        <div>
+          <div class="text-sm font-extrabold neon">CorreQ <span class="text-xs text-gray-300 font-medium">· Interconsultas S.A.S</span></div>
+          <div class="text-xs text-gray-400">Desarrollado por <span class="text-blue-300 font-semibold">CorreQ</span> · Usted tiene autonomía</div>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex gap-6 items-center text-sm text-gray-300">
+        <a href="#inicio" class="hover:text-white transition">Inicio</a>
+        <a href="#reportes" class="hover:text-white transition">Reportes</a>
+        <a href="#dashboard" class="hover:text-white transition">Dashboard</a>
+        <a href="#inspecciones" class="hover:text-white transition">Inspecciones</a>
+        <a href="#fichas" class="hover:text-white transition">Fichas</a>
+        <a href="#contacto" class="hover:text-white transition">Contacto</a>
+        <button id="btn-theme" title="Cambiar tema" class="ml-4 px-3 py-1 rounded-md bg-white/5 hover:bg-white/8">Tema</button>
       </nav>
+
+      <div class="md:hidden">
+        <button id="mobile-open" class="px-3 py-2 rounded-md bg-white/5">Menu</button>
+      </div>
     </div>
   </header>
 
-  <!-- Hero principal -->
-  <section id="inicio" class="h-screen flex flex-col justify-center items-center text-center px-6">
-    <h2 class="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg animate-pulse">
-      Bienvenido a CorreQ
-    </h2>
-    <p class="mt-6 text-lg md:text-xl max-w-2xl text-gray-300">
-      Plataforma futurista de gestión de mantenimiento preventivo, correctivo y analítica de datos
-      para <span class="font-bold text-blue-400">Interconsultas S.A.S</span>.
-    </p>
-    <p class="mt-2 text-sm text-gray-400 italic">Desarrollado por CorreQ</p>
-    <a href="#reportes" 
-       class="mt-8 px-8 py-3 bg-blue-600 hover:bg-blue-800 rounded-full shadow-lg text-white font-bold transition">
-       🚀 Empezar
-    </a>
-  </section>
-
-  <!-- Reportes -->
-  <section id="reportes" class="p-12 max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold mb-8 text-center text-blue-400">📑 Reportes en línea</h2>
-    <div class="grid md:grid-cols-2 gap-8">
-      <!-- Reporte Infraestructura -->
-      <div class="bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-105 transition">
-        <h3 class="text-xl font-bold mb-2">Infraestructura</h3>
-        <p class="text-gray-300 mb-4">Gestione reportes de infraestructura en tiempo real.</p>
-        <a href="https://docs.google.com/forms/d/xxxx" target="_blank"
-           class="px-6 py-2 bg-blue-500 hover:bg-blue-700 rounded-lg">Abrir Reporte</a>
-      </div>
-      <!-- Reporte Equipos Médicos -->
-      <div class="bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-105 transition">
-        <h3 class="text-xl font-bold mb-2">Equipos Médicos</h3>
-        <p class="text-gray-300 mb-4">Genere reportes y haga seguimiento de equipos biomédicos.</p>
-        <a href="https://docs.google.com/forms/d/yyyy" target="_blank"
-           class="px-6 py-2 bg-blue-500 hover:bg-blue-700 rounded-lg">Abrir Reporte</a>
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 hidden">
+    <div class="modal-backdrop absolute inset-0"></div>
+    <div class="absolute top-16 left-0 right-0 p-4">
+      <div class="bg-gray-900/80 card rounded-xl p-4 max-w-md mx-auto">
+        <div class="flex justify-between items-center mb-4">
+          <div class="text-white font-bold">Navegación</div>
+          <button id="mobile-close" class="text-gray-300">Cerrar</button>
+        </div>
+        <ul class="flex flex-col gap-3">
+          <li><a href="#inicio" class="block py-2">Inicio</a></li>
+          <li><a href="#reportes" class="block py-2">Reportes</a></li>
+          <li><a href="#dashboard" class="block py-2">Dashboard</a></li>
+          <li><a href="#inspecciones" class="block py-2">Inspecciones</a></li>
+          <li><a href="#fichas" class="block py-2">Fichas</a></li>
+          <li><a href="#contacto" class="block py-2">Contacto</a></li>
+        </ul>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Dashboard -->
-  <section id="dashboard" class="p-12 bg-gray-900 bg-opacity-60 rounded-2xl m-6 max-w-6xl mx-auto shadow-lg">
-    <h2 class="text-3xl font-bold mb-8 text-center text-blue-400">📊 Dashboard en Tiempo Real</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <canvas id="chart1"></canvas>
-      <canvas id="chart2"></canvas>
-    </div>
-    <script>
-      // Gráfico 1: Solicitudes por tipo
-      new Chart(document.getElementById('chart1'), {
-        type: 'bar',
-        data: {
-          labels: ['Preventivo', 'Correctivo', 'Gestión'],
-          datasets: [{
-            label: 'Solicitudes',
-            data: [15, 9, 6],
-            backgroundColor: ['#2563eb','#10b981','#f59e0b']
-          }]
-        },
-        options: { responsive: true, plugins: { legend: { display: false } } }
-      });
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto px-4">
 
-      // Gráfico 2: Estado de solicitudes
-      new Chart(document.getElementById('chart2'), {
-        type: 'doughnut',
-        data: {
-          labels: ['Pendiente','En gestión','Finalizado'],
-          datasets: [{
-            data: [5, 8, 12],
-            backgroundColor: ['#ef4444','#f59e0b','#10b981']
-          }]
-        },
-        options: { responsive: true }
-      });
-    </script>
-  </section>
+    <!-- HERO -->
+    <section id="inicio" class="min-h-[60vh] flex flex-col md:flex-row gap-8 items-center justify-center py-12">
+      <div class="w-full md:w-1/2">
+        <h1 class="text-4xl md:text-5xl font-extrabold neon leading-tight">CorreQ — Plataforma de Gestión de Mantenimiento</h1>
+        <p class="mt-4 text-gray-300 max-w-xl">Solución enfocada a Interconsultas S.A.S. Administre reportes, inspecciones, fichas técnicas, analítica y generación automática de informes. Usted tiene autonomía completa sobre los procesos y datos.</p>
 
-  <!-- Inspecciones -->
-  <section id="inspecciones" class="p-12 max-w-5xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-6 text-blue-400">✅ Inspecciones</h2>
-    <p class="mb-6 text-gray-300">Cree listas de chequeo y descargue informes técnicos en PDF con firma digital.</p>
-    <a href="https://docs.google.com/forms/d/zzzz" target="_blank" 
-       class="px-8 py-3 bg-green-600 hover:bg-green-800 rounded-full font-bold shadow-md">Registrar Inspección</a>
-  </section>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#reportes" class="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-teal-400 font-semibold shadow-lg">Ver reportes</a>
+          <a href="#dashboard" class="px-6 py-3 rounded-full bg-white/5 hover:bg-white/7">Ir al dashboard</a>
+          <button id="quick-export" class="px-6 py-3 rounded-full border border-white/8">Exportar CSV</button>
+        </div>
 
-  <!-- Contacto -->
-  <section id="contacto" class="p-12 bg-gray-800 text-center">
-    <h2 class="text-3xl font-bold mb-4 text-blue-400">📬 Contacto</h2>
-    <p class="mb-4">¿Tiene dudas o sugerencias? Escríbanos:</p>
-    <p class="font-semibold text-gray-200">auxiliarmantenimiento.ips@gmail.com</p>
-    <form class="mt-6 max-w-lg mx-auto bg-gray-900 p-6 rounded-xl shadow-lg">
-      <input type="text" placeholder="Nombre" class="w-full mb-4 p-3 rounded-lg text-black">
-      <input type="email" placeholder="Correo" class="w-full mb-4 p-3 rounded-lg text-black">
-      <textarea placeholder="Mensaje" rows="4" class="w-full mb-4 p-3 rounded-lg text-black"></textarea>
-      <button class="w-full px-6 py-3 bg-blue-600 hover:bg-blue-800 rounded-lg font-bold">Enviar</button>
-    </form>
-  </section>
+        <div class="mt-6 grid grid-cols-2 gap-3 max-w-sm">
+          <div class="card p-3 rounded-xl">
+            <div class="text-xs text-gray-400">Solicitudes hoy</div>
+            <div class="text-2xl font-bold">18</div>
+          </div>
+          <div class="card p-3 rounded-xl">
+            <div class="text-xs text-gray-400">Equipos registrados</div>
+            <div class="text-2xl font-bold">142</div>
+          </div>
+        </div>
+      </div>
 
-  <!-- Footer -->
-  <footer class="bg-black text-gray-400 text-center p-6 mt-12">
-    <p>© 2025 Interconsultas S.A.S – Desarrollado por <span class="text-blue-400">CorreQ</span></p>
+      <div class="w-full md:w-1/2">
+        <div class="card rounded-2xl p-6 shadow-xl">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm text-gray-300">Panel rápido</div>
+              <div class="text-xl font-bold neon">Resumen Operativo</div>
+            </div>
+            <div class="text-xs text-gray-400">Autonomía: <span class="kbd">Activa</span></div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 gap-4">
+            <canvas id="miniChart" height="160"></canvas>
+            <div class="flex gap-3 mt-2">
+              <button id="download-dashboard" class="px-4 py-2 bg-blue-600 rounded-md">Descargar imagen</button>
+              <button id="save-local" class="px-4 py-2 bg-green-600 rounded-md">Guardar local</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORTES -->
+    <section id="reportes" class="py-8">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold neon">Reportes & Formularios</h2>
+        <div class="flex gap-3">
+          <input id="searchReports" type="search" placeholder="Buscar reportes..." class="px-3 py-2 rounded-md bg-white/5 text-sm" />
+          <button id="create-report" class="px-3 py-2 bg-blue-600 rounded-md">Crear</button>
+        </div>
+      </div>
+
+      <div id="report-grid" class="grid md:grid-cols-3 gap-6">
+        <!-- Cards generadas por JS -->
+      </div>
+
+      <div class="mt-6">
+        <small class="text-gray-400">Enlaces rápidos: AppSheet · Formularios · Manuales</small>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="py-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold neon">Dashboard Analítico</h2>
+        <div class="text-sm text-gray-400">Datos de ejemplo (reemplazar con su datasource)</div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="card p-4 rounded-xl">
+          <div class="text-sm text-gray-300">Solicitudes por tipo</div>
+          <canvas id="chart-types" height="220"></canvas>
+        </div>
+
+        <div class="card p-4 rounded-xl">
+          <div class="text-sm text-gray-300">Estado de solicitudes</div>
+          <canvas id="chart-status" height="220"></canvas>
+        </div>
+
+        <div class="card p-4 rounded-xl">
+          <div class="text-sm text-gray-300">Tendencia mensual</div>
+          <canvas id="chart-trend" height="220"></canvas>
+        </div>
+      </div>
+
+      <div class="mt-6 card p-4 rounded-xl">
+        <h3 class="font-semibold">Tabla de Solicitudes</h3>
+        <div class="mt-3 overflow-x-auto">
+          <table class="w-full text-left text-sm" id="table-solicitudes">
+            <thead class="text-gray-300">
+              <tr>
+                <th class="p-2">ID</th>
+                <th class="p-2">Fecha</th>
+                <th class="p-2">Tipo</th>
+                <th class="p-2">Equipo</th>
+                <th class="p-2">Sede</th>
+                <th class="p-2">Estado</th>
+                <th class="p-2">Acciones</th>
+              </tr>
+            </thead>
+            <tbody class="text-gray-200" id="tbody-solicitudes">
+              <!-- filas generadas por JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+          <button id="exportCSV" class="px-4 py-2 bg-indigo-600 rounded-md">Exportar CSV</button>
+          <button id="generatePDF" class="px-4 py-2 bg-rose-600 rounded-md">Generar informe PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSPECCIONES -->
+    <section id="inspecciones" class="py-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-bold neon">Inspecciones & Checklists</h2>
+        <div class="text-sm text-gray-400">Cree listas y genere informes con firma digital (integración futura)</div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="card p-4 rounded-xl">
+          <h4 class="font-semibold">Inspección diaria</h4>
+          <p class="text-sm text-gray-300">Formato rápido para camillas, tomas de muestra, áreas críticas.</p>
+          <a href="https://docs.google.com/forms/d/zzzz" class="mt-3 inline-block px-4 py-2 bg-green-600 rounded-md">Abrir formulario</a>
+        </div>
+
+        <div class="card p-4 rounded-xl">
+          <h4 class="font-semibold">Inspección equipos</h4>
+          <p class="text-sm text-gray-300">Checklist detallado por referencia y serial.</p>
+          <a href="https://docs.google.com/forms/d/yyyy" class="mt-3 inline-block px-4 py-2 bg-green-600 rounded-md">Registrar</a>
+        </div>
+
+        <div class="card p-4 rounded-xl">
+          <h4 class="font-semibold">Generar informe</h4>
+          <p class="text-sm text-gray-300">Exportar inspección a PDF con firma digital (opcional).</p>
+          <button id="exportInspection" class="mt-3 px-4 py-2 bg-amber-500 rounded-md">Exportar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FICHAS TÉCNICAS -->
+    <section id="fichas" class="py-8">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold neon">Fichas técnicas de equipos</h2>
+        <div class="text-sm text-gray-400">Busque por código, vea historial y descargue la ficha.</div>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6 mb-6" id="fichas-grid">
+        <!-- Fichas generadas por JS -->
+      </div>
+
+      <div class="text-sm text-gray-400">Sugerencia: vincule cada equipo con un QR/Barcode en la app CorreQ para abrir su ficha al escanear.</div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="py-8 mb-12">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="card p-6 rounded-xl">
+          <h3 class="text-xl font-bold neon">Contacto</h3>
+          <p class="text-gray-300 mt-2">Envíe sus preguntas, solicitudes o solicite demo en vivo.</p>
+
+          <form id="contactForm" class="mt-4 grid gap-3">
+            <input required name="name" placeholder="Nombre" class="p-3 rounded-md bg-white/5 text-black" />
+            <input required name="email" type="email" placeholder="Correo" class="p-3 rounded-md bg-white/5 text-black" />
+            <textarea required name="message" rows="4" placeholder="Mensaje" class="p-3 rounded-md bg-white/5 text-black"></textarea>
+            <div class="flex gap-2">
+              <button type="submit" class="px-4 py-2 bg-blue-600 rounded-md">Enviar</button>
+              <a href="mailto:auxiliarmantenimiento.ips@gmail.com" class="px-4 py-2 bg-white/5 rounded-md">Enviar por correo</a>
+            </div>
+          </form>
+        </div>
+
+        <div class="card p-6 rounded-xl">
+          <h3 class="text-xl font-bold neon">Descargas</h3>
+          <p class="text-gray-300 mt-2">Manuales, guías y la ficha técnica del proyecto CorreQ.</p>
+          <div class="mt-4 flex flex-col gap-2">
+            <a id="downloadManual" class="px-4 py-2 bg-indigo-600 rounded-md text-center">Descargar Manual (PDF)</a>
+            <a href="#" class="px-4 py-2 bg-white/5 rounded-md text-center">Versión resumida</a>
+            <a href="#" class="px-4 py-2 bg-white/5 rounded-md text-center">Landing y documentación</a>
+          </div>
+          <div class="mt-6 text-sm text-gray-400">© 2025 Interconsultas S.A.S • Desarrollado por CorreQ</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/4 mt-12 py-6 text-center text-sm text-gray-400">
+    Interconsultas S.A.S — Plataforma CorreQ · Autonomía otorgada al responsable · Desarrollado por <strong>CorreQ</strong>
   </footer>
+
+  <!-- MODAL FICHA -->
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="modal-backdrop absolute inset-0"></div>
+    <div class="relative z-10 w-full max-w-3xl p-6">
+      <div class="card rounded-xl p-6">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 id="modal-title" class="text-xl font-bold">Ficha técnica</h3>
+            <div id="modal-sub" class="text-sm text-gray-300">Detalle del equipo</div>
+          </div>
+          <div>
+            <button id="modal-close" class="px-3 py-2 bg-white/5 rounded-md">Cerrar</button>
+          </div>
+        </div>
+
+        <div class="mt-4 grid md:grid-cols-2 gap-4">
+          <div>
+            <p id="modal-desc" class="text-gray-200"></p>
+            <ul class="mt-3 text-sm text-gray-300" id="modal-list">
+              <!-- specs -->
+            </ul>
+            <div class="mt-4 flex gap-2">
+              <button id="modal-download" class="px-4 py-2 bg-indigo-600 rounded-md">Descargar ficha PDF</button>
+              <button id="modal-export" class="px-4 py-2 bg-green-600 rounded-md">Exportar registro</button>
+            </div>
+          </div>
+          <div>
+            <div class="bg-white/5 p-4 rounded-lg text-center">
+              <div id="modal-serial" class="font-mono text-sm text-gray-200"></div>
+              <div class="mt-4 text-sm text-gray-300">Historial</div>
+              <div id="modal-history" class="mt-3 text-xs text-gray-300 max-h-40 overflow-auto"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // ====== Datos de ejemplo para poblar la UI ======
+    const sampleReports = [
+      {id: 'R-001', title: 'Falla tomacorriente UCI', type: 'Infraestructura', link: 'https://docs.google.com/forms/d/xxxx', date:'2025-08-20', sede:'Sede 1', status:'Pendiente'},
+      {id: 'R-002', title: 'Calibración monitoreo', type: 'Equipos', link: 'https://docs.google.com/forms/d/yyyy', date:'2025-08-19', sede:'Sede 2', status:'En gestión'},
+      {id: 'R-003', title: 'Reemplazo compresor', type: 'Infraestructura', link: 'https://docs.google.com/forms/d/zzzz', date:'2025-08-18', sede:'Sede 3', status:'Finalizado'},
+      {id: 'R-004', title: 'Mantenimiento preventivo desfibrilador', type: 'Equipos', link: 'https://docs.google.com/forms/d/aaaa', date:'2025-08-17', sede:'Sede 2', status:'Pendiente'},
+      {id: 'R-005', title: 'Reporte limpieza campana', type: 'Infraestructura', link: 'https://docs.google.com/forms/d/bbbb', date:'2025-08-16', sede:'Sede 1', status:'Finalizado'}
+    ];
+
+    const sampleEquipos = [
+      {code:'EQ-1001', name:'Desfibrilador Mindray BeneHeart D1', marca:'Mindray', modelo:'D1', serial:'SN-45129', sede:'Sede 2', history:['2025-07-10 calibración','2025-06-05 revisión']},
+      {code:'EQ-1002', name:'Bombas de infusión MarcaX', marca:'MarcaX', modelo:'Inf-200', serial:'SN-33211', sede:'Sede 1', history:['2025-05-20 calibración','2024-12-12 reparación']},
+      {code:'EQ-1003', name:'Monitor multiparámetro', marca:'BrandA', modelo:'MP-5', serial:'SN-88744', sede:'Sede 3', history:['2025-03-01 verificación']},
+      {code:'EQ-1004', name:'Nevera vacunas', marca:'CoolMed', modelo:'C-450', serial:'SN-99821', sede:'Sede 1', history:['2025-01-15 mantenimiento']}
+    ];
+
+    const sampleSolicitudes = [
+      {id:'S-001', date:'2025-08-20', type:'Preventivo', equipo:'EQ-1002', sede:'Sede 1', state:'Pendiente'},
+      {id:'S-002', date:'2025-08-19', type:'Correctivo', equipo:'EQ-1001', sede:'Sede 2', state:'En gestión'},
+      {id:'S-003', date:'2025-08-19', type:'Gestión', equipo:'EQ-1003', sede:'Sede 3', state:'Finalizado'},
+      {id:'S-004', date:'2025-08-18', type:'Preventivo', equipo:'EQ-1004', sede:'Sede 1', state:'Finalizado'},
+      {id:'S-005', date:'2025-08-17', type:'Correctivo', equipo:'EQ-1001', sede:'Sede 2', state:'Pendiente'}
+    ];
+
+    // ====== UTILIDADES ======
+    function qs(sel){return document.querySelector(sel)}
+    function qsa(sel){return document.querySelectorAll(sel)}
+
+    // ====== INIT UI: Report cards, fichas y tabla solicitudes ======
+    function renderReportCards(list) {
+      const grid = qs('#report-grid');
+      grid.innerHTML = '';
+      list.forEach(r=>{
+        const card = document.createElement('div');
+        card.className = 'card p-4 rounded-xl';
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-xs text-gray-400">${r.date} · ${r.sede}</div>
+              <div class="font-semibold mt-1">${r.title}</div>
+              <div class="text-sm text-gray-300 mt-1">${r.type}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm ${r.status==='Finalizado'?'text-green-400':r.status==='En gestión'?'text-amber-400':'text-rose-400'} font-semibold">${r.status}</div>
+              <div class="mt-3 flex flex-col gap-2">
+                <a href="${r.link}" target="_blank" class="px-3 py-1 bg-white/5 rounded-md text-sm">Abrir</a>
+                <button class="px-3 py-1 bg-blue-600 rounded-md text-sm" onclick="openAsNewWindow('${r.link}')">Abrir en ventana</button>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderFichas(list){
+      const grid = qs('#fichas-grid');
+      grid.innerHTML = '';
+      list.forEach(eq=>{
+        const el = document.createElement('div');
+        el.className = 'card p-4 rounded-xl';
+        el.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm text-gray-400">${eq.marca} · ${eq.modelo}</div>
+              <div class="font-semibold mt-1">${eq.name}</div>
+              <div class="text-xs mt-2 text-gray-300">${eq.serial}</div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <button class="px-3 py-1 bg-indigo-600 rounded-md" onclick="openFicha('${eq.code}')">Ver</button>
+              <button class="px-3 py-1 bg-white/5 rounded-md" onclick="downloadFicha('${eq.code}')">PDF</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+    }
+
+    function renderSolicitudes(list){
+      const tbody = qs('#tbody-solicitudes');
+      tbody.innerHTML = '';
+      list.forEach(s=>{
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="p-2 text-gray-200">${s.id}</td>
+          <td class="p-2 text-gray-200">${s.date}</td>
+          <td class="p-2 text-gray-200">${s.type}</td>
+          <td class="p-2 text-gray-200">${s.equipo}</td>
+          <td class="p-2 text-gray-200">${s.sede}</td>
+          <td class="p-2 text-gray-200">${s.state}</td>
+          <td class="p-2 text-gray-200"><button class="px-2 py-1 bg-white/5 rounded" onclick="openSolicitud('${s.id}')">Abrir</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ====== Interacciones y utilidades adicionales ======
+    function openAsNewWindow(url){
+      window.open(url,'_blank','noopener');
+    }
+
+    function openSolicitud(id){
+      alert('Abrir solicitud: '+id+' (función demo - integrar con AppSheet o backend real)');
+    }
+
+    // ====== Modal ficha ======
+    function openFicha(code){
+      const eq = sampleEquipos.find(e=>e.code===code);
+      if(!eq) return alert('Equipo no encontrado');
+      qs('#modal-title').innerText = eq.name;
+      qs('#modal-sub').innerText = `${eq.marca} · ${eq.modelo} · ${eq.serial}`;
+      qs('#modal-desc').innerText = `Ficha técnica de ${eq.name}. Código: ${eq.code}. Ubicación: ${eq.sede}.`;
+      qs('#modal-serial').innerText = `Serial: ${eq.serial}`;
+      const listEl = qs('#modal-list'); listEl.innerHTML='';
+      ['Marca: '+eq.marca,'Modelo: '+eq.modelo,'Código: '+eq.code,'Sede: '+eq.sede].forEach(x=>{
+        const li = document.createElement('li'); li.innerText = x; listEl.appendChild(li);
+      });
+      const hist = qs('#modal-history'); hist.innerHTML='';
+      eq.history.forEach(h=>{
+        const d = document.createElement('div'); d.className='text-xs text-gray-300 py-1 border-b border-white/2'; d.innerText=h; hist.appendChild(d);
+      });
+      qs('#modal').classList.remove('hidden');
+    }
+
+    function closeModal(){
+      qs('#modal').classList.add('hidden');
+    }
+
+    function downloadFicha(code){
+      const eq = sampleEquipos.find(e=>e.code===code);
+      if(!eq) return alert('Equipo no encontrado');
+      // Generar PDF sencillo con jsPDF
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(14);
+      doc.text('Ficha técnica - ' + eq.name, 14, 20);
+      doc.setFontSize(10);
+      doc.text(`Código: ${eq.code}`, 14, 30);
+      doc.text(`Marca: ${eq.marca}`, 14, 36);
+      doc.text(`Modelo: ${eq.modelo}`, 14, 42);
+      doc.text(`Serial: ${eq.serial}`, 14, 48);
+      doc.text('Historial:', 14, 60);
+      eq.history.forEach((h,i)=> doc.text(`- ${h}`, 18, 68 + i*6));
+      doc.save(`${eq.code}_ficha.pdf`);
+    }
+
+    // ====== Chart initialization ======
+    function initCharts(){
+      // miniChart
+      const ctxMini = qs('#miniChart').getContext('2d');
+      new Chart(ctxMini, {
+        type:'line',
+        data:{
+          labels:['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+          datasets:[{label:'Solicitudes', data:[2,3,5,4,6,4,2], fill:true, tension:0.35, backgroundColor:'rgba(34,193,195,0.12)', borderColor:'#22c1c3'}]
+        },
+        options:{plugins:{legend:{display:false}}}
+      });
+
+      // chart-types
+      const ctx1 = qs('#chart-types').getContext('2d');
+      new Chart(ctx1, { type:'bar', data:{
+        labels:['Preventivo','Correctivo','Gestión'],
+        datasets:[{label:'Solicitudes', data:[15,9,6], backgroundColor:['#2563eb','#10b981','#f59e0b']}] },
+        options:{plugins:{legend:{display:false}}}
+      );
+
+      // chart-status
+      const ctx2 = qs('#chart-status').getContext('2d');
+      new Chart(ctx2, { type:'doughnut', data:{
+        labels:['Pendiente','En gestión','Finalizado'],
+        datasets:[{data:[5,8,12], backgroundColor:['#ef4444','#f59e0b','#10b981'] }]
+      }});
+
+      // chart-trend
+      const ctx3 = qs('#chart-trend').getContext('2d');
+      new Chart(ctx3, { type:'line', data:{
+        labels:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago'],
+        datasets:[{label:'Solicitudes', data:[12,15,10,9,14,16,13,18], fill:false, tension:0.3, borderColor:'#8b5cf6'}]
+      }, options:{plugins:{legend:{display:false}}} );
+    }
+
+    // ====== Export CSV ======
+    function exportCSV(){
+      const rows = [['ID','Fecha','Tipo','Equipo','Sede','Estado'], ...sampleSolicitudes.map(s=>[s.id,s.date,s.type,s.equipo,s.sede,s.state])];
+      const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='solicitudes_export.csv'; a.click(); URL.revokeObjectURL(url);
+    }
+
+    // ====== Save local (localStorage) ======
+    function saveLocal(){
+      localStorage.setItem('correq_solicitudes', JSON.stringify(sampleSolicitudes));
+      alert('Datos guardados en almacenamiento local del navegador.');
+    }
+
+    // ====== Generate PDF general ======
+    function generatePDF(){
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({unit:'pt', format:'a4'});
+      doc.setFontSize(18); doc.text('Informe CorreQ - Resumen de solicitudes', 40, 60);
+      doc.setFontSize(11); doc.text(`Fecha: ${new Date().toLocaleString()}`, 40, 80);
+      let y=110;
+      sampleSolicitudes.forEach(s=>{
+        doc.text(`${s.id} | ${s.date} | ${s.type} | ${s.equipo} | ${s.sede} | ${s.state}`, 40, y);
+        y+=18;
+        if(y>750){ doc.addPage(); y=40; }
+      });
+      doc.save('informe_correq.pdf');
+    }
+
+    // ====== Export inspection (demo) ======
+    function exportInspectionPDF(){
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(16); doc.text('Inspección - Reporte', 14, 20);
+      doc.setFontSize(11); doc.text('Formato demo generado por CorreQ', 14, 36);
+      doc.text('Este PDF es un ejemplo. Integre su flujo real para firmar digitalmente.', 14, 50);
+      doc.save('inspeccion_reporte.pdf');
+    }
+
+    // ====== Simula descarga de manual (archivo creado en cliente) ======
+    function downloadManual(){
+      const content = `Manual CorreQ - Interconsultas S.A.S\n\nDesarrollado por CorreQ\n\nContenido: Guía de uso, instalación y despliegue en GitHub Pages.`;
+      const blob = new Blob([content], {type:'text/plain'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='manual_correq.txt'; a.click(); URL.revokeObjectURL(a.href);
+    }
+
+    // ====== Theme toggle (simple) ======
+    function toggleTheme(){
+      document.body.classList.toggle('bg-black');
+      document.body.classList.toggle('bg-gradient-to-br');
+      alert('Tema alternado (demo). Para tema persistente, implementar preferencia en localStorage.');
+    }
+
+    // ====== Event listeners ======
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderReportCards(sampleReports);
+      renderFichas(sampleEquipos);
+      renderSolicitudes(sampleSolicitudes);
+      initCharts();
+
+      // mobile menu
+      qs('#mobile-open').addEventListener('click', ()=> qs('#mobile-menu').classList.remove('hidden'));
+      qs('#mobile-close').addEventListener('click', ()=> qs('#mobile-menu').classList.add('hidden'));
+
+      // modal
+      qs('#modal-close').addEventListener('click', closeModal);
+      qs('#modal').addEventListener('click', (e)=>{ if(e.target===qs('#modal')) closeModal() });
+
+      // search reports
+      qs('#searchReports').addEventListener('input', (e)=>{
+        const q = e.target.value.toLowerCase();
+        renderReportCards(sampleReports.filter(r => r.title.toLowerCase().includes(q) || r.type.toLowerCase().includes(q) || r.sede.toLowerCase().includes(q)));
+      });
+
+      // quick export
+      qs('#quick-export').addEventListener('click', exportCSV);
+      qs('#exportCSV').addEventListener('click', exportCSV);
+      qs('#save-local').addEventListener('click', saveLocal);
+      qs('#generatePDF').addEventListener('click', generatePDF);
+      qs('#exportInspection').addEventListener('click', exportInspectionPDF);
+      qs('#downloadManual').addEventListener('click', downloadManual);
+      qs('#btn-theme').addEventListener('click', toggleTheme);
+
+      // contact form demo
+      qs('#contactForm').addEventListener('submit', (ev)=>{
+        ev.preventDefault();
+        const f = new FormData(ev.target);
+        alert('Gracias, '+f.get('name')+'. Su mensaje ha sido recibido (demo).');
+        ev.target.reset();
+      });
+
+      // download ficha from modal
+      qs('#modal-download').addEventListener('click', ()=>{
+        const code = qs('#modal-serial').innerText.replace('Serial: ','');
+        // fallback: download first equipo to demo
+        downloadFicha(sampleEquipos[0].code);
+      });
+
+      // modal export
+      qs('#modal-export').addEventListener('click', ()=>{
+        alert('Exportar registro (demo) — en producción conecte con su backend o Appsheets API.');
+      });
+
+      // export inspection button
+      qs('#generatePDF')?.addEventListener('click', generatePDF);
+      qs('#download-dashboard')?.addEventListener('click', ()=>{
+        // capture dashboard as image from canvas elements (simple)
+        const outCanvas = document.createElement('canvas');
+        outCanvas.width = 1200; outCanvas.height = 600;
+        const ctx = outCanvas.getContext('2d');
+        // simple background
+        ctx.fillStyle = '#07183a'; ctx.fillRect(0,0,outCanvas.width,outCanvas.height);
+        ctx.fillStyle = '#fff'; ctx.font = '20px sans-serif'; ctx.fillText('Dashboard CorreQ (captura)', 40, 40);
+        // Save as image
+        const a = document.createElement('a'); a.href = outCanvas.toDataURL('image/png'); a.download='dashboard_capture.png'; a.click();
+      });
+
+      // create report demo
+      qs('#create-report').addEventListener('click', ()=>{
+        const id = 'R-'+String(Math.floor(Math.random()*900)+100);
+        const newR = {id, title:'Reporte generado '+id, type:'Infraestructura', link:'#', date:new Date().toISOString().split('T')[0], sede:'Sede 1', status:'Pendiente'};
+        sampleReports.unshift(newR);
+        renderReportCards(sampleReports);
+        alert('Reporte creado (demo): '+id);
+      });
+
+      // export inspection
+      qs('#exportInspection').addEventListener('click', exportInspectionPDF);
+
+      // open fichas items clickable
+      // (we already created buttons to call openFicha)
+    });
+
+    // Expose some functions to global for usage from inline onclick attributes
+    window.openFicha = openFicha;
+    window.downloadFicha = downloadFicha;
+    window.openAsNewWindow = openAsNewWindow;
+    window.openSolicitud = openSolicitud;
+    window.exportCSV = exportCSV;
+    window.generatePDF = generatePDF;
+
+    // Optional: Try load stored data
+    (function tryLoadLocal(){
+      try{
+        const stored = localStorage.getItem('correq_solicitudes');
+        if(stored) console.info('Cargando solicitudes desde localStorage (demo).');
+      }catch(e){}
+    })();
+
+  </script>
 
 </body>
 </html>
-  
-
