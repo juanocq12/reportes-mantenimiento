@@ -43,6 +43,12 @@
       z-index: 9999;
     }
 
+    #loader img {
+      width: 160px;
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s infinite alternate;
+    }
+
     .spinner {
       border: 6px solid rgba(255, 255, 255, 0.2);
       border-top: 6px solid #00c6ff;
@@ -65,6 +71,8 @@
     }
 
     @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px);} 100% { opacity: 1; transform: translateY(0);} }
+
+    header img { max-width: 220px; margin-bottom: 1rem; }
 
     header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 1px; }
     header h2 {
@@ -135,12 +143,14 @@
 
   <!-- Loader -->
   <div id="loader">
+    <img src="assets/img/Logo-Interconsultas-01b-500px.png" alt="Logo Interconsultas">
     <div class="spinner"></div>
   </div>
 
   <!-- Contenido -->
   <div id="content">
     <header>
+      <img src="assets/img/Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
       <h1>IPS Interconsultas</h1>
       <h2>Solicitud de Mantenimiento (Locativo y Biomédico)</h2>
     </header>
@@ -159,11 +169,14 @@
         <p>Solicita soporte en equipos médicos, calibración, revisiones preventivas o correctivas.</p>
       </div>
       <div class="card">
-        <h3>📞 Contacto 317 513 2548</h3>
-        <p> 🕒 Horario de servicio:
-          Lunes a viernes: 7:00 a.m. a 6:00 p.m.
-           Sábados: 7:00 a.m. a 12:00 m.
-          🔹 Nota: Se garantiza atención prioritaria para equipos biomédicos y locativos críticos dentro del horario establecido..</p>
+        <h3>📞 Contacto</h3>
+        <p>
+          Teléfono: <strong>317 513 2548</strong><br>
+          🕒 Horario de atención:<br>
+          Lunes a viernes: 7:00 a.m. – 6:00 p.m.<br>
+          Sábados: 7:00 a.m. – 12:00 m.<br><br>
+          🔹 <em>Se garantiza atención prioritaria para equipos biomédicos y locativos críticos dentro del horario establecido.</em>
+        </p>
       </div>
     </section>
 
@@ -203,6 +216,5 @@
   </script>
 </body>
 </html>
-
 
 
