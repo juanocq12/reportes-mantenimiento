@@ -3,108 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solicitud de Mantenimiento - IPS Interconsultas</title>
+  <title>IPS Interconsultas - Solicitud de Mantenimiento</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="Logo-Interconsultas-01b-500px.png">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
     body {
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 0;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Fondo animado */
-    #particles-js {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
+      color: #fff;
       background: linear-gradient(135deg, #001f3f, #00172e);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
-    /* Loader */
-    #loader {
+    /* ==== MENÚ SUPERIOR ==== */
+    nav {
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #00172e;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    #loader img {
-      width: 160px;
-      margin-bottom: 20px;
-      animation: fadeIn 1.5s infinite alternate;
-    }
-
-    .spinner {
-      border: 6px solid rgba(255, 255, 255, 0.2);
-      border-top: 6px solid #00c6ff;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
-    @keyframes fadeIn { from { opacity: 0.3;} to { opacity: 1;} }
-
-    /* Contenido */
-    #content {
-      display: none;
       width: 100%;
-      max-width: 1100px;
-      padding: 3rem 1.5rem;
-      animation: fadeUp 1.2s ease-out forwards;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      z-index: 1000;
+    }
+    nav img { height: 45px; }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover { color: #00c6ff; }
+
+    /* Menú hamburguesa */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      margin: 4px 0;
     }
 
-    @keyframes fadeUp { 0% { opacity: 0; transform: translateY(30px);} 100% { opacity: 1; transform: translateY(0);} }
+    @media(max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        padding: 1rem;
+      }
+      nav ul.active { display: flex; }
+      .menu-toggle { display: flex; }
+    }
 
-    header img { max-width: 220px; margin-bottom: 1rem; }
-
-    header h1 { font-size: 2.8rem; margin-bottom: 0.5rem; font-weight: 800; letter-spacing: 1px; }
+    /* ==== SECCIONES ==== */
+    section {
+      padding: 100px 20px;
+      text-align: center;
+      min-height: 100vh;
+    }
+    header h1 { font-size: 2.8rem; margin-bottom: 1rem; }
     header h2 {
       font-size: 1.4rem;
       margin-bottom: 2rem;
       background: linear-gradient(90deg, #00c6ff, #0072ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      font-weight: 600;
     }
 
     .btn {
       display: inline-block;
+      margin-top: 1.5rem;
       background: linear-gradient(90deg, #0072ff, #00c6ff, #00ffb9);
       background-size: 300% 300%;
       animation: gradientMove 6s ease infinite;
       color: white;
-      padding: 1.2rem 3rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      text-decoration: none;
+      padding: 1rem 2.5rem;
       border-radius: 50px;
-      box-shadow: 0 6px 25px rgba(0, 198, 255, 0.5);
-      transition: transform 0.3s;
-      margin-top: 2rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-decoration: none;
     }
-    .btn:hover { transform: translateY(-5px) scale(1.05); }
+    .btn:hover { transform: scale(1.05); }
 
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
@@ -112,58 +107,124 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Secciones extras */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
-      margin-top: 3rem;
+      margin-top: 2rem;
     }
     .card {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255,255,255,0.08);
       border-radius: 20px;
       padding: 2rem;
-      backdrop-filter: blur(12px);
-      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
     }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 25px rgba(0, 198, 255, 0.3);
-    }
-    .card h3 { margin-bottom: 1rem; font-size: 1.3rem; color: #00c6ff; }
+    .card h3 { margin-bottom: 1rem; color: #00c6ff; }
 
+    /* ==== FORMULARIO ==== */
+    form {
+      max-width: 600px;
+      margin: auto;
+      text-align: left;
+      background: rgba(255,255,255,0.08);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+    form label { display: block; margin: 1rem 0 0.5rem; }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 1rem;
+    }
+    form button {
+      width: 100%;
+      padding: 1rem;
+      background: #00c6ff;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    form button:hover { background: #0072ff; }
+
+    /* ==== FOOTER ==== */
     footer {
-      margin-top: 4rem;
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0,0,0,0.8);
       font-size: 0.9rem;
-      opacity: 0.8;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      padding-top: 1rem;
+    }
+    footer a { color: #00c6ff; text-decoration: none; }
+
+    /* BOTONES FLOTANTES */
+    #btnTop {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 30px;
+      background: #00c6ff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 22px;
+      color: white;
+      cursor: pointer;
+    }
+    #btnTop:hover { transform: scale(1.15); }
+
+    #btnWhatsApp {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      background: #25d366;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
-  <!-- Fondo animado -->
-  <div id="particles-js"></div>
 
-  <!-- Loader -->
-  <div id="loader">
-    <img src="Logo-Interconsultas-01b-500px.png" alt="Logo Interconsultas">
-    <div class="spinner"></div>
-  </div>
+  <!-- NAV -->
+  <nav>
+    <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
+    <div class="menu-toggle" onclick="document.querySelector('nav ul').classList.toggle('active')">
+      <div></div><div></div><div></div>
+    </div>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#formulario">Formulario</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
 
-  <!-- Contenido -->
-  <div id="content">
+  <!-- INICIO -->
+  <section id="inicio">
     <header>
-      <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
       <h1>IPS Interconsultas</h1>
       <h2>Solicitud de Mantenimiento (Locativo y Biomédico)</h2>
     </header>
+    <a href="#formulario" class="btn">🚀 Ir al Formulario</a>
+  </section>
 
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank" class="btn">
-      🚀 Ir al Formulario
-    </a>
-
-    <section class="cards">
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <h1>Nuestros Servicios</h1>
+    <div class="cards">
       <div class="card">
         <h3>🔧 Mantenimiento Locativo</h3>
         <p>Reporta problemas en infraestructura, electricidad, mobiliario o áreas físicas de la institución.</p>
@@ -172,52 +233,75 @@
         <h3>💉 Mantenimiento Biomédico</h3>
         <p>Solicita soporte en equipos médicos, calibración, revisiones preventivas o correctivas.</p>
       </div>
-      <div class="card">
-        <h3>📞 Contacto</h3>
-        <p>
-          Teléfono: <strong>317 513 2548</strong><br>
-          🕒 Horario de atención:<br>
-          Lunes a viernes: 7:00 a.m. – 6:00 p.m.<br>
-          Sábados: 7:00 a.m. – 12:00 m.<br><br>
-          🔹 <em>Se garantiza atención prioritaria para equipos biomédicos y locativos críticos dentro del horario establecido.</em>
-        </p>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <footer>
-     © Plataforma desarrollada por CorreQ
-Gracias por utilizar los canales digitales de IPS Interconsultas.
+  <!-- FORMULARIO -->
+  <section id="formulario">
+    <h1>Formulario de Solicitud</h1>
+    <form>
+      <label>Nombre completo</label>
+      <input type="text" required>
       
-    </footer>
-  </div>
+      <label>Correo electrónico</label>
+      <input type="email" required>
+      
+      <label>Teléfono</label>
+      <input type="text">
+      
+      <label>Tipo de solicitud</label>
+      <select required>
+        <option value="">Seleccione...</option>
+        <option>Locativo</option>
+        <option>Biomédico</option>
+      </select>
+      
+      <label>Descripción</label>
+      <textarea rows="4" required></textarea>
+      
+      <button type="submit">Enviar Solicitud</button>
+    </form>
+    <p style="margin-top:1rem;">O si prefiere puede usar nuestro <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank">Google Form</a>.</p>
+  </section>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <h1>Contacto</h1>
+    <p>
+      📲 <a href="https://wa.me/573175132548" target="_blank">317 513 2548</a><br>
+      📧 <a href="mailto:mesa.ayuda@rubikgroup.com.co">mesa.ayuda@rubikgroup.com.co</a><br>
+      🕒 Horario: Lunes a viernes 7:00 a.m. – 6:00 p.m. | Sábados 7:00 a.m. – 12:00 m.
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © Plataforma desarrollada por CorreQ | IPS Interconsultas <br>
+    <a href="#">Política de privacidad</a> | 
+    <a href="#">Manual de usuario</a>
+  </footer>
+
+  <!-- BOTONES FLOTANTES -->
+  <button id="btnTop">⬆</button>
+  <a id="btnWhatsApp" href="https://wa.me/573175132548" target="_blank">💬</a>
+
   <script>
-    // Loader
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
-        document.getElementById("content").style.display = "block";
-      }, 1800); 
-    });
+    // Botón arriba
+    const btnTop = document.getElementById("btnTop");
+    window.onscroll = () => {
+      if (document.documentElement.scrollTop > 200) {
+        btnTop.style.display = "block";
+      } else {
+        btnTop.style.display = "none";
+      }
+    };
+    btnTop.onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // Configuración de partículas
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
-        "color": { "value": "#00c6ff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.4, "random": true },
-        "size": { "value": 3, "random": true },
-        "line_linked": { "enable": true, "distance": 150, "color": "#0072ff", "opacity": 0.3, "width": 1 },
-        "move": { "enable": true, "speed": 2 }
-      },
-      "interactivity": {
-        "events": { "onhover": { "enable": true, "mode": "grab" } },
-        "modes": { "grab": { "distance": 200, "line_linked": { "opacity": 0.6 } } }
-      },
-      "retina_detect": true
+    // Manejo de envío (ejemplo)
+    document.querySelector("form").addEventListener("submit", e => {
+      e.preventDefault();
+      alert("✅ Solicitud enviada correctamente. Gracias por reportar.");
+      e.target.reset();
     });
   </script>
 </body>
