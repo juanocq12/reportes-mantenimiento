@@ -1,42 +1,157 @@
-<!-- SERVICIOS -->
-<section id="servicios">
-  <div class="container">
-    <h2>Nuestros servicios</h2>
-    <div class="cards" data-aos="fade-up">
-      <div class="card">
-        <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Locativo</h4>
-        <p class="small">Infraestructura, electricidad, fontanería, mobiliario y obras menores.</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CorreQ - Gestión de Solicitudes</title>
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --text: #111827;
+      --muted: #6b7280;
+      --accent-1: #0072ff;
+      --accent-2: #00c6ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    header { background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); color: #fff; padding: 1rem 0; text-align: center; }
+    header h1 { margin-bottom: .25rem; }
+    nav a { color: #fff; margin: 0 .75rem; text-decoration: none; font-weight: bold; }
+    nav a:hover { text-decoration: underline; }
+    section { padding: 3rem 1rem; max-width: 960px; margin: auto; }
+    h2 { text-align: center; margin-bottom: 1.5rem; font-size: 1.75rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 1.5rem; }
+    .card { background: #fff; padding: 1.25rem; border-radius: .75rem; box-shadow: 0 2px 6px rgba(0,0,0,.1); }
+    .btn { display: inline-block; padding: .75rem 1.25rem; border-radius: .5rem; font-weight: bold; text-align: center; text-decoration: none; }
+    .btn.primary { background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); color: #fff; }
+    form { display: grid; gap: 1rem; background: #fff; padding: 1.5rem; border-radius: .75rem; box-shadow: 0 2px 6px rgba(0,0,0,.1); }
+    label { font-weight: bold; }
+    input, select, textarea { padding: .5rem; border: 1px solid #ccc; border-radius: .5rem; width: 100%; }
+    footer { text-align: center; padding: 1rem; font-size: .875rem; background: #e5e7eb; margin-top: 2rem; }
+    footer a { color: var(--accent-1); }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <h1>CorreQ</h1>
+    <p>Gestión de Solicitudes</p>
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#contacto">Formulario</a>
+    </nav>
+  </header>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="container">
+      <h2>Nuestros servicios</h2>
+      <div class="cards" data-aos="fade-up">
+        <div class="card">
+          <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Locativo</h4>
+          <p class="small">Infraestructura, electricidad, fontanería, mobiliario y obras menores.</p>
+        </div>
+        <div class="card">
+          <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Biomédico</h4>
+          <p class="small">Calibraciones, reparación y mantenimiento preventivo/correctivo de equipos médicos.</p>
+        </div>
+        <div class="card">
+          <h4 style="color:var(--accent-1); margin-bottom:.25rem">Inspecciones & Reportes</h4>
+          <p class="small">Checklists digitales, generación automática de informes y firmas digitales.</p>
+        </div>
       </div>
-      <div class="card">
-        <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Biomédico</h4>
-        <p class="small">Calibraciones, reparación y mantenimiento preventivo/correctivo de equipos médicos.</p>
+
+      <!-- 🔹 BOTONES SOLICITADOS -->
+      <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+        <!-- Botón formulario interno -->
+        <a href="#contacto" class="btn primary">📋 Reportar Solicitud (Infraestructura / Equipos Médicos)</a>
+        
+        <!-- Botón soporte tecnológico -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" 
+           target="_blank" rel="noopener" 
+           class="btn primary">
+          💻 Soporte Tecnológico (Software / Hardware)
+        </a>
       </div>
-      <div class="card">
-        <h4 style="color:var(--accent-1); margin-bottom:.25rem">Inspecciones & Reportes</h4>
-        <p class="small">Checklists digitales, generación automática de informes y firmas digitales.</p>
-      </div>
+
+      <!-- Texto aclaratorio -->
+      <p style="margin-top:1rem; text-align:center; color:var(--muted)">
+        • El primer botón es para <strong>infraestructura y equipos biomédicos</strong>.<br>
+        • El segundo botón es para <strong>soporte tecnológico</strong> (mesa de ayuda: 
+        <a href="mailto:mesa.ayuda@rubikgroup.com.co">mesa.ayuda@rubikgroup.com.co</a>).
+      </p>
     </div>
+  </section>
 
-    <!-- 🔹 NUEVA SECCIÓN DE BOTONES -->
-    <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
-      <!-- Botón formulario interno -->
-      <a href="#contacto" class="btn primary">📋 Reportar Solicitud (Infraestructura / Equipos Médicos)</a>
-      
-      <!-- Botón soporte tecnológico -->
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" 
-         target="_blank" rel="noopener" 
-         class="btn primary" 
-         style="background:linear-gradient(90deg,#25d366,#128c7e)">
-        💻 Soporte Tecnológico (Software / Hardware)
-      </a>
+  <!-- FORMULARIO -->
+  <section id="contacto">
+    <div class="container">
+      <h2>Formulario de Solicitud</h2>
+      <form id="solicitudForm">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" required>
+
+        <label for="telefono">Teléfono de contacto</label>
+        <input type="tel" id="telefono" name="telefono">
+
+        <label for="categoria">Categoría del reporte</label>
+        <select id="categoria" name="categoria" required>
+          <option value="">Seleccione...</option>
+          <option value="Infraestructura">Infraestructura</option>
+          <option value="Equipo médico">Equipo médico</option>
+        </select>
+
+        <label for="descripcion">Descripción detallada</label>
+        <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+
+        <button type="submit" class="btn primary">Enviar solicitud</button>
+        <p id="formHint" style="color:var(--muted); font-size:.9rem"></p>
+      </form>
     </div>
+  </section>
 
-    <!-- Texto aclaratorio -->
-    <p style="margin-top:1rem; text-align:center; color:var(--muted)">
-      • El primer botón es para <strong>infraestructura y equipos biomédicos</strong>.  
-      • El segundo botón es para <strong>soporte tecnológico</strong> (mesa de ayuda: 
-      <a href="mailto:mesa.ayuda@rubikgroup.com.co" style="color:var(--accent-1)">mesa.ayuda@rubikgroup.com.co</a>).
-    </p>
-  </div>
-</section>
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 CorreQ. Desarrollado por Juan Manuel Correa Quiceno.</p>
+    <p>Contacto: <a href="mailto:mesa.ayuda@rubikgroup.com.co">mesa.ayuda@rubikgroup.com.co</a></p>
+  </footer>
 
+  <!-- SCRIPT -->
+  <script>
+    const form = document.getElementById('solicitudForm');
+    const formHint = document.getElementById('formHint');
+    const APPS_SCRIPT_URL = "URL_DE_SU_SCRIPT_AQUI"; // Reemplace con la URL de Google Apps Script
+
+    function disableForm(disabled) {
+      [...form.elements].forEach(el => el.disabled = disabled);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      disableForm(true);
+      formHint.textContent = "⏳ Enviando...";
+      try {
+        const data = Object.fromEntries(new FormData(form).entries());
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          body: new FormData(form)
+        });
+        if (res.ok) {
+          form.reset();
+          formHint.textContent = "✅ Solicitud enviada con éxito.";
+        } else {
+          formHint.textContent = "❌ Error al enviar. Intente de nuevo.";
+        }
+      } catch (err) {
+        console.error(err);
+        formHint.textContent = "❌ Error de conexión. Revise su red.";
+      } finally {
+        disableForm(false);
+      }
+    });
+  </script>
+</body>
+</html>
