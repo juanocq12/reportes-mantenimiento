@@ -1,526 +1,139 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!--
-    IPS Interconsultas - Página profesional (index.html)
-    Instrucciones rápidas:
-    1) Reemplace APPS_SCRIPT_URL y (opcional) APPS_SCRIPT_STATS_URL en el script.
-    2) Suba a GitHub Pages o a su hosting.
-    3) Para guardar formularios en Google Sheets, publique el Apps Script como Web App (doPost).
-  -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IPS Interconsultas — Solicitud de Mantenimiento</title>
-  <meta name="description" content="Plataforma de IPS Interconsultas para reportes y seguimiento de mantenimientos locativos y biomédicos. Registro, trazabilidad y analítica." />
-  <meta name="theme-color" content="#00172e" />
-  <!-- Open Graph -->
-  <meta property="og:title" content="IPS Interconsultas — Solicitud de Mantenimiento" />
-  <meta property="og:description" content="Plataforma de IPS Interconsultas para reportes y seguimiento de mantenimientos locativos y biomédicos." />
-  <meta property="og:type" content="website" />
-  <!-- Favicon -->
-  <link rel="icon" href="Logo-Interconsultas-01b-500px.png" />
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- AOS (simple animaciones) -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulario de Solicitudes</title>
   <style>
-    :root{
-      --bg:#00172e;
-      --bg-2:#001f3f;
-      --glass: rgba(255,255,255,0.06);
-      --accent-1:#00c6ff;
-      --accent-2:#0072ff;
-      --success:#25d366;
-      --muted:#98a0b3;
-      --card-radius:16px;
-      --max-width:1100px;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fc;
+      margin: 0;
+      padding: 0;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:'Poppins',sans-serif;
-      background: linear-gradient(135deg,var(--bg-2),var(--bg));
-      color:#fff;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
+    header {
+      background: #0066cc;
+      color: white;
+      padding: 1rem;
+      text-align: center;
     }
-
-    /* Skip link para accesibilidad */
-    .skip-link{
-      position:absolute;
-      left:-999px;
-      top:auto;
-      width:1px;
-      height:1px;
-      overflow:hidden;
+    main {
+      max-width: 500px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .skip-link:focus{
-      left:1rem; top:1rem; width:auto; height:auto; background:#fff; color:#000; padding:.5rem .75rem; border-radius:6px; z-index:9999;
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
     }
-
-    .container{max-width:var(--max-width); margin:0 auto; padding:0 1rem}
-
-    /* NAV */
-    nav{
-      position:fixed; top:0; left:0; right:0; z-index:999;
-      background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.25));
-      backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(255,255,255,0.03);
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
     }
-    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.9rem 1rem;}
-    .brand{display:flex; align-items:center; gap:.75rem; text-decoration:none; color:#fff}
-    .brand img{height:42px; width:auto; border-radius:8px}
-    .brand .title{font-weight:800; font-size:1rem; letter-spacing:.4px}
-
-    .nav-links{display:flex; gap:1rem; align-items:center}
-    .nav-links a{color:#fff; text-decoration:none; font-weight:600; padding:.45rem .6rem; border-radius:8px; transition:all .18s}
-    .nav-links a:hover, .nav-links a:focus{background:rgba(255,255,255,0.03); color:var(--accent-1)}
-    .cta{background:linear-gradient(90deg,var(--accent-2),var(--accent-1)); padding:.55rem .9rem; border-radius:999px; font-weight:700; box-shadow:0 8px 30px rgba(0,198,255,0.12)}
-    .small-action{background:rgba(255,255,255,0.04); padding:.45rem .8rem; border-radius:999px}
-
-    /* Hamburger */
-    .hamburger{display:none; background:transparent; border:0; color:#fff}
-    .hamburger svg{height:22px; width:22px}
-
-    @media(max-width:900px){
-      .nav-links{display:none}
-      .hamburger{display:inline-flex}
-      .mobile-menu{display:none}
-      .mobile-menu.active{display:block; background:rgba(0,0,0,0.7); padding:1rem; border-top:1px solid rgba(255,255,255,0.04)}
-      .mobile-menu a{display:block; padding:.6rem 0}
+    form input, form select, form textarea, form button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
     }
-
-    /* HERO */
-    .hero{padding:120px 0 40px}
-    .hero-grid{display:grid; grid-template-columns:1fr 420px; gap:2rem; align-items:center}
-    .hero h1{font-size:2.25rem; margin:0; line-height:1.05}
-    .hero p{color:var(--muted); margin-top:.75rem; max-width:46ch}
-    .hero .actions{margin-top:1.1rem; display:flex; gap:.7rem; flex-wrap:wrap}
-    .btn{display:inline-flex; align-items:center; gap:.6rem; padding:.7rem 1.1rem; border-radius:999px; text-decoration:none; color:#00172e; font-weight:700}
-    .btn.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#fff; box-shadow:0 12px 30px rgba(0,112,255,0.12)}
-    .btn.ghost{background:transparent; border:1px solid rgba(255,255,255,0.06); color:#fff}
-
-    /* CARD */
-    .card{background:var(--glass); padding:1.4rem; border-radius:var(--card-radius); box-shadow:0 6px 30px rgba(0,0,0,0.45)}
-    .card small{color:var(--muted)}
-
-    /* SECCIONES */
-    section{padding:64px 0}
-    section h2{font-size:1.6rem; margin-bottom:.6rem}
-    .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1rem}
-
-    /* FORM */
-    .form-wrap{max-width:680px; margin:0 auto}
-    form {background:var(--glass); padding:1.2rem; border-radius:12px}
-    label{display:block; font-size:.9rem; margin-top:.75rem; color:#e6f7ff}
-    input[type="text"], input[type="email"], textarea, select{width:100%; padding:.8rem; margin-top:.35rem; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background: rgba(0,0,0,0.18); color: #fff}
-    textarea{min-height:110px; resize:vertical}
-    .form-row{display:grid; grid-template-columns:1fr 1fr; gap:0.6rem}
-    .hint{font-size:.85rem; color:var(--muted); margin-top:.5rem}
-
-    /* footer */
-    footer{padding:36px 0; text-align:center; border-top:1px solid rgba(255,255,255,0.03); color:var(--muted)}
-
-    /* floating controls */
-    .float-btn{position:fixed; right:22px; z-index:998}
-    #btnWhats{bottom:20px}
-    #btnTop{bottom:86px}
-    .icon-btn{display:inline-flex; align-items:center; justify-content:center; width:54px; height:54px; border-radius:999px; font-size:22px; color:#fff}
-
-    /* Modal simple */
-    .modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:1200}
-    .modal{background:#0b1722; padding:1.2rem; border-radius:12px; max-width:520px; width:94%; box-shadow:0 12px 40px rgba(0,0,0,0.6)}
-
-    /* Dashboard canvas */
-    .charts{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
-    @media(max-width:820px){ .hero-grid{grid-template-columns:1fr} .charts{grid-template-columns:1fr} .form-row{grid-template-columns:1fr} }
+    form button {
+      background: #0066cc;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1.5rem;
+    }
+    form button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .form-hint {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #006600;
+    }
+    .error {
+      color: red;
+    }
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <header>
+    <h1>Gestión de Solicitudes</h1>
+  </header>
+  <main>
+    <h2>Formulario</h2>
+    <form id="solicitudForm">
+      <label for="nombre">Nombre</label>
+      <input type="text" id="nombre" name="nombre" required />
 
-  <!-- NAV -->
-  <nav role="navigation" aria-label="Principal">
-    <div class="container nav-inner">
-      <a class="brand" href="#inicio">
-        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
-        <span class="title">IPS Interconsultas</span>
-      </a>
-      <div style="display:flex;align-items:center;gap:.75rem">
-        <div class="nav-links" aria-hidden="false">
-          <a href="#inicio">Inicio</a>
-          <a href="#servicios">Servicios</a>
-          <a href="#formulario">Formulario</a>
-          <a href="#dashboard">Dashboard</a>
-          <a href="#contacto">Contacto</a>
-        </div>
-        <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="mobile-menu container" id="mobileMenu" aria-hidden="true" style="display:none">
-      <a href="#inicio">Inicio</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#formulario">Formulario</a>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#contacto">Contacto</a>
-    </div>
-  </nav>
+      <label for="correo">Correo</label>
+      <input type="email" id="correo" name="correo" required />
 
-  <main id="main">
-    <!-- HERO -->
-    <section id="inicio" class="hero container" aria-labelledby="hero-title">
-      <div class="hero-grid">
-        <div data-aos="fade-right">
-          <h1 id="hero-title">Solicitud de Mantenimiento — <span style="color:var(--accent-1)">Locativo</span> y <span style="color:var(--accent-2)">Biomédico</span></h1>
-          <p>Plataforma para reportes, seguimiento, trazabilidad y analítica. Prioridad para equipos biomédicos críticos y generación automática de tickets.</p>
+      <label for="categoria">Categoría</label>
+      <select id="categoria" name="categoria" required>
+        <option value="">Seleccione...</option>
+        <option value="Soporte tecnológico">Soporte tecnológico</option>
+        <option value="Mantenimiento locativo">Mantenimiento locativo</option>
+        <option value="Biomédico">Biomédico</option>
+      </select>
 
-          <div class="actions">
-            <a class="btn primary" href="#formulario">Crear solicitud</a>
-            <a class="btn ghost" href="#dashboard" style="color:#fff">Ver Dashboard</a>
-          </div>
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
 
-          <p class="hint">Teléfono: <a href="https://wa.me/573175132548" style="color:var(--accent-1); text-decoration:underline">317 513 2548</a> — Correo: <a href="mailto:mesa.ayuda@rubikgroup.com.co" style="color:var(--accent-1)">(mesa.ayuda@rubikgroup.com.co)</a></p>
-        </div>
-
-        <aside class="card" data-aos="fade-left" aria-label="Resumen de servicios">
-          <h3 style="margin:0;color:var(--accent-1)">Atención prioritaria</h3>
-          <p class="small" style="margin:.5rem 0 .75rem;">Los casos críticos reciben atención inmediata en horario laboral.</p>
-          <ul style="padding-left:1rem; color:var(--muted); margin:0;">
-            <li>Trazabilidad por ticket</li>
-            <li>Historial por equipo con QR</li>
-            <li>Informes mensuales automáticos</li>
-          </ul>
-          <div style="margin-top:1rem">
-            <a class="btn primary" href="#formulario" style="width:100%; display:inline-flex; justify-content:center">Crear solicitud</a>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- SERVICIOS -->
-    <section id="servicios" aria-labelledby="servicios-title">
-      <div class="container">
-        <h2 id="servicios-title">Nuestros servicios</h2>
-        <div class="cards" data-aos="fade-up">
-          <div class="card">
-            <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Locativo</h4>
-            <p class="small">Infraestructura, electricidad, fontanería, mobiliario y obras menores.</p>
-          </div>
-          <div class="card">
-            <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Biomédico</h4>
-            <p class="small">Calibraciones, reparación y mantenimiento preventivo/correctivo de equipos médicos.</p>
-          </div>
-          <div class="card">
-            <h4 style="color:var(--accent-1); margin-bottom:.25rem">Inspecciones & Reportes</h4>
-            <p class="small">Checklists digitales, generación automática de informes y firmas digitales.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FORMULARIO -->
-    <section id="formulario" aria-labelledby="form-title">
-      <div class="container">
-        <h2 id="form-title">Formulario de Solicitud</h2>
-        <p class="hint">Complete el formulario o utilice el Google Form embebido. Los datos se almacenan en Google Sheets.</p>
-
-        <div class="form-wrap" data-aos="fade-up">
-          <form id="nativeForm" novalidate>
-            <div class="form-row">
-              <div>
-                <label for="nombre">Nombre completo<span aria-hidden="true" style="color:#ffb4b4"> *</span></label>
-                <input id="nombre" name="nombre" type="text" required placeholder="Juan Pérez">
-              </div>
-              <div>
-                <label for="email">Correo electrónico<span aria-hidden="true" style="color:#ffb4b4"> *</span></label>
-                <input id="email" name="email" type="email" required placeholder="correo@ejemplo.com">
-              </div>
-            </div>
-
-            <label for="telefono">Teléfono</label>
-            <input id="telefono" name="telefono" type="text" placeholder="317 000 0000">
-
-            <div class="form-row">
-              <div>
-                <label for="sede">Sede</label>
-                <select id="sede" name="sede">
-                  <option value="">Seleccione...</option>
-                  <option>Sede 1</option>
-                  <option>Sede 2</option>
-                  <option>Sede 3</option>
-                </select>
-              </div>
-              <div>
-                <label for="tipo">Tipo de solicitud<span aria-hidden="true" style="color:#ffb4b4"> *</span></label>
-                <select id="tipo" name="tipo" required>
-                  <option value="">Seleccione...</option>
-                  <option>Locativo</option>
-                  <option>Biomédico</option>
-                </select>
-              </div>
-            </div>
-
-            <label for="prioridad">Prioridad</label>
-            <select id="prioridad" name="prioridad">
-              <option>Normal</option>
-              <option>Alta</option>
-              <option>Crítica</option>
-            </select>
-
-            <label for="descripcion">Descripción<span aria-hidden="true" style="color:#ffb4b4"> *</span></label>
-            <textarea id="descripcion" name="descripcion" required placeholder="Describa el problema con la mayor precisión posible"></textarea>
-
-            <!-- opcional: campo de adjuntos (nota en comentarios) -->
-            <!-- <label>Adjuntar evidencia (opcional)</label>
-            <input type="file" id="adjunto" name="adjunto" accept="image/*"> -->
-            <div style="margin-top:1rem; display:flex; gap:.6rem">
-              <button type="submit" class="btn primary" aria-live="polite" id="submitBtn">Enviar solicitud</button>
-              <button type="button" class="btn ghost" id="openGoogleForm">Abrir Google Form</button>
-            </div>
-            <p id="formHint" class="hint" role="status" aria-live="polite" style="margin-top:.8rem"></p>
-          </form>
-
-          <div style="margin-top:1rem; text-align:center">
-            <small class="hint">También puede usar: <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank" rel="noopener" style="color:var(--accent-1)">Google Form oficial</a>.</small>
-          </div>
-        </div>
-
-        <!-- Google Form embebido -->
-        <div style="margin-top:1.25rem" data-aos="fade-up">
-          <div class="card" style="overflow:hidden; padding:0; height:420px;">
-            <iframe id="gformEmbed" title="Google Form" src="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform?embedded=true" style="border:0; width:100%; height:100%"></iframe>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DASHBOARD -->
-    <section id="dashboard" aria-labelledby="dash-title">
-      <div class="container">
-        <h2 id="dash-title">Dashboard</h2>
-        <p class="hint">Resumen visual de solicitudes. Conectar con Google Sheets para datos reales.</p>
-        <div class="charts" data-aos="fade-up" style="margin-top:1rem">
-          <div class="card">
-            <h4 style="margin:0 0 .5rem">Solicitudes por tipo</h4>
-            <canvas id="chartTipo" aria-label="Gráfica de tipo de solicitudes" role="img"></canvas>
-          </div>
-          <div class="card">
-            <h4 style="margin:0 0 .5rem">Solicitudes por prioridad</h4>
-            <canvas id="chartPri" aria-label="Gráfica de prioridad de solicitudes" role="img"></canvas>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACTO -->
-    <section id="contacto" aria-labelledby="contacto-title">
-      <div class="container">
-        <h2 id="contacto-title">Contacto</h2>
-        <p class="hint">Teléfono: <a href="https://wa.me/573175132548" style="color:var(--accent-1)">317 513 2548</a> • Correo: <a href="mailto:mesa.ayuda@rubikgroup.com.co" style="color:var(--accent-1)">mesa.ayuda@rubikgroup.com.co</a></p>
-
-        <div style="margin-top:1rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap">
-          <a class="small-action" href="#">Política de privacidad</a>
-          <a class="small-action" href="#">Manual de usuario</a>
-          <a class="small-action" href="#">Portal IPS</a>
-        </div>
-      </div>
-    </section>
+      <button type="submit">Enviar</button>
+      <p id="formHint" class="form-hint"></p>
+    </form>
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div style="display:flex; align-items:center; justify-content:center; gap:.6rem; margin-bottom:.6rem">
-        <img src="Logo-Interconsultas-01b-500px.png" alt="" style="height:28px; width:auto; opacity:.9">
-        <strong>CorreQ</strong>
-      </div>
-      <div style="color:var(--muted)">© 2025 IPS Interconsultas — Todos los derechos reservados</div>
-    </div>
-  </footer>
-
-  <!-- Floating buttons -->
-  <div class="float-btn" id="btnTop" title="Ir arriba" style="position:fixed; right:20px">
-    <button class="icon-btn" style="background:linear-gradient(90deg,var(--accent-1),var(--accent-2));" aria-label="Ir arriba">⬆</button>
-  </div>
-  <div class="float-btn" id="btnWhats" title="WhatsApp" style="position:fixed; right:20px">
-    <a href="https://wa.me/573175132548" target="_blank" rel="noopener" class="icon-btn" style="background:var(--success)">&nbsp;💬&nbsp;</a>
-  </div>
-
-  <!-- Modal (oculto) -->
-  <div id="modal" style="display:none" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal" role="document">
-      <h3 id="modalTitle">Solicitud enviada</h3>
-      <p id="modalBody" style="color:var(--muted)"></p>
-      <div style="display:flex; gap:.6rem; margin-top:1rem; justify-content:flex-end">
-        <button id="copyTicket" class="btn ghost">Copiar ticket</button>
-        <button id="openWhatsFromModal" class="btn primary">Abrir WhatsApp</button>
-        <button id="closeModal" class="btn ghost">Cerrar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({ duration:600, once:true });
-
-    // -------- CONFIG: reemplazar por su Apps Script desplegado -------------
-    const APPS_SCRIPT_URL = 'REEMPLACE_POR_SU_APPS_SCRIPT_URL'; // ej: https://script.google.com/macros/s/AKfy.../exec
-    // (Opcional) endpoint que devuelve los conteos para el dashboard (JSON)
-    const APPS_SCRIPT_STATS_URL = ''; // si lo tiene, coloque aquí
-    // ----------------------------------------------------------------------
-
-    // Menú móvil
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburgerBtn.addEventListener('click', () => {
-      const active = mobileMenu.style.display === 'block';
-      mobileMenu.style.display = active ? 'none' : 'block';
-    });
-
-    // Scroll to top
-    const btnTop = document.getElementById('btnTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 200) btnTop.style.display = 'block'; else btnTop.style.display = 'none';
-    });
-    btnTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
-
-    // Abrir Google Form
-    document.getElementById('openGoogleForm').addEventListener('click', () => {
-      const url = 'https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform';
-      window.open(url, '_blank');
-    });
-
-    // Modal controls
-    const modal = document.getElementById('modal');
-    const modalBody = document.getElementById('modalBody');
-    const closeModal = document.getElementById('closeModal');
-    const copyTicket = document.getElementById('copyTicket');
-    const openWhatsFromModal = document.getElementById('openWhatsFromModal');
-
-    closeModal.addEventListener('click', () => modal.style.display = 'none');
-
-    // Form handling: Send JSON to Apps Script and show ticket modal
-    const form = document.getElementById('nativeForm');
-    const submitBtn = document.getElementById('submitBtn');
+    const form = document.getElementById('solicitudForm');
     const formHint = document.getElementById('formHint');
 
-    function disableForm(disabled=true){
-      Array.from(form.elements).forEach(el => el.disabled = disabled);
-      submitBtn.disabled = disabled;
-      submitBtn.style.opacity = disabled ? 0.7 : 1;
-    }
+    // Cambie este valor por su URL de Apps Script desplegado como Web App
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXXXXXXXXXXXXXX/exec";
 
-    async function sendFormData(payload){
-      if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('REEMPLACE_POR_SU_APPS_SCRIPT_URL')){
-        // No URL configurada: simular envío (útil para pruebas locales)
-        return { result:'success', ticket: 'TEST-'+Date.now() };
-      }
-      const resp = await fetch(APPS_SCRIPT_URL, {
-        method:'POST',
-        headers: { 'Content-Type':'application/json' },
-        body: JSON.stringify(payload)
-      });
-      return resp.ok ? resp.json() : { result:'error', message:'Error al conectar con Apps Script' };
+    function disableForm(disabled) {
+      Array.from(form.elements).forEach(el => el.disabled = disabled);
     }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      // Validación mínima
-      if(!form.checkValidity()){
-        formHint.textContent = 'Por favor complete todos los campos obligatorios (*)';
-        return;
-      }
-      formHint.textContent = '';
+      formHint.textContent = "⏳ Enviando solicitud...";
+      formHint.classList.remove("error");
       disableForm(true);
-      formHint.textContent = 'Enviando…';
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.date = new Date().toISOString();
 
-      try{
-        const json = await sendFormData(data);
-        if(json.result === 'success'){
-          formHint.textContent = '✅ Solicitud registrada. Ticket: ' + (json.ticket || '—');
-          modalBody.textContent = `Su ticket es ${json.ticket || '—'}. Guarde este código para seguimiento.`;
-          modal.style.display = 'flex';
-          // configure modal actions
-          copyTicket.onclick = () => {
-            navigator.clipboard.writeText(json.ticket || '').then(()=> {
-              copyTicket.textContent = '¡Copiado!';
-              setTimeout(()=> copyTicket.textContent = 'Copiar ticket',1200);
-            });
-          };
-          openWhatsFromModal.onclick = () => {
-            const msg = `Nueva solicitud%0A*Ticket*: ${encodeURIComponent(json.ticket||'')}%0A*Nombre*: ${encodeURIComponent(data.nombre||'')}%0A*Tel*: ${encodeURIComponent(data.telefono||'')}%0A*Tipo*: ${encodeURIComponent(data.tipo||'')}%0A*Prioridad*: ${encodeURIComponent(data.prioridad||'')}`;
-            window.open('https://wa.me/573175132548?text=' + msg, '_blank');
-          };
+      const formData = new FormData(form);
+      try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          body: formData
+        });
+        if (!response.ok) throw new Error("Error en la red");
+
+        const result = await response.json();
+        if (result.success) {
+          formHint.textContent = "✅ Solicitud enviada correctamente.";
           form.reset();
         } else {
-          formHint.textContent = '❌ No se pudo registrar la solicitud. Intente nuevamente.';
-          console.error(json);
+          formHint.textContent = "❌ No se pudo enviar la solicitud.";
+          formHint.classList.add("error");
         }
-      } catch (err){
+      } catch (err) {
         console.error(err);
-        formHint.textContent = '⚠️ Error de conexión. Intente más tarde.';
+        formHint.textContent = "❌ Error de conexión. Intente más tarde.";
+        formHint.classList.add("error");
       } finally {
         disableForm(false);
       }
     });
-
-    // Charts: si tiene APPS_SCRIPT_STATS_URL, se intentará obtener datos reales; si no, se usan datos de ejemplo
-    const ctxTipo = document.getElementById('chartTipo').getContext('2d');
-    const ctxPri = document.getElementById('chartPri').getContext('2d');
-
-    const exampleTipo = { labels:['Locativo','Biomédico'], values:[34,18] };
-    const examplePri = { labels:['Normal','Alta','Crítica'], values:[30,15,7] };
-
-    async function loadStats(){
-      let tipoData = exampleTipo;
-      let priData = examplePri;
-      if(APPS_SCRIPT_STATS_URL){
-        try{
-          const res = await fetch(APPS_SCRIPT_STATS_URL);
-          if(res.ok){
-            const j = await res.json();
-            tipoData = j.tipo || tipoData;
-            priData = j.prioridad || priData;
-          }
-        }catch(e){ console.warn('No se pudo cargar stats:', e) }
-      }
-      // Draw charts
-      new Chart(ctxTipo, {
-        type:'doughnut',
-        data:{ labels: tipoData.labels, datasets:[{ data: tipoData.values }]},
-        options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom'}}}
-      });
-      new Chart(ctxPri, {
-        type:'bar',
-        data:{ labels: priData.labels, datasets:[{ label:'Solicitudes', data: priData.values }]},
-        options:{ responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true}}}
-      });
-    }
-    loadStats();
-
-    // Small enhancements: keyboard accessibility for modal close ESC
-    document.addEventListener('keydown', (e)=> {
-      if(e.key === 'Escape') modal.style.display = 'none';
-    });
-
-    // Lazy load images (simple)
-    document.addEventListener('DOMContentLoaded', ()=> {
-      const imgs = document.querySelectorAll('img[loading!="lazy"]');
-      imgs.forEach(img => img.setAttribute('loading','lazy'));
-    });
-
-    // Save theme preference (dark/light) - small scaffold if desea expandir
-    // (no implementado UI toggle aquí, pero guardamos en localStorage si desea activarlo después)
-    if(!localStorage.getItem('iq_theme')) localStorage.setItem('iq_theme','dark');
   </script>
 </body>
 </html>
