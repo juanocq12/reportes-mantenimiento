@@ -1,157 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CorreQ - Gestión de Solicitudes</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IPS Interconsultas — Solicitud de Mantenimiento</title>
+  <meta name="description" content="Plataforma de IPS Interconsultas para reportes y seguimiento de mantenimientos locativos y biomédicos. Registro, trazabilidad y analítica." />
+  <meta name="theme-color" content="#00172e" />
+  <link rel="icon" href="Logo-Interconsultas-01b-500px.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #f9fafb;
-      --text: #111827;
-      --muted: #6b7280;
-      --accent-1: #0072ff;
-      --accent-2: #00c6ff;
+    :root{
+      --bg:#00172e;
+      --bg-2:#001f3f;
+      --glass: rgba(255,255,255,0.06);
+      --accent-1:#00c6ff;
+      --accent-2:#0072ff;
+      --success:#25d366;
+      --muted:#98a0b3;
+      --card-radius:16px;
+      --max-width:1100px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-    header { background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); color: #fff; padding: 1rem 0; text-align: center; }
-    header h1 { margin-bottom: .25rem; }
-    nav a { color: #fff; margin: 0 .75rem; text-decoration: none; font-weight: bold; }
-    nav a:hover { text-decoration: underline; }
-    section { padding: 3rem 1rem; max-width: 960px; margin: auto; }
-    h2 { text-align: center; margin-bottom: 1.5rem; font-size: 1.75rem; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 1.5rem; }
-    .card { background: #fff; padding: 1.25rem; border-radius: .75rem; box-shadow: 0 2px 6px rgba(0,0,0,.1); }
-    .btn { display: inline-block; padding: .75rem 1.25rem; border-radius: .5rem; font-weight: bold; text-align: center; text-decoration: none; }
-    .btn.primary { background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); color: #fff; }
-    form { display: grid; gap: 1rem; background: #fff; padding: 1.5rem; border-radius: .75rem; box-shadow: 0 2px 6px rgba(0,0,0,.1); }
-    label { font-weight: bold; }
-    input, select, textarea { padding: .5rem; border: 1px solid #ccc; border-radius: .5rem; width: 100%; }
-    footer { text-align: center; padding: 1rem; font-size: .875rem; background: #e5e7eb; margin-top: 2rem; }
-    footer a { color: var(--accent-1); }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      background: linear-gradient(135deg,var(--bg-2),var(--bg));
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+    .skip-link{position:absolute;left:-999px}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 1rem}
+    nav{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(180deg,rgba(0,0,0,0.45),rgba(0,0,0,0.25));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1rem;}
+    .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff}
+    .brand img{height:42px;width:auto;border-radius:8px}
+    .brand .title{font-weight:800;font-size:1rem;letter-spacing:.4px}
+    .nav-links{display:flex;gap:1rem;align-items:center}
+    .nav-links a{color:#fff;text-decoration:none;font-weight:600;padding:.45rem .6rem;border-radius:8px;transition:all .18s}
+    .nav-links a:hover{background:rgba(255,255,255,0.03);color:var(--accent-1)}
+    .hamburger{display:none;background:transparent;border:0;color:#fff}
+    .hero{padding:120px 0 40px}
+    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center}
+    .hero h1{font-size:2.25rem;margin:0;line-height:1.05}
+    .hero p{color:var(--muted);margin-top:.75rem;max-width:46ch}
+    .actions{margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:.8rem}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;border-radius:999px;text-decoration:none;color:#00172e;font-weight:700}
+    .btn.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;box-shadow:0 12px 30px rgba(0,112,255,0.12)}
+    .card{background:var(--glass);padding:1.4rem;border-radius:var(--card-radius);box-shadow:0 6px 30px rgba(0,0,0,0.45)}
+    section{padding:64px 0}
+    section h2{font-size:1.6rem;margin-bottom:.6rem}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+    footer{padding:36px 0;text-align:center;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+    .float-btn{position:fixed;right:22px;z-index:998}
+    #btnWhats{bottom:20px}
+    #btnTop{bottom:86px}
+    .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:999px;font-size:22px;color:#fff}
+    @media(max-width:820px){.hero-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <h1>CorreQ</h1>
-    <p>Gestión de Solicitudes</p>
-    <nav>
-      <a href="#servicios">Servicios</a>
-      <a href="#contacto">Formulario</a>
-    </nav>
-  </header>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
 
-  <!-- SERVICIOS -->
-  <section id="servicios">
-    <div class="container">
-      <h2>Nuestros servicios</h2>
-      <div class="cards" data-aos="fade-up">
-        <div class="card">
-          <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Locativo</h4>
-          <p class="small">Infraestructura, electricidad, fontanería, mobiliario y obras menores.</p>
+  <!-- NAV -->
+  <nav role="navigation" aria-label="Principal">
+    <div class="container nav-inner">
+      <a class="brand" href="#inicio">
+        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
+        <span class="title">IPS Interconsultas</span>
+      </a>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <div class="nav-links">
+          <a href="#inicio">Inicio</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#contacto">Contacto</a>
         </div>
-        <div class="card">
-          <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Biomédico</h4>
-          <p class="small">Calibraciones, reparación y mantenimiento preventivo/correctivo de equipos médicos.</p>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- HERO -->
+    <section id="inicio" class="hero container">
+      <div class="hero-grid">
+        <div data-aos="fade-right">
+          <h1>Solicitud de Mantenimiento — <span style="color:var(--accent-1)">Locativo</span> y <span style="color:var(--accent-2)">Biomédico</span></h1>
+          <p>Plataforma para reportes, seguimiento y trazabilidad. Priorización para equipos biomédicos críticos.</p>
+          <div class="actions">
+            <!-- 🔹 Botón al formulario -->
+            <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank" rel="noopener">📋 Reportar Solicitud</a>
+            <!-- 🔹 Botón a mesa de ayuda -->
+            <a class="btn primary" href="mailto:mesa.ayuda@rubikgroup.com.co">💻 Mesa de Ayuda</a>
+          </div>
         </div>
-        <div class="card">
-          <h4 style="color:var(--accent-1); margin-bottom:.25rem">Inspecciones & Reportes</h4>
-          <p class="small">Checklists digitales, generación automática de informes y firmas digitales.</p>
+        <aside class="card" data-aos="fade-left">
+          <h3 style="margin:0;color:var(--accent-1)">Atención prioritaria</h3>
+          <p class="small">Los casos críticos reciben atención inmediata en horario laboral.</p>
+          <ul style="padding-left:1rem; color:var(--muted); margin:0;">
+            <li>Trazabilidad por ticket</li>
+            <li>Historial por equipo con QR</li>
+            <li>Informes mensuales automáticos</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios">
+      <div class="container">
+        <h2>Nuestros servicios</h2>
+        <div class="cards" data-aos="fade-up">
+          <div class="card">
+            <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Locativo</h4>
+            <p class="small">Infraestructura, electricidad, fontanería, mobiliario y obras menores.</p>
+          </div>
+          <div class="card">
+            <h4 style="color:var(--accent-1); margin-bottom:.25rem">Mantenimiento Biomédico</h4>
+            <p class="small">Calibraciones, reparación y mantenimiento preventivo/correctivo de equipos médicos.</p>
+          </div>
+          <div class="card">
+            <h4 style="color:var(--accent-1); margin-bottom:.25rem">Inspecciones & Reportes</h4>
+            <p class="small">Checklists digitales, generación automática de informes y firmas digitales.</p>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- 🔹 BOTONES SOLICITADOS -->
-      <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
-        <!-- Botón formulario interno -->
-        <a href="#contacto" class="btn primary">📋 Reportar Solicitud (Infraestructura / Equipos Médicos)</a>
-        
-        <!-- Botón soporte tecnológico -->
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" 
-           target="_blank" rel="noopener" 
-           class="btn primary">
-          💻 Soporte Tecnológico (Software / Hardware)
-        </a>
+    <!-- CONTACTO -->
+    <section id="contacto">
+      <div class="container">
+        <h2>Contacto</h2>
+        <p class="hint">Teléfono: <a href="https://wa.me/573175132548" style="color:var(--accent-1)">317 513 2548</a> • Correo: <a href="mailto:mesa.ayuda@rubikgroup.com.co" style="color:var(--accent-1)">mesa.ayuda@rubikgroup.com.co</a></p>
       </div>
-
-      <!-- Texto aclaratorio -->
-      <p style="margin-top:1rem; text-align:center; color:var(--muted)">
-        • El primer botón es para <strong>infraestructura y equipos biomédicos</strong>.<br>
-        • El segundo botón es para <strong>soporte tecnológico</strong> (mesa de ayuda: 
-        <a href="mailto:mesa.ayuda@rubikgroup.com.co">mesa.ayuda@rubikgroup.com.co</a>).
-      </p>
-    </div>
-  </section>
-
-  <!-- FORMULARIO -->
-  <section id="contacto">
-    <div class="container">
-      <h2>Formulario de Solicitud</h2>
-      <form id="solicitudForm">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" name="nombre" required>
-
-        <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" name="correo" required>
-
-        <label for="telefono">Teléfono de contacto</label>
-        <input type="tel" id="telefono" name="telefono">
-
-        <label for="categoria">Categoría del reporte</label>
-        <select id="categoria" name="categoria" required>
-          <option value="">Seleccione...</option>
-          <option value="Infraestructura">Infraestructura</option>
-          <option value="Equipo médico">Equipo médico</option>
-        </select>
-
-        <label for="descripcion">Descripción detallada</label>
-        <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-
-        <button type="submit" class="btn primary">Enviar solicitud</button>
-        <p id="formHint" style="color:var(--muted); font-size:.9rem"></p>
-      </form>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 CorreQ. Desarrollado por Juan Manuel Correa Quiceno.</p>
-    <p>Contacto: <a href="mailto:mesa.ayuda@rubikgroup.com.co">mesa.ayuda@rubikgroup.com.co</a></p>
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.6rem">
+        <img src="Logo-Interconsultas-01b-500px.png" alt="" style="height:28px;width:auto;opacity:.9">
+        <strong>CorreQ</strong>
+      </div>
+      <div style="color:var(--muted)">© 2025 IPS Interconsultas — Todos los derechos reservados</div>
+    </div>
   </footer>
 
-  <!-- SCRIPT -->
+  <!-- Floating buttons -->
+  <div class="float-btn" id="btnTop" title="Ir arriba" style="display:none">
+    <button class="icon-btn" style="background:linear-gradient(90deg,var(--accent-1),var(--accent-2));">⬆</button>
+  </div>
+  <div class="float-btn" id="btnWhats" title="WhatsApp">
+    <a href="https://wa.me/573175132548" target="_blank" rel="noopener" class="icon-btn" style="background:var(--success)">💬</a>
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    const form = document.getElementById('solicitudForm');
-    const formHint = document.getElementById('formHint');
-    const APPS_SCRIPT_URL = "URL_DE_SU_SCRIPT_AQUI"; // Reemplace con la URL de Google Apps Script
-
-    function disableForm(disabled) {
-      [...form.elements].forEach(el => el.disabled = disabled);
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      disableForm(true);
-      formHint.textContent = "⏳ Enviando...";
-      try {
-        const data = Object.fromEntries(new FormData(form).entries());
-        const res = await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          body: new FormData(form)
-        });
-        if (res.ok) {
-          form.reset();
-          formHint.textContent = "✅ Solicitud enviada con éxito.";
-        } else {
-          formHint.textContent = "❌ Error al enviar. Intente de nuevo.";
-        }
-      } catch (err) {
-        console.error(err);
-        formHint.textContent = "❌ Error de conexión. Revise su red.";
-      } finally {
-        disableForm(false);
-      }
-    });
+    AOS.init({ duration:600, once:true });
+    const btnTop = document.getElementById('btnTop');
+    window.addEventListener('scroll',()=>{btnTop.style.display=window.scrollY>200?'block':'none';});
+    btnTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
   </script>
 </body>
 </html>
