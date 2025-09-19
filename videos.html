@@ -4,9 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IPS Interconsultas — Videos de Mantenimiento</title>
+
+  <!-- Fuente -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos de AOS (animaciones) -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" /> <!-- Usa mismo CSS si lo separa -->
+
+  <!-- Tu hoja de estilos principal -->
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <!-- NAV -->
@@ -26,25 +32,43 @@
 
   <!-- CONTENIDO -->
   <main id="main" class="container" style="padding-top:120px">
-    <h1 style="color:#00c6ff">📹 Videos de Mantenimiento Biomédico</h1>
-    <p class="small" style="color:#98a0b3">Aquí encontrará videos de soporte y guías de mantenimiento preventivo/correctivo.</p>
-    
-    <div class="cards" data-aos="fade-up">
+    <h1 style="color:#00c6ff" data-aos="fade-up">📹 Videos de Mantenimiento Biomédico</h1>
+    <p class="small" style="color:#98a0b3" data-aos="fade-up" data-aos-delay="100">
+      Capacitaciones y guías prácticas para equipos médicos.
+    </p>
+
+    <div class="cards" style="margin-top:2rem" data-aos="fade-up" data-aos-delay="200">
+      <!-- Video 1 -->
       <div class="card">
-        <h4>Video 1: Calibración de Tensiómetro</h4>
+        <h4>Introducción al mantenimiento biomédico</h4>
         <video controls width="100%">
-          <source src="videos/calibracion-tensiometro.mp4" type="video/mp4">
+          <source src="videos/introduccion.mp4" type="video/mp4">
           Su navegador no soporta videos.
         </video>
       </div>
+
+      <!-- Video 2 -->
       <div class="card">
-        <h4>Video 2: Mantenimiento de Electrocardiógrafo</h4>
+        <h4>Procedimiento de calibración de equipos</h4>
         <video controls width="100%">
-          <source src="videos/mantenimiento-ecg.mp4" type="video/mp4">
+          <source src="videos/calibracion.mp4" type="video/mp4">
+          Su navegador no soporta videos.
+        </video>
+      </div>
+
+      <!-- Video 3 -->
+      <div class="card">
+        <h4>Protocolos de seguridad en intervenciones</h4>
+        <video controls width="100%">
+          <source src="videos/protocolos.mp4" type="video/mp4">
           Su navegador no soporta videos.
         </video>
       </div>
     </div>
+
+    <p style="margin-top:2rem">
+      <a href="index.html" style="color:#00c6ff">⬅ Volver a la página principal</a>
+    </p>
   </main>
 
   <!-- FOOTER -->
@@ -54,9 +78,15 @@
         <img src="Logo-Interconsultas-01b-500px.png" alt="" style="height:28px;width:auto;opacity:.9">
         <strong>CorreQ</strong>
       </div>
-      <div style="color:#98a0b3">© 2025 IPS Interconsultas — Todos los derechos reservados | Versión 1.2</div>
+      <div style="color:#98a0b3">© 2025 IPS Interconsultas — Versión 1.2</div>
     </div>
   </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>
 
