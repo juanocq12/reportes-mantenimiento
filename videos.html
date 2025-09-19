@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IPS Interconsultas — Videos de Mantenimiento</title>
+  <title>IPS Interconsultas — Videos</title>
+  <meta name="description" content="Galería de videos educativos y corporativos de IPS Interconsultas." />
+  <meta name="theme-color" content="#00172e" />
   <link rel="icon" href="Logo-Interconsultas-01b-500px.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <style>
-    /* 🔹 mismos estilos que en index */
-    :root{--bg:#00172e;--bg-2:#001f3f;--glass: rgba(255,255,255,0.06);--accent-1:#00c6ff;--accent-2:#0072ff;--success:#25d366;--muted:#98a0b3;--card-radius:16px;--max-width:1100px;}
-    *{box-sizing:border-box} body{margin:0;font-family:'Poppins',sans-serif;background: linear-gradient(135deg,var(--bg-2),var(--bg));color:#fff;}
-    .container{max-width:var(--max-width);margin:0 auto;padding:0 1rem}
+    body{margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#001f3f,#00172e);color:#fff;line-height:1.45}
+    .container{max-width:1100px;margin:0 auto;padding:0 1rem}
     nav{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(180deg,rgba(0,0,0,0.45),rgba(0,0,0,0.25));backdrop-filter:blur(6px)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem}
     .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff}
     .brand img{height:42px;width:auto;border-radius:8px}
     .nav-links{display:flex;gap:1rem}
-    .nav-links a{color:#fff;text-decoration:none;font-weight:600;padding:.45rem .6rem;border-radius:8px}
-    .nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,0.03);color:var(--accent-1)}
-    section{padding:120px 0 64px;text-align:center}
-    h2{color:var(--accent-1)}
-    .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;margin-top:2rem}
-    .video-card{background:var(--glass);padding:1rem;border-radius:var(--card-radius)}
-    .video-card iframe{width:100%;height:220px;border-radius:8px}
-    footer{padding:36px 0;text-align:center;color:var(--muted)}
+    .nav-links a{color:#fff;text-decoration:none;font-weight:600}
+    .nav-links a:hover{color:#00c6ff}
+    .hero{padding:120px 0 40px;text-align:center}
+    .hero h1{font-size:2rem;margin:0}
+    .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;padding:40px 0}
+    .video-card{background:rgba(255,255,255,0.06);padding:1rem;border-radius:16px}
+    .video-card iframe{width:100%;height:200px;border-radius:12px}
+    footer{padding:36px 0;text-align:center;color:#98a0b3;border-top:1px solid rgba(255,255,255,0.1)}
   </style>
 </head>
 <body>
@@ -37,34 +37,42 @@
       </a>
       <div class="nav-links">
         <a href="index.html">Inicio</a>
-        <a href="videos.html" class="active">Videos</a>
+        <a href="videos.html">Videos</a>
       </div>
     </div>
   </nav>
 
-  <!-- CONTENIDO -->
-  <section>
-    <div class="container">
-      <h2>📺 Videos de Mantenimiento Biomédico</h2>
-      <p style="color:var(--muted)">Capacitaciones y guías prácticas para equipos médicos</p>
+  <!-- HERO -->
+  <section class="hero container">
+    <h1 data-aos="fade-up">Galería de Videos</h1>
+    <p data-aos="fade-up" data-aos-delay="200">Material audiovisual para capacitación, información y apoyo institucional.</p>
+  </section>
 
-      <div class="video-grid">
-        <div class="video-card">
-          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-          <h3>Introducción al mantenimiento</h3>
-        </div>
-        <div class="video-card">
-          <iframe src="https://www.youtube.com/embed/nCgQDjiotG0" allowfullscreen></iframe>
-          <h3>Procedimiento de calibración</h3>
-        </div>
-      </div>
+  <!-- VIDEOS -->
+  <section class="container video-grid">
+    <div class="video-card" data-aos="zoom-in">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" frameborder="0" allowfullscreen></iframe>
+      <p>Introducción a Interconsultas IPS</p>
+    </div>
+    <div class="video-card" data-aos="zoom-in" data-aos-delay="100">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" frameborder="0" allowfullscreen></iframe>
+      <p>Servicios y beneficios</p>
+    </div>
+    <div class="video-card" data-aos="zoom-in" data-aos-delay="200">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" frameborder="0" allowfullscreen></iframe>
+      <p>Atención al paciente</p>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="container">© 2025 IPS Interconsultas — Versión 1.2</div>
+    <div class="container">
+      © 2025 IPS Interconsultas — Todos los derechos reservados | Versión 1.2
+    </div>
   </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration:600, once:true });</script>
 </body>
 </html>
 
