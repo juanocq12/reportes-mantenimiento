@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <style>
+    /* 🔹 Mismos estilos que su código madre */
     :root{
       --bg:#00172e;
       --bg-2:#001f3f;
@@ -23,15 +24,7 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0;
-      font-family:'Poppins',sans-serif;
-      background: linear-gradient(135deg,var(--bg-2),var(--bg));
-      color:#fff;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-    }
+    body{margin:0;font-family:'Poppins',sans-serif;background: linear-gradient(135deg,var(--bg-2),var(--bg));color:#fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.45;}
     .skip-link{position:absolute;left:-999px}
     .container{max-width:var(--max-width);margin:0 auto;padding:0 1rem}
     nav{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(180deg,rgba(0,0,0,0.45),rgba(0,0,0,0.25));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
@@ -41,8 +34,7 @@
     .brand .title{font-weight:800;font-size:1rem;letter-spacing:.4px}
     .nav-links{display:flex;gap:1rem;align-items:center}
     .nav-links a{color:#fff;text-decoration:none;font-weight:600;padding:.45rem .6rem;border-radius:8px;transition:all .18s}
-    .nav-links a:hover{background:rgba(255,255,255,0.03);color:var(--accent-1)}
-    .hamburger{display:none;background:transparent;border:0;color:#fff}
+    .nav-links a:hover,.nav-links a.active{background:rgba(255,255,255,0.03);color:var(--accent-1)}
     .hero{padding:120px 0 40px}
     .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center}
     .hero h1{font-size:2.25rem;margin:0;line-height:1.05}
@@ -68,16 +60,14 @@
   <!-- NAV -->
   <nav role="navigation" aria-label="Principal">
     <div class="container nav-inner">
-      <a class="brand" href="#inicio">
+      <a class="brand" href="index.html">
         <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
         <span class="title">IPS Interconsultas</span>
       </a>
-      <div style="display:flex;align-items:center;gap:.75rem">
-        <div class="nav-links">
-          <a href="#inicio">Inicio</a>
-          <a href="#contacto">Contacto</a>
-          <a href="videos.html">Videos</a> <!-- 🔹 Nuevo link -->
-        </div>
+      <div class="nav-links">
+        <a href="index.html" class="active">Inicio</a>
+        <a href="#contacto">Contacto</a>
+        <a href="videos.html">Videos</a>
       </div>
     </div>
   </nav>
@@ -90,50 +80,18 @@
           <h1>Solicitud de Mantenimiento — <span style="color:var(--accent-1)">Locativo</span> y <span style="color:var(--accent-2)">Biomédico</span></h1>
           <p>Plataforma para reportes, seguimiento y trazabilidad. Priorización para equipos biomédicos críticos.</p>
           <div class="actions">
-            <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank" rel="noopener">📋 Reportar Solicitud</a>
+            <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank">📋 Reportar Solicitud</a>
             <a class="btn primary" href="mailto:mesa.ayuda@rubikgroup.com.co">💻 Mesa de Ayuda</a>
           </div>
         </div>
         <aside class="card" data-aos="fade-left">
           <h3 style="margin:0;color:var(--accent-1)">Atención prioritaria</h3>
-          <p class="small">Los siguientes casos reciben atención inmediata en horario laboral:</p>
+          <p class="small">Los siguientes casos reciben atención inmediata:</p>
           <ul style="padding-left:1rem; color:var(--muted); margin:0;">
             <li>Equipos biomédicos críticos</li>
             <li>Daños locativos que afecten la operación</li>
           </ul>
         </aside>
-      </div>
-    </section>
-
-    <!-- SERVICIOS -->
-    <section id="servicios">
-      <div class="container">
-        <h2>Áreas de reporte</h2>
-        <div class="cards" data-aos="fade-up">
-          <div class="card">
-            <h4 style="color:var(--accent-1); margin-bottom:.25rem">🔧 Mantenimiento Locativo</h4>
-            <p class="small">Reporta problemas en infraestructura, electricidad, mobiliario o áreas físicas de la institución.</p>
-          </div>
-          <div class="card">
-            <h4 style="color:var(--accent-1); margin-bottom:.25rem">🛠️ Mantenimiento Biomédico</h4>
-            <p class="small">Solicita soporte en equipos médicos, calibración, revisiones preventivas o correctivas.</p>
-          </div>
-          <div class="card">
-            <h4 style="color:var(--accent-1); margin-bottom:.25rem">📞 Contacto</h4>
-            <p class="small">Teléfono: <a href="https://wa.me/573175132548" style="color:var(--accent-1)">317 513 2548</a><br>
-            Horario: Lunes a viernes 7:00 a.m. – 6:00 p.m.<br>
-            Sábados 7:00 a.m. – 12:00 m.<br>
-            <em style="color:var(--muted)">Se garantiza atención prioritaria para equipos biomédicos y locativos críticos dentro del horario establecido.</em></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACTO -->
-    <section id="contacto">
-      <div class="container">
-        <h2>Contacto</h2>
-        <p class="hint">Teléfono: <a href="https://wa.me/573175132548" style="color:var(--accent-1)">317 513 2548</a> • Correo: <a href="mailto:mesa.ayuda@rubikgroup.com.co" style="color:var(--accent-1)">mesa.ayuda@rubikgroup.com.co</a></p>
       </div>
     </section>
   </main>
@@ -145,25 +103,13 @@
         <img src="Logo-Interconsultas-01b-500px.png" alt="" style="height:28px;width:auto;opacity:.9">
         <strong>CorreQ</strong>
       </div>
-      <div style="color:var(--muted)">© 2025 IPS Interconsultas — Todos los derechos reservados | Versión 1.2</div>
+      <div style="color:var(--muted)">© 2025 IPS Interconsultas — Versión 1.2</div>
     </div>
   </footer>
-
-  <!-- Floating buttons -->
-  <div class="float-btn" id="btnTop" title="Ir arriba" style="display:none">
-    <button class="icon-btn" style="background:linear-gradient(90deg,var(--accent-1),var(--accent-2));">⬆</button>
-  </div>
-  <div class="float-btn" id="btnWhats" title="WhatsApp">
-    <a href="https://wa.me/573175132548" target="_blank" rel="noopener" class="icon-btn" style="background:var(--success)">💬</a>
-  </div>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({ duration:600, once:true });
-    const btnTop = document.getElementById('btnTop');
-    window.addEventListener('scroll',()=>{btnTop.style.display=window.scrollY>200?'block':'none';});
-    btnTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
   </script>
 </body>
 </html>
-
