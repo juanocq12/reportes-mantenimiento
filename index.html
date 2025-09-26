@@ -22,20 +22,35 @@
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
-      margin:0;
       font-family:'Poppins',sans-serif;
-      background: linear-gradient(135deg,var(--bg-2),var(--bg));
+      background: var(--bg);
       color:#fff;
       overflow-x:hidden;
     }
-    #particles-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
+
+    /* Fondo de videos */
+    #background-videos{
+      position:fixed;
+      top:0;left:0;width:100%;height:100%;
+      overflow:hidden;z-index:-2;
     }
+    #background-videos video{
+      position:absolute;
+      top:50%;left:50%;
+      min-width:100%;min-height:100%;
+      transform:translate(-50%,-50%);
+      object-fit:cover;
+      opacity:0;transition:opacity 1s ease-in-out;
+    }
+    #background-videos video.active{opacity:1}
+
+    /* Fondo de partículas encima del video */
+    #particles-js{
+      position:fixed;
+      top:0;left:0;width:100%;height:100%;
+      z-index:-1;
+    }
+
     .container{max-width:var(--max-width);margin:0 auto;padding:0 1rem}
     nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
     .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1rem;}
@@ -45,6 +60,7 @@
     .nav-links{display:flex;gap:1rem}
     .nav-links a{color:#fff;text-decoration:none;font-weight:600;padding:.45rem .6rem;border-radius:8px;transition:.2s}
     .nav-links a:hover{background:rgba(255,255,255,0.05);color:var(--accent-1)}
+
     .hero{padding:120px 0 50px;text-align:center}
     .hero h1{font-size:2.3rem;margin:0;line-height:1.2}
     .hero p{color:var(--muted);margin-top:.8rem;max-width:50ch;margin-left:auto;margin-right:auto}
@@ -52,22 +68,38 @@
     .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none}
     .btn.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;box-shadow:0 6px 20px rgba(0,112,255,0.25)}
     .btn.secondary{background:#fff;color:#00172e;box-shadow:0 4px 14px rgba(0,0,0,0.3)}
+
     section{padding:70px 0;text-align:center}
     section h2{font-size:1.8rem;margin-bottom:.8rem}
     .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:1.5rem}
     .card{background:var(--glass);padding:1.5rem;border-radius:var(--card-radius);box-shadow:0 6px 30px rgba(0,0,0,0.45)}
+
     footer{padding:40px 0;text-align:center;border-top:1px solid rgba(255,255,255,0.08);color:var(--muted);font-size:.95rem}
     .contacto{margin-top:1.5rem;line-height:1.8}
     .contacto p{margin:.3rem 0}
     .contacto a{color:var(--accent-1);text-decoration:none}
+
     .float-btn{position:fixed;right:22px;bottom:20px;z-index:998}
     .whatsapp-btn{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:999px;background:var(--success);color:#fff;font-size:28px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.3)}
   </style>
 </head>
 <body>
 
+  <!-- Videos de fondo -->
+  <div id="background-videos">
+    <video class="active" autoplay muted loop>
+      <source src="video1.mp4" type="video/mp4">
+    </video>
+    <video muted loop>
+      <source src="video2.mp4" type="video/mp4">
+    </video>
+    <video muted loop>
+      <source src="video3.mp4" type="video/mp4">
+    </video>
+  </div>
+
   <!-- Partículas -->
-  <canvas id="particles-bg"></canvas>
+  <div id="particles-js"></div>
 
   <!-- NAV -->
   <nav>
@@ -146,95 +178,31 @@
     <a href="https://wa.me/573175132548?text=Hola%2C%20necesito%20soporte%20de%20mantenimiento." target="_blank" class="whatsapp-btn">💬</a>
   </div>
 
-  <!-- Script Partículas -->
+  <!-- Partículas JS -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <script>
-    const canvas = document.getElementById('particles-bg');
-    const ctx = canvas.getContext('2d');
-    let particlesArray;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', function(){
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      init();
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {"value": 60,"density": {"enable": true,"value_area": 800}},
+        "color": {"value": "#00c6ff"},
+        "shape": {"type": "circle"},
+        "opacity": {"value": 0.5,"random": true},
+        "size": {"value": 3,"random": true},
+        "line_linked": {"enable": true,"distance": 150,"color": "#0072ff","opacity": 0.4,"width": 1},
+        "move": {"enable": true,"speed": 2,"direction": "none","random": false,"straight": false,"out_mode": "out"}
+      }
     });
 
-    class Particle {
-      constructor(x, y, size, speedX, speedY){
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.speedX = speedX;
-        this.speedY = speedY;
-      }
-      update(){
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if(this.x < 0 || this.x > canvas.width){
-          this.speedX = -this.speedX;
-        }
-        if(this.y < 0 || this.y > canvas.height){
-          this.speedY = -this.speedY;
-        }
-      }
-      draw(){
-        ctx.fillStyle = '#00c6ff';
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.fill();
-      }
-    }
-
-    function init(){
-      particlesArray = [];
-      let numberOfParticles = (canvas.width * canvas.height) / 9000;
-      for(let i = 0; i < numberOfParticles; i++){
-        let size = (Math.random() * 2) + 1;
-        let x = Math.random() * (canvas.width - size * 2);
-        let y = Math.random() * (canvas.height - size * 2);
-        let speedX = (Math.random() * 1) - 0.5;
-        let speedY = (Math.random() * 1) - 0.5;
-        particlesArray.push(new Particle(x, y, size, speedX, speedY));
-      }
-    }
-
-    function connect(){
-      for(let a = 0; a < particlesArray.length; a++){
-        for(let b = a; b < particlesArray.length; b++){
-          let dx = particlesArray[a].x - particlesArray[b].x;
-          let dy = particlesArray[a].y - particlesArray[b].y;
-          let distance = dx*dx + dy*dy;
-          if(distance < (canvas.width/10) * (canvas.height/10)){
-            ctx.strokeStyle = 'rgba(0,198,255,0.1)';
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-            ctx.stroke();
-          }
-        }
-      }
-    }
-
-    function animate(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(let i=0; i<particlesArray.length; i++){
-        particlesArray[i].update();
-        particlesArray[i].draw();
-      }
-      connect();
-      requestAnimationFrame(animate);
-    }
-
-    init();
-    animate();
+    // Rotar videos
+    const videos = document.querySelectorAll("#background-videos video");
+    let current = 0;
+    setInterval(() => {
+      videos[current].classList.remove("active");
+      current = (current + 1) % videos.length;
+      videos[current].classList.add("active");
+      videos[current].play();
+    }, 15000); // cambia cada 15 seg
   </script>
 </body>
 </html>
-
-
 
