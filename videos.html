@@ -92,15 +92,38 @@
       border-radius:.8rem;
       text-align:center;
       transition:transform .3s;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
     }
     .video-card:hover{
       transform:translateY(-5px);
     }
-    .video-card iframe{
+    .video-thumb{
+      position:relative;
+    }
+    .video-thumb img{
       width:100%;
-      height:200px;
       border-radius:.6rem;
-      margin-bottom:.5rem;
+      display:block;
+    }
+    .play-btn{
+      position:absolute;
+      top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      background:rgba(0,0,0,0.6);
+      border-radius:50%;
+      width:60px;height:60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      color:#fff;
+    }
+    .video-card p{
+      margin-top:.7rem;
+      font-size:.95rem;
+      color:#cdd6e4;
     }
 
     /* === FOOTER === */
@@ -143,18 +166,31 @@
 
   <!-- VIDEOS -->
   <section class="video-grid">
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/guzBKq3760E" frameborder="0" allowfullscreen></iframe>
-      <p>Video: GuzBKq3760E</p>
-    </div>
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" frameborder="0" allowfullscreen></iframe>
+    <!-- Nuevo video agregado -->
+    <a href="https://www.youtube.com/watch?v=guzBKq3760E" target="_blank" class="video-card">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/guzBKq3760E/hqdefault.jpg" alt="Video IPS Interconsultas">
+        <div class="play-btn">▶</div>
+      </div>
+      <p>Video de presentación</p>
+    </a>
+
+    <!-- Ejemplos -->
+    <a href="https://www.youtube.com/watch?v=VIDEO_ID_2" target="_blank" class="video-card">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg" alt="Servicios y beneficios">
+        <div class="play-btn">▶</div>
+      </div>
       <p>Servicios y beneficios</p>
-    </div>
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" frameborder="0" allowfullscreen></iframe>
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=VIDEO_ID_3" target="_blank" class="video-card">
+      <div class="video-thumb">
+        <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg" alt="Atención al paciente">
+        <div class="play-btn">▶</div>
+      </div>
       <p>Atención al paciente</p>
-    </div>
+    </a>
   </section>
 
   <!-- FOOTER -->
@@ -181,5 +217,4 @@
   </script>
 </body>
 </html>
-
 
