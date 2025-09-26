@@ -49,6 +49,7 @@
     .actions{margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:.8rem}
     .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.7rem 1.1rem;border-radius:999px;text-decoration:none;color:#00172e;font-weight:700}
     .btn.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;box-shadow:0 12px 30px rgba(0,112,255,0.12)}
+    .btn.secondary{background:#fff;color:#00172e;box-shadow:0 6px 16px rgba(0,0,0,0.25)}
     .card{background:var(--glass);padding:1.4rem;border-radius:var(--card-radius);box-shadow:0 6px 30px rgba(0,0,0,0.45)}
     section{padding:64px 0}
     section h2{font-size:1.6rem;margin-bottom:.6rem}
@@ -91,8 +92,16 @@
           <h1>Bienvenido a IPS Interconsultas</h1>
           <p>Plataforma para reportes y seguimiento de mantenimientos locativos y biomédicos.</p>
           <div class="actions">
-            <a href="#contacto" class="btn primary">Reportar mantenimiento</a>
-            <a href="videos.html" class="btn">Ver videos</a>
+            <!-- Botón que lleva al formulario -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" 
+               target="_blank" class="btn primary">
+              Reportar mantenimiento
+            </a>
+            <!-- Botón que abre el correo -->
+            <a href="mailto:mesa.ayuda@rubikgroup.com.co?subject=Soporte%20Hardware%20Computadores" 
+               class="btn secondary">
+              Soporte hardware computadores
+            </a>
           </div>
         </div>
       </div>
@@ -139,5 +148,4 @@
   </footer>
 </body>
 </html>
-
 
