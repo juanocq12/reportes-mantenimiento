@@ -4,55 +4,70 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IPS Interconsultas — Solicitud de Mantenimiento</title>
-  <meta name="description" content="Plataforma de IPS Interconsultas para reportes y seguimiento de mantenimientos locativos y biomédicos." />
+  <meta name="description" content="Plataforma de IPS Interconsultas para reportes y seguimiento de mantenimientos locativos y biomédicos. Registro, trazabilidad y analítica." />
+  <meta name="theme-color" content="#00172e" />
   <link rel="icon" href="Logo-Interconsultas-01b-500px.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    body,html{
+    :root{
+      --bg:#00172e;
+      --bg-2:#001f3f;
+      --glass: rgba(255,255,255,0.06);
+      --accent-1:#00c6ff;
+      --accent-2:#0072ff;
+      --success:#25d366;
+      --muted:#98a0b3;
+      --card-radius:16px;
+      --max-width:1100px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
       margin:0;
-      padding:0;
-      height:100%;
       font-family:'Poppins',sans-serif;
+      background: linear-gradient(135deg,var(--bg-2),var(--bg));
       color:#fff;
       overflow-x:hidden;
     }
-
-    /* Fondo con partículas */
-    #particles-js{
-      position:fixed;
-      width:100%;
-      height:100%;
-      top:0;
-      left:0;
-      z-index:-1; /* detrás del contenido */
-      background: url("f247d9b4-16c0-4b46-8fff-fa92dee901ff.png") no-repeat center center;
-      background-size:cover;
-      background-color:#00172e; /* fallback */
+    #particles-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
-
-    .container{max-width:1100px;margin:0 auto;padding:0 1rem}
-    nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem}
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 1rem}
+    nav{position:fixed;top:0;left:0;right:0;z-index:999;background:rgba(0,0,0,0.45);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.05)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 1rem;}
     .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff}
-    .brand img{height:42px;border-radius:8px}
-    .nav-links a{color:#fff;text-decoration:none;font-weight:600;padding:.5rem .8rem;border-radius:8px}
-    .nav-links a:hover{background:rgba(255,255,255,0.1);color:#00c6ff}
-
+    .brand img{height:42px;width:auto;border-radius:8px}
+    .brand .title{font-weight:800;font-size:1rem}
+    .nav-links{display:flex;gap:1rem}
+    .nav-links a{color:#fff;text-decoration:none;font-weight:600;padding:.45rem .6rem;border-radius:8px;transition:.2s}
+    .nav-links a:hover{background:rgba(255,255,255,0.05);color:var(--accent-1)}
     .hero{padding:120px 0 50px;text-align:center}
-    .hero h1{font-size:2.4rem;margin:0}
-    .hero p{color:#98a0b3;margin:.8rem auto;max-width:50ch}
+    .hero h1{font-size:2.3rem;margin:0;line-height:1.2}
+    .hero p{color:var(--muted);margin-top:.8rem;max-width:50ch;margin-left:auto;margin-right:auto}
     .actions{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
-    .btn{display:inline-flex;align-items:center;padding:.9rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none}
-    .btn.primary{background:linear-gradient(90deg,#00c6ff,#0072ff);color:#fff}
-    .btn.secondary{background:#fff;color:#00172e}
-
-    footer{padding:30px 0;text-align:center;color:#98a0b3}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;padding:.9rem 1.4rem;border-radius:999px;font-weight:700;text-decoration:none}
+    .btn.primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#fff;box-shadow:0 6px 20px rgba(0,112,255,0.25)}
+    .btn.secondary{background:#fff;color:#00172e;box-shadow:0 4px 14px rgba(0,0,0,0.3)}
+    section{padding:70px 0;text-align:center}
+    section h2{font-size:1.8rem;margin-bottom:.8rem}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin-top:1.5rem}
+    .card{background:var(--glass);padding:1.5rem;border-radius:var(--card-radius);box-shadow:0 6px 30px rgba(0,0,0,0.45)}
+    footer{padding:40px 0;text-align:center;border-top:1px solid rgba(255,255,255,0.08);color:var(--muted);font-size:.95rem}
+    .contacto{margin-top:1.5rem;line-height:1.8}
+    .contacto p{margin:.3rem 0}
+    .contacto a{color:var(--accent-1);text-decoration:none}
+    .float-btn{position:fixed;right:22px;bottom:20px;z-index:998}
+    .whatsapp-btn{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:999px;background:var(--success);color:#fff;font-size:28px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.3)}
   </style>
 </head>
 <body>
-  <!-- Fondo partículas -->
-  <div id="particles-js"></div>
+
+  <!-- Partículas -->
+  <canvas id="particles-bg"></canvas>
 
   <!-- NAV -->
   <nav>
@@ -85,6 +100,40 @@
     </div>
   </section>
 
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="container">
+      <h2>Servicios de Mantenimiento</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Mantenimiento Biomédico</h3>
+          <p>Correctivo y preventivo para garantizar el óptimo funcionamiento de equipos médicos.</p>
+        </div>
+        <div class="card">
+          <h3>Mantenimiento Locativo</h3>
+          <p>Soporte en infraestructura física, electricidad y mobiliario hospitalario.</p>
+        </div>
+        <div class="card">
+          <h3>Analítica de Datos</h3>
+          <p>Monitoreo y análisis para reducir costos y mejorar la eficiencia en mantenimientos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="container">
+      <h2>Contacto</h2>
+      <div class="contacto">
+        <p>📍 Calle 56 # 24-29, Barrio Belén, Manizales - Caldas</p>
+        <p>📞 PBX: (606) 893 0350 | Cel: 317 513 2548</p>
+        <p>🌐 <a href="https://www.ipsinterconsultas.com" target="_blank">www.ipsinterconsultas.com</a> | @interconsultas</p>
+        <p>📧 <a href="mailto:auxiliarmantenimiento.ips@gmail.com">auxiliarmantenimiento.ips@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="container">
@@ -92,40 +141,100 @@
     </div>
   </footer>
 
-  <!-- Script partículas -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <!-- WHATSAPP FLOATING BUTTON -->
+  <div class="float-btn">
+    <a href="https://wa.me/573175132548?text=Hola%2C%20necesito%20soporte%20de%20mantenimiento." target="_blank" class="whatsapp-btn">💬</a>
+  </div>
+
+  <!-- Script Partículas -->
   <script>
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 80 },
-        "color": { "value": "#00c6ff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.6 },
-        "size": { "value": 3 },
-        "line_linked": {
-          "enable": true,
-          "distance": 120,
-          "color": "#0072ff",
-          "opacity": 0.4,
-          "width": 1
-        },
-        "move": { "enable": true, "speed": 2 }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": { "enable": true, "mode": "grab" },
-          "onclick": { "enable": true, "mode": "push" }
-        },
-        "modes": {
-          "grab": { "distance": 140, "line_linked": { "opacity": 0.7 } },
-          "push": { "particles_nb": 4 }
-        }
-      },
-      "retina_detect": true
+    const canvas = document.getElementById('particles-bg');
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', function(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
     });
+
+    class Particle {
+      constructor(x, y, size, speedX, speedY){
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+      }
+      update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if(this.x < 0 || this.x > canvas.width){
+          this.speedX = -this.speedX;
+        }
+        if(this.y < 0 || this.y > canvas.height){
+          this.speedY = -this.speedY;
+        }
+      }
+      draw(){
+        ctx.fillStyle = '#00c6ff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+      }
+    }
+
+    function init(){
+      particlesArray = [];
+      let numberOfParticles = (canvas.width * canvas.height) / 9000;
+      for(let i = 0; i < numberOfParticles; i++){
+        let size = (Math.random() * 2) + 1;
+        let x = Math.random() * (canvas.width - size * 2);
+        let y = Math.random() * (canvas.height - size * 2);
+        let speedX = (Math.random() * 1) - 0.5;
+        let speedY = (Math.random() * 1) - 0.5;
+        particlesArray.push(new Particle(x, y, size, speedX, speedY));
+      }
+    }
+
+    function connect(){
+      for(let a = 0; a < particlesArray.length; a++){
+        for(let b = a; b < particlesArray.length; b++){
+          let dx = particlesArray[a].x - particlesArray[b].x;
+          let dy = particlesArray[a].y - particlesArray[b].y;
+          let distance = dx*dx + dy*dy;
+          if(distance < (canvas.width/10) * (canvas.height/10)){
+            ctx.strokeStyle = 'rgba(0,198,255,0.1)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=0; i<particlesArray.length; i++){
+        particlesArray[i].update();
+        particlesArray[i].draw();
+      }
+      connect();
+      requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
   </script>
 </body>
 </html>
+
 
 
