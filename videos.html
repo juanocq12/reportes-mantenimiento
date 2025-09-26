@@ -1,219 +1,161 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IPS Interconsultas — Videos</title>
-  <meta name="description" content="Galería de videos educativos y corporativos de IPS Interconsultas." />
-  <meta name="theme-color" content="#00172e" />
-  <link rel="icon" href="Logo-Interconsultas-01b-500px.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App CorreQ</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:'Poppins',sans-serif;
-      background:#061c36;
-      color:#fff;
-      overflow-x:hidden;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      color: #333;
     }
-
-    /* === PARTICULAS === */
-    #particles-js{
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      z-index:-1;
+    header {
+      background: #004aad;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
     }
-
-    /* === NAVBAR === */
-    nav{
-      background:rgba(10,42,87,0.95);
-      padding:1rem 2rem;
-      position:sticky;
-      top:0;
-      z-index:10;
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #00337a;
     }
-    .nav-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      max-width:1100px;
-      margin:0 auto;
+    nav button {
+      background: none;
+      border: none;
+      color: #fff;
+      padding: 15px 20px;
+      cursor: pointer;
+      font-size: 16px;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:.6rem;
-      text-decoration:none;
-      color:white;
-      font-weight:bold;
-      font-size:1.2rem;
+    nav button.active {
+      background: #00204d;
     }
-    .brand img{
-      height:40px;
+    .tab-content {
+      display: none;
+      padding: 20px;
     }
-    .nav-links a{
-      margin-left:1.2rem;
-      text-decoration:none;
-      color:white;
-      font-weight:500;
-      transition:color .3s;
+    .tab-content.active {
+      display: block;
     }
-    .nav-links a:hover{
-      color:#06b6d4;
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
     }
-
-    /* === HERO === */
-    .hero{
-      text-align:center;
-      padding:4rem 1rem 2rem;
+    .video-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
-    .hero h1{
-      font-size:2.3rem;
-      margin-bottom:.5rem;
+    .video-card:hover {
+      transform: translateY(-5px);
     }
-    .hero p{
-      font-size:1.1rem;
-      color:#cdd6e4;
+    .video-thumb {
+      position: relative;
     }
-
-    /* === VIDEOS === */
-    .video-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-      gap:1.5rem;
-      max-width:1100px;
-      margin:2rem auto;
-      padding:0 1rem;
+    .video-thumb img {
+      width: 100%;
+      display: block;
     }
-    .video-card{
-      background:#102c57;
-      padding:1rem;
-      border-radius:.8rem;
-      text-align:center;
-      transition:transform .3s;
-      cursor:pointer;
-      position:relative;
-      overflow:hidden;
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.6);
     }
-    .video-card:hover{
-      transform:translateY(-5px);
+    .video-card p {
+      margin: 10px;
+      font-weight: bold;
+      text-align: center;
     }
-    .video-thumb{
-      position:relative;
-    }
-    .video-thumb img{
-      width:100%;
-      border-radius:.6rem;
-      display:block;
-    }
-    .play-btn{
-      position:absolute;
-      top:50%;left:50%;
-      transform:translate(-50%,-50%);
-      background:rgba(0,0,0,0.6);
-      border-radius:50%;
-      width:60px;height:60px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      color:#fff;
-    }
-    .video-card p{
-      margin-top:.7rem;
-      font-size:.95rem;
-      color:#cdd6e4;
-    }
-
-    /* === FOOTER === */
-    footer{
-      text-align:center;
-      background:#061c36;
-      padding:1rem;
-      font-size:.9rem;
-      border-top:1px solid #0a2a57;
-      margin-top:2rem;
-    }
-    footer a{color:#06b6d4;text-decoration:none}
   </style>
 </head>
 <body>
-  <!-- PARTICULAS -->
-  <div id="particles-js"></div>
+  <header>
+    <h1>App CorreQ</h1>
+    <p>Gestión de solicitudes y reportes de mantenimiento</p>
+  </header>
 
-  <!-- NAV -->
   <nav>
-    <div class="nav-inner">
-      <a class="brand" href="index.html">
-        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
-        <span class="title">IPS Interconsultas</span>
-      </a>
-      <div class="nav-links">
-        <a href="index.html">Inicio</a>
-        <a href="index.html#servicios">Servicios</a>
-        <a href="index.html#contacto">Contacto</a>
-        <a href="videos.html">Videos</a>
-      </div>
-    </div>
+    <button class="tab-link active" onclick="openTab(event, 'inicio')">Inicio</button>
+    <button class="tab-link" onclick="openTab(event, 'videos')">Videos</button>
+    <button class="tab-link" onclick="openTab(event, 'documentacion')">Documentación</button>
+    <button class="tab-link" onclick="openTab(event, 'contacto')">Contacto</button>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Galería de Videos</h1>
-    <p>Material audiovisual para capacitación, información y apoyo institucional.</p>
+  <!-- Inicio -->
+  <section id="inicio" class="tab-content active">
+    <h2>Bienvenido a CorreQ</h2>
+    <p>Aplicación para la gestión de solicitudes e informes de mantenimiento biomédico e infraestructura.</p>
   </section>
 
-  <!-- VIDEOS -->
-  <section class="video-grid">
-    <!-- Nuevo video agregado -->
-    <a href="https://www.youtube.com/watch?v=guzBKq3760E" target="_blank" class="video-card">
-      <div class="video-thumb">
-        <img src="https://img.youtube.com/vi/guzBKq3760E/hqdefault.jpg" alt="Video IPS Interconsultas">
-        <div class="play-btn">▶</div>
+  <!-- Videos -->
+  <section id="videos" class="tab-content">
+    <h2>Videos</h2>
+    <div class="video-grid">
+      <!-- Video agregado -->
+      <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=guzBKq3760E','_blank')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/guzBKq3760E/hqdefault.jpg" alt="Video de presentación">
+          <div class="play-btn">▶</div>
+        </div>
+        <p>Video de presentación</p>
       </div>
-      <p>Video de presentación</p>
-    </a>
 
-    <!-- Ejemplos -->
-    <a href="https://www.youtube.com/watch?v=VIDEO_ID_2" target="_blank" class="video-card">
-      <div class="video-thumb">
-        <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg" alt="Servicios y beneficios">
-        <div class="play-btn">▶</div>
+      <!-- Ejemplo -->
+      <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID_2','_blank')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_2/hqdefault.jpg" alt="Servicios y beneficios">
+          <div class="play-btn">▶</div>
+        </div>
+        <p>Servicios y beneficios</p>
       </div>
-      <p>Servicios y beneficios</p>
-    </a>
 
-    <a href="https://www.youtube.com/watch?v=VIDEO_ID_3" target="_blank" class="video-card">
-      <div class="video-thumb">
-        <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg" alt="Atención al paciente">
-        <div class="play-btn">▶</div>
+      <div class="video-card" onclick="window.open('https://www.youtube.com/watch?v=VIDEO_ID_3','_blank')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/VIDEO_ID_3/hqdefault.jpg" alt="Atención al paciente">
+          <div class="play-btn">▶</div>
+        </div>
+        <p>Atención al paciente</p>
       </div>
-      <p>Atención al paciente</p>
-    </a>
+    </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    Auxiliar de Mantenimiento Biomédico — Interconsultas S.A.S<br>
-    PBX: (606) 893 0350 | Cel: 317 5132548<br>
-    Calle 56 # 24-29 Barrio Belén, Manizales - Caldas<br>
-    Email: <a href="mailto:auxiliarmantenimiento.ips@gmail.com">auxiliarmantenimiento.ips@gmail.com</a> |
-    Web: <a href="http://www.ipsinterconsultas.com">www.ipsinterconsultas.com</a><br>
-    © 2025 IPS Interconsultas - Todos los derechos reservados
-  </footer>
+  <!-- Documentación -->
+  <section id="documentacion" class="tab-content">
+    <h2>Documentación</h2>
+    <p>Aquí podrá encontrar manuales, instructivos y guías de uso de la App CorreQ.</p>
+  </section>
 
-  <!-- SCRIPTS PARTICULAS -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <!-- Contacto -->
+  <section id="contacto" class="tab-content">
+    <h2>Contacto</h2>
+    <p>Para más información comuníquese al correo: <strong>auxiliarmantenimiento.ips@gmail.com</strong></p>
+  </section>
+
   <script>
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 60 },
-        "size": { "value": 3 },
-        "move": { "speed": 2 },
-        "line_linked": { "enable": true, "color": "#06b6d4" }
+    function openTab(evt, tabName) {
+      let i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tab-content");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].classList.remove("active");
       }
-    });
+      tablinks = document.getElementsByClassName("tab-link");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].classList.remove("active");
+      }
+      document.getElementById(tabName).classList.add("active");
+      evt.currentTarget.classList.add("active");
+    }
   </script>
 </body>
 </html>
