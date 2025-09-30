@@ -3,163 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de Reporte</title>
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>IPS Interconsultas - Formulario de Reporte</title>
   <style>
-    body { background: #f4f6f9; font-family: "Segoe UI", sans-serif; }
-    .form-card { background: #fff; border-radius: 16px; padding: 2rem; box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
-    h2 { color: #1a73e8; font-weight: 700; }
-    label { font-weight: 500; margin-top: 0.5rem; }
-    .form-section { display: none; }
-    .btn-primary { background: #1a73e8; border: none; border-radius: 10px; }
-    .btn-primary:hover { background: #1558b0; }
-    .divider { border-top: 2px solid #e1e5eb; margin: 2rem 0; }
+    /* ===== RESET ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #061c36;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== PARTICULAS ===== */
+    #particles-js {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: rgba(10, 42, 87, 0.95);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .brand img {
+      height: 40px;
+    }
+    .nav-links a {
+      margin-left: 1.2rem;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: #06b6d4;
+    }
+
+    /* ===== FORM CONTAINER ===== */
+    .form-container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: rgba(16, 44, 87, 0.95);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #06b6d4;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #0d274d;
+      color: #fff;
+      font-size: 1rem;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid #06b6d4;
+    }
+    textarea { resize: vertical; }
+
+    /* Botones */
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 1.5rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: center;
+    }
+    .btn.primary {
+      background: linear-gradient(to right, #06b6d4, #3b82f6);
+      color: white;
+      border: none;
+    }
+    .btn.primary:hover {
+      background: linear-gradient(to right, #0284c7, #2563eb);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      background: #061c36;
+      padding: 1rem;
+      font-size: 0.9rem;
+      border-top: 1px solid #0a2a57;
+      margin-top: 3rem;
+    }
+
+    /* Secciones dinámicas */
+    .form-section { display: none; margin-top: 1rem; }
   </style>
 </head>
 <body>
-<div class="container my-5">
-  <div class="form-card">
-    <h2 class="text-center mb-4">📋 Formulario de Reporte</h2>
+  <!-- PARTICULAS -->
+  <div id="particles-js"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
+        <span class="title">IPS Interconsultas</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="index.html#servicios">Servicios</a>
+        <a href="index.html#contacto">Contacto</a>
+        <a href="formulario.html">Formulario</a>
+        <a href="videos.html">Videos</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- FORMULARIO -->
+  <section class="form-container">
+    <h2>📋 Formulario de Reporte</h2>
     <form id="reporteForm">
+      
+      <!-- Datos básicos -->
+      <label>Fecha</label>
+      <input type="date" name="fecha" required>
 
-      <!-- 🔹 Datos básicos -->
-      <h5>Datos básicos</h5>
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label>Fecha</label>
-          <input type="date" class="form-control" name="fecha" required>
-        </div>
-        <div class="col-md-6">
-          <label>Hora</label>
-          <input type="time" class="form-control" name="hora" required>
-        </div>
-        <div class="col-md-6">
-          <label>Nombre completo</label>
-          <input type="text" class="form-control" name="nombre" required>
-        </div>
-        <div class="col-md-6">
-          <label>Correo electrónico</label>
-          <input type="email" class="form-control" name="correo" required>
-        </div>
-        <div class="col-md-6">
-          <label>Sede</label>
-          <select class="form-select" name="sede" required>
-            <option value="">Seleccione...</option>
-            <option>Sede 1</option>
-            <option>Sede 2</option>
-            <option>Sede 3</option>
-            <option>Sede 4</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label>Ubicación específica</label>
-          <input type="text" class="form-control" name="ubicacion" placeholder="Ej: Consultorio 106">
-        </div>
-      </div>
+      <label>Hora</label>
+      <input type="time" name="hora" required>
 
-      <div class="divider"></div>
+      <label>Nombre completo</label>
+      <input type="text" name="nombre" required>
 
-      <!-- 🔹 Detalles del reporte -->
-      <h5>Detalles del reporte</h5>
-      <div class="mb-3">
-        <label>Categoría del reporte</label>
-        <select class="form-select" id="categoria" name="categoria" required>
-          <option value="">Seleccione...</option>
-          <option value="infraestructura">Infraestructura y equipos de apoyo</option>
-          <option value="electricos">Equipos eléctricos</option>
-          <option value="electronicos">Equipos electrónicos</option>
-          <option value="computo">Equipos de cómputo</option>
-          <option value="muebles">Muebles y enseres</option>
-        </select>
-      </div>
+      <label>Correo electrónico</label>
+      <input type="email" name="correo" required>
+
+      <label>Sede</label>
+      <select name="sede" required>
+        <option value="">Seleccione...</option>
+        <option>Sede 1</option>
+        <option>Sede 2</option>
+        <option>Sede 3</option>
+        <option>Sede 4</option>
+      </select>
+
+      <label>Ubicación específica</label>
+      <input type="text" name="ubicacion" placeholder="Ej: Consultorio 106">
+
+      <!-- Detalles del reporte -->
+      <label>Categoría del reporte</label>
+      <select id="categoria" name="categoria" required>
+        <option value="">Seleccione...</option>
+        <option value="infraestructura">Infraestructura y equipos de apoyo</option>
+        <option value="electricos">Equipos eléctricos</option>
+        <option value="electronicos">Equipos electrónicos</option>
+        <option value="computo">Equipos de cómputo</option>
+        <option value="muebles">Muebles y enseres</option>
+      </select>
 
       <!-- Secciones dinámicas -->
       <div id="infraestructura" class="form-section">
         <label>Descripción de la falla</label>
-        <textarea class="form-control" name="detalle_infra" rows="3"></textarea>
+        <textarea name="detalle_infra" rows="3"></textarea>
       </div>
       <div id="electricos" class="form-section">
         <label>Descripción de la falla eléctrica</label>
-        <textarea class="form-control" name="detalle_electrico" rows="3"></textarea>
+        <textarea name="detalle_electrico" rows="3"></textarea>
       </div>
       <div id="electronicos" class="form-section">
         <label>Descripción de la falla electrónica</label>
-        <textarea class="form-control" name="detalle_electronico" rows="3"></textarea>
+        <textarea name="detalle_electronico" rows="3"></textarea>
       </div>
       <div id="computo" class="form-section">
         <label>Descripción del reporte de cómputo</label>
-        <textarea class="form-control" name="detalle_computo" rows="3"></textarea>
+        <textarea name="detalle_computo" rows="3"></textarea>
       </div>
       <div id="muebles" class="form-section">
         <label>Descripción del reporte de muebles</label>
-        <textarea class="form-control" name="detalle_muebles" rows="3"></textarea>
+        <textarea name="detalle_muebles" rows="3"></textarea>
       </div>
 
-      <div class="mb-3 mt-3">
-        <label>Prioridad del caso</label>
-        <select class="form-select" name="prioridad" required>
-          <option value="">Seleccione...</option>
-          <option>Alta</option>
-          <option>Media</option>
-          <option>Baja</option>
-        </select>
-      </div>
+      <label>Prioridad del caso</label>
+      <select name="prioridad" required>
+        <option value="">Seleccione...</option>
+        <option>Alta</option>
+        <option>Media</option>
+        <option>Baja</option>
+      </select>
 
-      <div class="divider"></div>
+      <!-- Seguimiento -->
+      <label>Estado</label>
+      <select name="estado">
+        <option>Pendiente</option>
+        <option>En gestión</option>
+        <option>Realizado</option>
+      </select>
 
-      <!-- 🔹 Seguimiento -->
-      <h5>Seguimiento</h5>
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label>Estado</label>
-          <select class="form-select" name="estado">
-            <option>Pendiente</option>
-            <option>En gestión</option>
-            <option>Realizado</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label>Responsable</label>
-          <input type="text" class="form-control" name="responsable">
-        </div>
-        <div class="col-12">
-          <label>Observaciones</label>
-          <textarea class="form-control" name="observacion" rows="2"></textarea>
-        </div>
-      </div>
+      <label>Responsable</label>
+      <input type="text" name="responsable">
 
-      <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary btn-lg px-5">Enviar reporte</button>
-      </div>
+      <label>Observaciones</label>
+      <textarea name="observacion" rows="2"></textarea>
+
+      <button type="submit" class="btn primary">Enviar Reporte</button>
     </form>
-  </div>
-</div>
+  </section>
 
-<!-- JS -->
-<script>
-  // 🔄 Mostrar campos dinámicos según categoría
-  document.getElementById('categoria').addEventListener('change', function() {
-    document.querySelectorAll('.form-section').forEach(sec => sec.style.display = 'none');
-    if (this.value) {
-      document.getElementById(this.value).style.display = 'block';
-    }
-  });
+  <!-- FOOTER -->
+  <footer>
+    &copy; 2025 IPS Interconsultas - Todos los derechos reservados
+  </footer>
 
-  // 🔗 Conexión a Apps Script
-  const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
-  const form = document.getElementById("reporteForm");
-  form.addEventListener("submit", e => {
-    e.preventDefault();
-    fetch(scriptURL, { method: "POST", body: new FormData(form)})
-      .then(() => {
-        alert("✅ Reporte enviado correctamente");
-        form.reset();
-      })
-      .catch(error => alert("❌ Error al enviar: " + error.message));
-  });
-</script>
+  <!-- SCRIPTS PARTICULAS -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 60 },
+        "size": { "value": 3 },
+        "move": { "speed": 2 },
+        "line_linked": { "enable": true, "color": "#06b6d4" }
+      }
+    });
+
+    // 🔄 Mostrar campos dinámicos según categoría
+    document.getElementById('categoria').addEventListener('change', function() {
+      document.querySelectorAll('.form-section').forEach(sec => sec.style.display = 'none');
+      if (this.value) {
+        document.getElementById(this.value).style.display = 'block';
+      }
+    });
+
+    // 🔗 Conexión con Apps Script
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
+    const form = document.getElementById("reporteForm");
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: "POST", body: new FormData(form)})
+        .then(() => { alert("✅ Reporte enviado correctamente"); form.reset(); })
+        .catch(error => alert("❌ Error al enviar: " + error.message));
+    });
+  </script>
 </body>
 </html>
-
 
