@@ -1,151 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IPS Interconsultas - Formulario de Reporte</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IPS Interconsultas — Reporte de Mantenimiento</title>
   <style>
-    /* ===== RESET ===== */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #061c36;
-      color: #fff;
-      overflow-x: hidden;
-      line-height: 1.5;
+    /* RESET */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Arial", sans-serif;
+      background:#061c36;
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
     }
 
-    /* ===== PARTICULAS ===== */
-    #particles-js {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
+    /* Partículas placeholder (igual estilo que index) */
+    #particles-js{position:fixed;inset:0;width:100%;height:100%;z-index:-1}
+
+    /* NAV */
+    nav{
+      background:rgba(10,42,87,0.95);
+      padding:1rem 1.5rem;
+      position:sticky;
+      top:0;
+      z-index:20;
+      box-shadow:0 2px 8px rgba(0,0,0,0.25);
+    }
+    .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:#fff;font-weight:700}
+    .brand img{height:40px}
+    .nav-links a{color:#fff;text-decoration:none;margin-left:1rem;font-weight:500;transition:color .18s}
+    .nav-links a:hover{color:#06b6d4}
+
+    /* LAYOUT */
+    .page-wrap{max-width:1100px;margin:2.2rem auto;padding:0 1rem}
+    .form-card{
+      background:rgba(16,44,87,0.96);
+      border-radius:12px;
+      padding:1.6rem;
+      box-shadow:0 10px 30px rgba(0,0,0,0.5);
+      border:1px solid rgba(10,30,60,0.25);
     }
 
-    /* ===== NAVBAR ===== */
-    nav {
-      background: rgba(10, 42, 87, 0.95);
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .brand img { height: 40px; }
-    .nav-links a {
-      margin-left: 1.2rem;
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: #06b6d4; }
-
-    /* ===== FORM CONTAINER ===== */
-    .form-container {
-      max-width: 900px;
-      margin: 3rem auto;
-      background: rgba(16, 44, 87, 0.95);
-      padding: 2.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-    }
-    .form-container h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: #06b6d4;
-      font-size: 1.8rem;
-    }
-    .form-section-title {
-      margin-top: 2rem;
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #3b82f6;
-      border-bottom: 1px solid #0a2a57;
-      padding-bottom: 0.3rem;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 1rem;
-      margin-bottom: 0.3rem;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.7rem;
-      border: none;
-      border-radius: 0.5rem;
-      background: #0d274d;
-      color: #fff;
-      font-size: 1rem;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: 2px solid #06b6d4;
-    }
-    textarea { resize: vertical; }
-
-    /* Botones */
-    .btn {
-      display: inline-block;
-      padding: 0.9rem 1.5rem;
-      border-radius: 2rem;
-      font-weight: bold;
-      transition: background 0.3s ease;
-      margin-top: 2rem;
-      cursor: pointer;
-      font-size: 1rem;
-      border: none;
-    }
-    .btn.primary {
-      background: linear-gradient(to right, #06b6d4, #3b82f6);
-      color: white;
-    }
-    .btn.primary:hover {
-      background: linear-gradient(to right, #0284c7, #2563eb);
+    .title {
+      color:#06b6d4;
+      text-align:center;
+      font-size:1.4rem;
+      margin-bottom:0.8rem;
+      font-weight:700;
     }
 
-    /* ===== FOOTER ===== */
-    footer {
-      text-align: center;
-      background: #061c36;
-      padding: 1rem;
-      font-size: 0.9rem;
-      border-top: 1px solid #0a2a57;
-      margin-top: 3rem;
+    .subtitle { color:#cfeef8; font-size:0.95rem; text-align:center; margin-bottom:1.2rem }
+
+    /* SECTION TITLES */
+    .section {
+      margin-top:1rem;
+      padding:0.8rem 0;
+      border-radius:8px;
+      background:linear-gradient(180deg, rgba(13,39,77,0.25), rgba(13,39,77,0.08));
+      border-left:4px solid #06b6d4;
+      margin-bottom:0.6rem;
+      font-weight:700;
+      color:#e6f9fb;
     }
 
-    /* Secciones dinámicas */
-    .form-section { display: none; margin-top: 1rem; }
+    /* GRID FORM */
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+      align-items:start;
+    }
+    .col-12{grid-column:span 12}
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    .col-3{grid-column:span 3}
+    @media (max-width:800px){
+      .col-6,.col-4,.col-3{grid-column:span 12}
+    }
+
+    label{display:block;font-weight:700;color:#dbeef6;margin-bottom:6px;font-size:0.95rem}
+    .field{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:0;
+      background:#0d274d;
+      color:#fff;
+      font-size:0.95rem;
+    }
+    .field:focus{outline:2px solid #06b6d4}
+    textarea.field{min-height:84px;resize:vertical;padding-top:10px}
+
+    .help{font-size:0.82rem;color:#9ed7e6;margin-top:6px}
+
+    /* radios / inline */
+    .inline-list{display:flex;flex-wrap:wrap;gap:8px}
+    .inline-item{background:transparent;padding:.35rem .6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:.5rem;cursor:pointer}
+    .inline-item input{transform:scale(1.05)}
+
+    /* footer actions */
+    .actions{display:flex;gap:12px;justify-content:center;margin-top:1.1rem}
+    .btn{
+      padding:12px 20px;border-radius:28px;border:0;font-weight:700;cursor:pointer;font-size:1rem;
+    }
+    .btn.primary{background:linear-gradient(90deg,#06b6d4,#3b82f6);color:#fff;box-shadow:0 6px 18px rgba(6,182,212,0.12)}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#d9f6fb}
+    .note{font-size:0.88rem;color:#bfeff8;text-align:center;margin-top:0.8rem}
+
+    /* success / error */
+    .toast{
+      position:fixed;right:18px;bottom:18px;background:#023a5e;color:#eaffff;padding:12px 16px;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,0.4);z-index:60
+    }
+
+    /* small text columns */
+    .two-col { display:grid;grid-template-columns:1fr 1fr;gap:10px }
+    @media (max-width:600px){ .two-col{grid-template-columns:1fr} }
+
   </style>
 </head>
 <body>
-  <!-- PARTICULAS -->
+  <!-- particles placeholder -->
   <div id="particles-js"></div>
 
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
       <a class="brand" href="index.html">
-        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
-        <span class="title">IPS Interconsultas</span>
+        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo" />
+        <span>IPS Interconsultas</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Inicio</a>
@@ -157,107 +143,258 @@
     </div>
   </nav>
 
-  <!-- FORMULARIO -->
-  <section class="form-container">
-    <h2>📋 Formulario de Reporte</h2>
-    <form id="reporteForm">
-      
-      <!-- DATOS DEL REPORTE -->
-      <div class="form-section-title">Datos básicos</div>
-      <label>Fecha</label>
-      <input type="date" name="fecha" required>
+  <!-- PAGE -->
+  <div class="page-wrap">
+    <div class="form-card" role="main" aria-labelledby="formTitle">
+      <div id="formTitle" class="title">📋 Formulario de Reporte - IPS Interconsultas</div>
+      <div class="subtitle">Complete el formulario con la mayor cantidad de detalle posible. Los campos marcados con * son obligatorios.</div>
 
-      <label>Hora</label>
-      <input type="time" name="hora" required>
+      <form id="reporteForm" autocomplete="off">
+        <div class="section">1. Datos básicos</div>
 
-      <label>Nombre completo</label>
-      <input type="text" name="nombre" placeholder="Ingrese su nombre completo" required>
+        <div class="grid">
+          <div class="col-4">
+            <label for="marcaTemporal">Marca temporal</label>
+            <input id="marcaTemporal" name="marca_temporal" class="field" type="datetime-local" />
+            <div class="help">Se registrará también la fecha/hora del envío en la hoja.</div>
+          </div>
 
-      <label>Correo electrónico</label>
-      <input type="email" name="correo" placeholder="ejemplo@correo.com" required>
+          <div class="col-4">
+            <label for="correo">Dirección de correo electrónico *</label>
+            <input id="correo" name="correo" class="field" type="email" placeholder="ejemplo@dominio.com" required />
+          </div>
 
-      <label>Sede</label>
-      <select name="sede" required>
-        <option value="">Seleccione una sede...</option>
-        <option>Sede 1</option>
-        <option>Sede 2</option>
-        <option>Sede 3</option>
-        <option>Sede 4</option>
-      </select>
+          <div class="col-2">
+            <label for="fecha">Fecha *</label>
+            <input id="fecha" name="fecha" class="field" type="date" required />
+          </div>
 
-      <label>Ubicación específica</label>
-      <input type="text" name="ubicacion" placeholder="Ej: Consultorio 106">
+          <div class="col-2">
+            <label for="hora">Hora *</label>
+            <input id="hora" name="hora" class="field" type="time" required />
+          </div>
 
-      <!-- DETALLES SEGÚN CATEGORÍA -->
-      <div class="form-section-title">Detalles del reporte</div>
-      <label>Categoría</label>
-      <select id="categoria" name="categoria" required>
-        <option value="">Seleccione una categoría...</option>
-        <option value="infraestructura">Infraestructura y equipos de apoyo</option>
-        <option value="electricos">Equipos eléctricos</option>
-        <option value="electronicos">Equipos electrónicos</option>
-        <option value="computo">Equipos de cómputo</option>
-        <option value="muebles">Muebles y enseres</option>
-      </select>
+          <div class="col-6">
+            <label for="nombre">Nombre completo *</label>
+            <input id="nombre" name="nombre" class="field" type="text" placeholder="Nombre y apellidos" required />
+          </div>
 
-      <!-- Secciones dinámicas -->
-      <div id="infraestructura" class="form-section">
-        <label>Descripción de la falla</label>
-        <textarea name="detalle_infra" rows="3" placeholder="Ej: Daño en la lámpara del consultorio"></textarea>
-      </div>
-      <div id="electricos" class="form-section">
-        <label>Descripción de la falla eléctrica</label>
-        <textarea name="detalle_electrico" rows="3" placeholder="Ej: No enciende el ventilador del área de espera"></textarea>
-      </div>
-      <div id="electronicos" class="form-section">
-        <label>Descripción de la falla electrónica</label>
-        <textarea name="detalle_electronico" rows="3" placeholder="Ej: Pantalla del monitor sin señal"></textarea>
-      </div>
-      <div id="computo" class="form-section">
-        <label>Descripción del reporte de cómputo</label>
-        <textarea name="detalle_computo" rows="3" placeholder="Ej: El computador no arranca o presenta lentitud"></textarea>
-      </div>
-      <div id="muebles" class="form-section">
-        <label>Descripción del reporte de muebles</label>
-        <textarea name="detalle_muebles" rows="3" placeholder="Ej: Silla dañada o escritorio inestable"></textarea>
-      </div>
+          <div class="col-6">
+            <label for="reporteIngresa">Reporte ingresa por</label>
+            <select id="reporteIngresa" name="reporte_ingresa_por" class="field">
+              <option value="">Seleccione...</option>
+              <option value="Usuario">Usuario</option>
+              <option value="Administrativo">Administrativo</option>
+              <option value="Técnico">Técnico</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+        </div>
 
-      <label>Prioridad</label>
-      <select name="prioridad" required>
-        <option value="">Seleccione...</option>
-        <option>Alta</option>
-        <option>Media</option>
-        <option>Baja</option>
-      </select>
+        <div class="section">2. Ubicación y relación</div>
+        <div class="grid">
+          <div class="col-6">
+            <label for="seRelaciona">El reporte se relaciona con</label>
+            <select id="seRelaciona" name="reporte_se_relaciona" class="field">
+              <option value="">Seleccione...</option>
+              <option value="Infraestructura">Infraestructura</option>
+              <option value="Equipos">Equipos</option>
+              <option value="Infraestructura y Equipos">Infraestructura y Equipos</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
 
-      <!-- SEGUIMIENTO -->
-      <div class="form-section-title">Seguimiento</div>
-      <label>Estado</label>
-      <select name="estado">
-        <option>Pendiente</option>
-        <option>En gestión</option>
-        <option>Realizado</option>
-      </select>
+          <div class="col-6">
+            <label for="area">Área específica</label>
+            <input id="area" name="area" class="field" type="text" placeholder="Ej: Consultorio 106, Sala de espera" />
+          </div>
 
-      <label>Responsable</label>
-      <input type="text" name="responsable" placeholder="Persona a cargo del caso">
+          <div class="col-6">
+            <label for="ubicSpec">Ubicación específica</label>
+            <input id="ubicSpec" name="ubicacion_especifica" class="field" type="text" placeholder="Piso, consultorio, mobiliario" />
+          </div>
 
-      <label>Observaciones</label>
-      <textarea name="observacion" rows="2" placeholder="Notas adicionales sobre el caso"></textarea>
+          <div class="col-6">
+            <label for="sede">Sede donde está ubicado *</label>
+            <select id="sede" name="sede" class="field" required>
+              <option value="">Seleccione sede...</option>
+              <option value="Sede 1">Sede 1</option>
+              <option value="Sede 2">Sede 2</option>
+              <option value="Sede 3">Sede 3</option>
+              <option value="Sede 4">Sede 4</option>
+            </select>
+          </div>
+        </div>
 
-      <button type="submit" class="btn primary">Enviar Reporte</button>
-    </form>
-  </section>
+        <div class="section">3. Clasificación y prioridad</div>
+        <div class="grid">
+          <div class="col-6">
+            <label for="clasificacionPrioridad">Clasificación de prioridad</label>
+            <select id="clasificacionPrioridad" name="clasificacion_prioridad" class="field">
+              <option value="">Seleccione...</option>
+              <option value="Crítica">Crítica</option>
+              <option value="Alta">Alta</option>
+              <option value="Media">Media</option>
+              <option value="Baja">Baja</option>
+            </select>
+            <div class="help">Use Clasificación adecuada para priorizar atención.</div>
+          </div>
+
+          <div class="col-6">
+            <label for="categoria">Categoría del reporte *</label>
+            <select id="categoria" name="categoria_reporte" class="field" required>
+              <option value="">Seleccione...</option>
+              <option value="infraestructura">Infraestructura y equipos de apoyo</option>
+              <option value="electricos">Equipos eléctricos</option>
+              <option value="electronicos">Equipos electrónicos</option>
+              <option value="computo">Equipos de cómputo</option>
+              <option value="muebles">Muebles y enseres</option>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label for="equipoReportar">El equipo a reportar es</label>
+            <input id="equipoReportar" name="equipo_a_reportar" class="field" type="text" placeholder="Ej: Autoclave, Monitor, Aire acondicionado, Silla" />
+          </div>
+
+          <div class="col-12">
+            <label for="danoReportar">Daño a reportar / síntoma</label>
+            <input id="danoReportar" name="dano_a_reportar" class="field" type="text" placeholder="Breve síntoma (ej: no enciende, pantalla negra)" />
+          </div>
+
+          <div class="col-6">
+            <label for="prioridadCaso">Prioridad del caso</label>
+            <select id="prioridadCaso" name="prioridad_caso" class="field">
+              <option value="">Seleccione...</option>
+              <option value="Alta">Alta</option>
+              <option value="Media">Media</option>
+              <option value="Baja">Baja</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="section">4. Detalle por tipo (rellene según corresponda)</div>
+        <div class="grid">
+          <div class="col-12">
+            <label>Infraestructura y equipos de apoyo — Descripción detallada</label>
+            <textarea name="desc_infraestructura" class="field" placeholder="Describa la falla o problema de infraestructura (ej: filtración, grieta, ventana rota)"></textarea>
+          </div>
+
+          <div class="col-12">
+            <label>Equipos eléctricos — Descripción detallada</label>
+            <textarea name="desc_electricos" class="field" placeholder="Describa problemas eléctricos (ej: cortocircuito, no enciende)"></textarea>
+          </div>
+
+          <div class="col-12">
+            <label>Equipos electrónicos — Descripción detallada</label>
+            <textarea name="desc_electronicos" class="field" placeholder="Describa problemas electrónicos (ej: cámaras, monitores)"></textarea>
+          </div>
+
+          <div class="col-12">
+            <label>Equipos de cómputo — Descripción detallada</label>
+            <textarea name="desc_computo" class="field" placeholder="Describa problemas en computadores, impresoras o red"></textarea>
+          </div>
+
+          <div class="col-12">
+            <label>Muebles y enseres — Descripción detallada</label>
+            <textarea name="desc_muebles" class="field" placeholder="Describa desperfectos en muebles y enseres"></textarea>
+          </div>
+        </div>
+
+        <div class="section">5. Información adicional y seguimiento</div>
+        <div class="grid">
+          <div class="col-6">
+            <label for="estado">ESTADO</label>
+            <select id="estado" name="estado" class="field">
+              <option value="">Seleccione...</option>
+              <option value="Pendiente">Pendiente</option>
+              <option value="En gestión">En gestión</option>
+              <option value="Cerrado">Cerrado</option>
+            </select>
+          </div>
+
+          <div class="col-6">
+            <label for="descripcionEstado">Descripción del estado</label>
+            <input id="descripcionEstado" name="descripcion_estado" class="field" type="text" placeholder="Resumen del estado actual" />
+          </div>
+
+          <div class="col-6">
+            <label for="fechaCierre">Fecha de cierre</label>
+            <input id="fechaCierre" name="fecha_cierre" class="field" type="date" />
+          </div>
+
+          <div class="col-6">
+            <label for="horaCierre">Hora de cierre</label>
+            <input id="horaCierre" name="hora_cierre" class="field" type="time" />
+          </div>
+
+          <div class="col-6">
+            <label for="observacion">Observación</label>
+            <textarea id="observacion" name="observacion" class="field" placeholder="Observaciones finales o notas"></textarea>
+          </div>
+
+          <div class="col-6">
+            <label for="responsable">Responsable</label>
+            <input id="responsable" name="responsable" class="field" type="text" placeholder="Persona encargada" />
+          </div>
+
+          <div class="col-6">
+            <label for="enviadoCorreo">Enviado al correo</label>
+            <input id="enviadoCorreo" name="enviado_al_correo" class="field" type="email" placeholder="correo@dominio.com" />
+          </div>
+
+          <div class="col-6">
+            <label for="cumplio">¿Se cumplió?</label>
+            <select id="cumplio" name="se_cumplio" class="field">
+              <option value="">Seleccione...</option>
+              <option value="Si">Sí</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="col-6">
+            <label for="col37">Column 37 (uso interno)</label>
+            <input id="col37" name="columna_37" class="field" type="text" placeholder="Dato extra (columna 37)" />
+          </div>
+
+          <div class="col-6">
+            <label for="tiempoRespuesta">Tiempo de respuesta</label>
+            <input id="tiempoRespuesta" name="tiempo_respuesta" class="field" type="text" placeholder="Ej: 2 días, 6 horas" />
+          </div>
+
+          <div class="col-6">
+            <label for="col39">Columna 39 (uso interno)</label>
+            <input id="col39" name="columna_39" class="field" type="text" placeholder="Dato extra (columna 39)" />
+          </div>
+
+          <div class="col-6">
+            <label for="col40">Columna 40 (uso interno)</label>
+            <input id="col40" name="columna_40" class="field" type="text" placeholder="Dato extra (columna 40)" />
+          </div>
+
+        </div>
+
+        <div class="note">Revise los datos antes de enviar. Puede dejar campos vacíos si no aplica.</div>
+
+        <div class="actions" role="group" aria-label="Acciones del formulario">
+          <button type="button" id="previewBtn" class="btn ghost">Vista previa</button>
+          <button type="reset" class="btn ghost">Limpiar</button>
+          <button type="submit" class="btn primary">Enviar reporte</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- FOOTER -->
-  <footer>
+  <footer style="margin-top:2rem;padding:1rem 0;text-align:center;background:transparent">
     &copy; 2025 IPS Interconsultas - Todos los derechos reservados
   </footer>
 
-  <!-- SCRIPTS -->
+  <!-- SCRIPTS PARTICULAS -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    // 🎇 Configuración de partículas
+    // Particles (igual configuración que index)
     particlesJS("particles-js", {
       "particles": {
         "number": { "value": 60 },
@@ -267,27 +404,101 @@
       }
     });
 
-    // 🔄 Mostrar campos dinámicos según categoría
-    const categoriaSelect = document.getElementById('categoria');
-    const secciones = document.querySelectorAll('.form-section');
-    categoriaSelect.addEventListener('change', function() {
-      secciones.forEach(sec => sec.style.display = 'none');
-      if (this.value) {
-        document.getElementById(this.value).style.display = 'block';
-      }
-    });
+    // Dinámica: mostrar secciones según la categoría seleccionada
+    (function(){
+      const categoriaEl = document.getElementById('categoria');
+      const sectionsToToggle = ['infraestructura','electricos','electronicos','computo','muebles'];
+      // hide all initially
+      sectionsToToggle.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.style.display = 'none';
+      });
 
-    // 🔗 Conexión con Apps Script
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
-    const form = document.getElementById("reporteForm");
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      fetch(scriptURL, { method: "POST", body: new FormData(form)})
-        .then(() => { alert("✅ Reporte enviado correctamente"); form.reset(); })
-        .catch(error => alert("❌ Error al enviar: " + error.message));
-    });
+      categoriaEl && categoriaEl.addEventListener('change', function(){
+        const val = this.value;
+        sectionsToToggle.forEach(id => {
+          const el = document.getElementById(id);
+          if(!el) return;
+          el.style.display = (id === val) ? 'block' : 'none';
+        });
+      });
+    })();
+
+    // Vista previa simple (abre un modal-like pequeño)
+    (function(){
+      const previewBtn = document.getElementById('previewBtn');
+      previewBtn && previewBtn.addEventListener('click', function(){
+        const form = document.getElementById('reporteForm');
+        const data = new FormData(form);
+        let html = '<div style="font-family:Arial;color:#061c36">';
+        html += '<h3>Vista previa rápida</h3><ul style="list-style:none;padding:0">';
+        for (const [k,v] of data.entries()){
+          if(v && v.toString().trim() !== '') html += `<li><strong>${k.replace(/_/g,' ')}:</strong> ${v}</li>`;
+        }
+        html += '</ul></div>';
+        const w = window.open('', '_blank', 'width=600,height=600,scrollbars=yes');
+        w.document.write(`<body style="font-family:Arial;background:#f4f7fb;padding:18px">${html}</body>`);
+        w.document.close();
+      });
+    })();
+
+    // Envío a Google Apps Script WebApp
+    (function(){
+      const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
+      const form = document.getElementById('reporteForm');
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        // validación mínima: correo y categoría obligatorios
+        const correo = form.querySelector('[name="correo"]').value.trim();
+        const categoria = form.querySelector('[name="categoria_reporte"]').value.trim();
+        if(!correo){
+          alert("Por favor ingrese la dirección de correo.");
+          return;
+        }
+        if(!categoria){
+          alert("Por favor seleccione la categoría del reporte.");
+          return;
+        }
+
+        // Enviar
+        const btn = form.querySelector('button[type="submit"]');
+        btn.disabled = true;
+        btn.textContent = "Enviando...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+          .then(response => {
+            if(!response.ok) throw new Error("Error en la respuesta: " + response.status);
+            return response.text();
+          })
+          .then(() => {
+            showToast("✅ Reporte enviado correctamente");
+            form.reset();
+            // ocultar todas las secciones dinámicas otra vez
+            ['infraestructura','electricos','electronicos','computo','muebles'].forEach(id=>{
+              const el = document.getElementById(id); if(el) el.style.display='none';
+            });
+          })
+          .catch(err => {
+            console.error(err);
+            showToast("❌ Error al enviar: " + (err.message||err));
+          })
+          .finally(()=>{
+            btn.disabled = false;
+            btn.textContent = "Enviar reporte";
+          });
+      });
+
+      function showToast(message){
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = message;
+        document.body.appendChild(t);
+        setTimeout(()=> t.remove(), 5000);
+      }
+    })();
   </script>
 </body>
 </html>
-
 
