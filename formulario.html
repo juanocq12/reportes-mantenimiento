@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Contacto - IPS Interconsultas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #061c36;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: rgba(13,39,77,0.95);
+      padding: 2rem;
+      border-radius: 0.8rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    input, textarea {
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.8rem;
+      border-radius: 0.4rem;
+      border: none;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 0.4rem;
+      background: linear-gradient(to right, #06b6d4, #3b82f6);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    button:hover {
+      background: linear-gradient(to right, #0284c7, #2563eb);
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Formulario de Contacto</h2>
+    <form id="miFormulario">
+      <input type="text" name="nombre" placeholder="Nombre completo" required>
+      <input type="email" name="email" placeholder="Correo electrónico" required>
+      <textarea name="mensaje" placeholder="Escriba su mensaje" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
+    const form = document.getElementById("miFormulario");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const data = {
+        nombre: form.nombre.value,
+        email: form.email.value,
+        mensaje: form.mensaje.value
+      };
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        alert("✅ Enviado correctamente");
+        form.reset();
+      })
+      .catch(err => {
+        alert("❌ Error al enviar: " + err);
+      });
+    });
+  </script>
+</body>
+</html>
