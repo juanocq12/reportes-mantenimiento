@@ -63,10 +63,10 @@
 
     /* ===== FORM CONTAINER ===== */
     .form-container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 3rem auto;
       background: rgba(16, 44, 87, 0.95);
-      padding: 2rem;
+      padding: 2rem 3rem;
       border-radius: 1rem;
       box-shadow: 0 6px 15px rgba(0,0,0,0.5);
     }
@@ -74,6 +74,16 @@
       text-align: center;
       margin-bottom: 1.5rem;
       color: #06b6d4;
+    }
+    .section-title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      background: #0d274d;
+      padding: 0.6rem 1rem;
+      border-left: 5px solid #06b6d4;
+      font-size: 1.1rem;
+      color: #06b6d4;
+      border-radius: 0.3rem;
     }
     label {
       font-weight: bold;
@@ -94,6 +104,12 @@
       outline: 2px solid #06b6d4;
     }
     textarea { resize: vertical; }
+
+    .radio-group label {
+      display: block;
+      margin: 0.4rem 0;
+      font-weight: normal;
+    }
 
     /* Botones */
     .btn {
@@ -126,9 +142,6 @@
       border-top: 1px solid #0a2a57;
       margin-top: 3rem;
     }
-
-    /* Secciones dinámicas */
-    .form-section { display: none; margin-top: 1rem; }
   </style>
 </head>
 <body>
@@ -158,19 +171,44 @@
     <form id="reporteForm">
       
       <!-- Datos básicos -->
-      <label>Fecha</label>
-      <input type="date" name="fecha" required>
-
-      <label>Hora</label>
-      <input type="time" name="hora" required>
-
-      <label>Nombre completo</label>
-      <input type="text" name="nombre" required>
-
-      <label>Correo electrónico</label>
+      <div class="section-title">Datos del solicitante</div>
+      <label>Correo electrónico *</label>
       <input type="email" name="correo" required>
 
-      <label>Sede</label>
+      <label>Fecha *</label>
+      <input type="date" name="fecha" required>
+
+      <label>Hora *</label>
+      <input type="time" name="hora" required>
+
+      <label>Nombre completo *</label>
+      <input type="text" name="nombre" required>
+
+      <!-- Tipo de reporte -->
+      <div class="section-title">Tipo de reporte</div>
+      <div class="radio-group">
+        <label><input type="radio" name="tipo_reporte" value="Infraestructura" required> Infraestructura</label>
+        <label><input type="radio" name="tipo_reporte" value="Equipo médico"> Equipo médico</label>
+      </div>
+
+      <!-- Datos del área -->
+      <div class="section-title">Información de ubicación</div>
+      <label>Área específica *</label>
+      <select name="area" required>
+        <option value="">Seleccione...</option>
+        <option>Laboratorio</option>
+        <option>Enfermería</option>
+        <option>Consulta externa</option>
+        <option>Odontología</option>
+        <option>Administración</option>
+        <option>Atención al usuario</option>
+        <option>Áreas comunes</option>
+      </select>
+
+      <label>Ubicación específica *</label>
+      <input type="text" name="ubicacion">
+
+      <label>Sede donde está ubicado *</label>
       <select name="sede" required>
         <option value="">Seleccione...</option>
         <option>Sede 1</option>
@@ -179,11 +217,16 @@
         <option>Sede 4</option>
       </select>
 
-      <label>Ubicación específica</label>
-      <input type="text" name="ubicacion" placeholder="Ej: Consultorio 106">
+      <!-- Prioridad -->
+      <div class="section-title">Clasificación de prioridad</div>
+      <div class="radio-group">
+        <label><input type="radio" name="prioridad" value="Urgente" required> Urgente: se detiene el servicio (≤6h)</label>
+        <label><input type="radio" name="prioridad" value="Prioritario"> Prioritario: no detiene el servicio, pero debe resolverse (≤48h)</label>
+        <label><input type="radio" name="prioridad" value="Programado"> Programado: puede resolverse según cronograma (≤192h)</label>
+      </div>
 
-      <!-- Detalles del reporte -->
-      <label>Categoría del reporte</label>
+      <!-- Categoría -->
+      <div class="section-title">Categoría del reporte</div>
       <select id="categoria" name="categoria" required>
         <option value="">Seleccione...</option>
         <option value="infraestructura">Infraestructura y equipos de apoyo</option>
@@ -195,7 +238,7 @@
 
       <!-- Secciones dinámicas -->
       <div id="infraestructura" class="form-section">
-        <label>Descripción de la falla</label>
+        <label>Descripción de la falla de infraestructura</label>
         <textarea name="detalle_infra" rows="3"></textarea>
       </div>
       <div id="electricos" class="form-section">
@@ -215,15 +258,15 @@
         <textarea name="detalle_muebles" rows="3"></textarea>
       </div>
 
-      <label>Prioridad del caso</label>
-      <select name="prioridad" required>
-        <option value="">Seleccione...</option>
-        <option>Alta</option>
-        <option>Media</option>
-        <option>Baja</option>
-      </select>
+      <!-- Equipo y descripción -->
+      <label>Equipo específico</label>
+      <input type="text" name="equipo" placeholder="Ej: Teclado, Autoclave, Monitor...">
+
+      <label>Descripción detallada *</label>
+      <textarea name="descripcion" rows="3" required></textarea>
 
       <!-- Seguimiento -->
+      <div class="section-title">Seguimiento</div>
       <label>Estado</label>
       <select name="estado">
         <option>Pendiente</option>
@@ -237,7 +280,8 @@
       <label>Observaciones</label>
       <textarea name="observacion" rows="2"></textarea>
 
-      <button type="submit" class="btn primary">Enviar Reporte</button>
+      <!-- Botón enviar -->
+      <button type="submit" class="btn primary">Enviar Solicitud</button>
     </form>
   </section>
 
