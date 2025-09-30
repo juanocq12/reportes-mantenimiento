@@ -13,6 +13,7 @@
       background-color: #061c36;
       color: #fff;
       overflow-x: hidden;
+      line-height: 1.5;
     }
 
     /* ===== PARTICULAS ===== */
@@ -47,9 +48,7 @@
       font-weight: bold;
       font-size: 1.2rem;
     }
-    .brand img {
-      height: 40px;
-    }
+    .brand img { height: 40px; }
     .nav-links a {
       margin-left: 1.2rem;
       text-decoration: none;
@@ -57,33 +56,31 @@
       font-weight: 500;
       transition: color 0.3s;
     }
-    .nav-links a:hover {
-      color: #06b6d4;
-    }
+    .nav-links a:hover { color: #06b6d4; }
 
     /* ===== FORM CONTAINER ===== */
     .form-container {
-      max-width: 950px;
+      max-width: 900px;
       margin: 3rem auto;
       background: rgba(16, 44, 87, 0.95);
-      padding: 2rem 3rem;
+      padding: 2.5rem;
       border-radius: 1rem;
       box-shadow: 0 6px 15px rgba(0,0,0,0.5);
     }
     .form-container h2 {
       text-align: center;
-      margin-bottom: 1.5rem;
-      color: #06b6d4;
-    }
-    .section-title {
-      margin-top: 2rem;
       margin-bottom: 1rem;
-      background: #0d274d;
-      padding: 0.6rem 1rem;
-      border-left: 5px solid #06b6d4;
-      font-size: 1.1rem;
       color: #06b6d4;
-      border-radius: 0.3rem;
+      font-size: 1.8rem;
+    }
+    .form-section-title {
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #3b82f6;
+      border-bottom: 1px solid #0a2a57;
+      padding-bottom: 0.3rem;
     }
     label {
       font-weight: bold;
@@ -105,29 +102,21 @@
     }
     textarea { resize: vertical; }
 
-    .radio-group label {
-      display: block;
-      margin: 0.4rem 0;
-      font-weight: normal;
-    }
-
     /* Botones */
     .btn {
       display: inline-block;
       padding: 0.9rem 1.5rem;
       border-radius: 2rem;
-      text-decoration: none;
       font-weight: bold;
       transition: background 0.3s ease;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       cursor: pointer;
       font-size: 1rem;
-      text-align: center;
+      border: none;
     }
     .btn.primary {
       background: linear-gradient(to right, #06b6d4, #3b82f6);
       color: white;
-      border: none;
     }
     .btn.primary:hover {
       background: linear-gradient(to right, #0284c7, #2563eb);
@@ -142,6 +131,9 @@
       border-top: 1px solid #0a2a57;
       margin-top: 3rem;
     }
+
+    /* Secciones dinámicas */
+    .form-section { display: none; margin-top: 1rem; }
   </style>
 </head>
 <body>
@@ -170,65 +162,37 @@
     <h2>📋 Formulario de Reporte</h2>
     <form id="reporteForm">
       
-      <!-- Datos básicos -->
-      <div class="section-title">Datos del solicitante</div>
-      <label>Correo electrónico *</label>
-      <input type="email" name="correo" required>
-
-      <label>Fecha *</label>
+      <!-- DATOS DEL REPORTE -->
+      <div class="form-section-title">Datos básicos</div>
+      <label>Fecha</label>
       <input type="date" name="fecha" required>
 
-      <label>Hora *</label>
+      <label>Hora</label>
       <input type="time" name="hora" required>
 
-      <label>Nombre completo *</label>
-      <input type="text" name="nombre" required>
+      <label>Nombre completo</label>
+      <input type="text" name="nombre" placeholder="Ingrese su nombre completo" required>
 
-      <!-- Tipo de reporte -->
-      <div class="section-title">Tipo de reporte</div>
-      <div class="radio-group">
-        <label><input type="radio" name="tipo_reporte" value="Infraestructura" required> Infraestructura</label>
-        <label><input type="radio" name="tipo_reporte" value="Equipo médico"> Equipo médico</label>
-      </div>
+      <label>Correo electrónico</label>
+      <input type="email" name="correo" placeholder="ejemplo@correo.com" required>
 
-      <!-- Datos del área -->
-      <div class="section-title">Información de ubicación</div>
-      <label>Área específica *</label>
-      <select name="area" required>
-        <option value="">Seleccione...</option>
-        <option>Laboratorio</option>
-        <option>Enfermería</option>
-        <option>Consulta externa</option>
-        <option>Odontología</option>
-        <option>Administración</option>
-        <option>Atención al usuario</option>
-        <option>Áreas comunes</option>
-      </select>
-
-      <label>Ubicación específica *</label>
-      <input type="text" name="ubicacion">
-
-      <label>Sede donde está ubicado *</label>
+      <label>Sede</label>
       <select name="sede" required>
-        <option value="">Seleccione...</option>
+        <option value="">Seleccione una sede...</option>
         <option>Sede 1</option>
         <option>Sede 2</option>
         <option>Sede 3</option>
         <option>Sede 4</option>
       </select>
 
-      <!-- Prioridad -->
-      <div class="section-title">Clasificación de prioridad</div>
-      <div class="radio-group">
-        <label><input type="radio" name="prioridad" value="Urgente" required> Urgente: se detiene el servicio (≤6h)</label>
-        <label><input type="radio" name="prioridad" value="Prioritario"> Prioritario: no detiene el servicio, pero debe resolverse (≤48h)</label>
-        <label><input type="radio" name="prioridad" value="Programado"> Programado: puede resolverse según cronograma (≤192h)</label>
-      </div>
+      <label>Ubicación específica</label>
+      <input type="text" name="ubicacion" placeholder="Ej: Consultorio 106">
 
-      <!-- Categoría -->
-      <div class="section-title">Categoría del reporte</div>
+      <!-- DETALLES SEGÚN CATEGORÍA -->
+      <div class="form-section-title">Detalles del reporte</div>
+      <label>Categoría</label>
       <select id="categoria" name="categoria" required>
-        <option value="">Seleccione...</option>
+        <option value="">Seleccione una categoría...</option>
         <option value="infraestructura">Infraestructura y equipos de apoyo</option>
         <option value="electricos">Equipos eléctricos</option>
         <option value="electronicos">Equipos electrónicos</option>
@@ -238,35 +202,36 @@
 
       <!-- Secciones dinámicas -->
       <div id="infraestructura" class="form-section">
-        <label>Descripción de la falla de infraestructura</label>
-        <textarea name="detalle_infra" rows="3"></textarea>
+        <label>Descripción de la falla</label>
+        <textarea name="detalle_infra" rows="3" placeholder="Ej: Daño en la lámpara del consultorio"></textarea>
       </div>
       <div id="electricos" class="form-section">
         <label>Descripción de la falla eléctrica</label>
-        <textarea name="detalle_electrico" rows="3"></textarea>
+        <textarea name="detalle_electrico" rows="3" placeholder="Ej: No enciende el ventilador del área de espera"></textarea>
       </div>
       <div id="electronicos" class="form-section">
         <label>Descripción de la falla electrónica</label>
-        <textarea name="detalle_electronico" rows="3"></textarea>
+        <textarea name="detalle_electronico" rows="3" placeholder="Ej: Pantalla del monitor sin señal"></textarea>
       </div>
       <div id="computo" class="form-section">
         <label>Descripción del reporte de cómputo</label>
-        <textarea name="detalle_computo" rows="3"></textarea>
+        <textarea name="detalle_computo" rows="3" placeholder="Ej: El computador no arranca o presenta lentitud"></textarea>
       </div>
       <div id="muebles" class="form-section">
         <label>Descripción del reporte de muebles</label>
-        <textarea name="detalle_muebles" rows="3"></textarea>
+        <textarea name="detalle_muebles" rows="3" placeholder="Ej: Silla dañada o escritorio inestable"></textarea>
       </div>
 
-      <!-- Equipo y descripción -->
-      <label>Equipo específico</label>
-      <input type="text" name="equipo" placeholder="Ej: Teclado, Autoclave, Monitor...">
+      <label>Prioridad</label>
+      <select name="prioridad" required>
+        <option value="">Seleccione...</option>
+        <option>Alta</option>
+        <option>Media</option>
+        <option>Baja</option>
+      </select>
 
-      <label>Descripción detallada *</label>
-      <textarea name="descripcion" rows="3" required></textarea>
-
-      <!-- Seguimiento -->
-      <div class="section-title">Seguimiento</div>
+      <!-- SEGUIMIENTO -->
+      <div class="form-section-title">Seguimiento</div>
       <label>Estado</label>
       <select name="estado">
         <option>Pendiente</option>
@@ -275,13 +240,12 @@
       </select>
 
       <label>Responsable</label>
-      <input type="text" name="responsable">
+      <input type="text" name="responsable" placeholder="Persona a cargo del caso">
 
       <label>Observaciones</label>
-      <textarea name="observacion" rows="2"></textarea>
+      <textarea name="observacion" rows="2" placeholder="Notas adicionales sobre el caso"></textarea>
 
-      <!-- Botón enviar -->
-      <button type="submit" class="btn primary">Enviar Solicitud</button>
+      <button type="submit" class="btn primary">Enviar Reporte</button>
     </form>
   </section>
 
@@ -290,9 +254,10 @@
     &copy; 2025 IPS Interconsultas - Todos los derechos reservados
   </footer>
 
-  <!-- SCRIPTS PARTICULAS -->
+  <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
+    // 🎇 Configuración de partículas
     particlesJS("particles-js", {
       "particles": {
         "number": { "value": 60 },
@@ -303,8 +268,10 @@
     });
 
     // 🔄 Mostrar campos dinámicos según categoría
-    document.getElementById('categoria').addEventListener('change', function() {
-      document.querySelectorAll('.form-section').forEach(sec => sec.style.display = 'none');
+    const categoriaSelect = document.getElementById('categoria');
+    const secciones = document.querySelectorAll('.form-section');
+    categoriaSelect.addEventListener('change', function() {
+      secciones.forEach(sec => sec.style.display = 'none');
       if (this.value) {
         document.getElementById(this.value).style.display = 'block';
       }
@@ -322,4 +289,5 @@
   </script>
 </body>
 </html>
+
 
