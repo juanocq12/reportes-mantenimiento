@@ -2,47 +2,56 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario de Contacto - IPS Interconsultas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Reporte - IPS Interconsultas</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #061c36;
+      background-color: #061c36;
       color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin: 0; padding: 0;
     }
-    .form-container {
-      background: rgba(13,39,77,0.95);
+    header {
+      background: rgba(10,42,87,0.95);
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+    header h1 { margin: 0; font-size: 1.6rem; }
+    form {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #102c57;
       padding: 2rem;
       border-radius: 0.8rem;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
     h2 {
-      text-align: center;
-      margin-bottom: 1rem;
+      border-bottom: 1px solid #06b6d4;
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
     }
-    input, textarea {
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, select, textarea {
       width: 100%;
-      margin: 0.5rem 0;
-      padding: 0.8rem;
-      border-radius: 0.4rem;
-      border: none;
-      outline: none;
+      padding: 0.5rem;
+      margin-top: 0.4rem;
+      border-radius: 0.3rem;
+      border: 1px solid #ccc;
+      font-size: 1rem;
     }
+    textarea { min-height: 80px; }
     button {
-      width: 100%;
-      padding: 0.8rem;
+      margin-top: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(to right, #06b6d4, #3b82f6);
+      color: white;
       border: none;
       border-radius: 0.4rem;
-      background: linear-gradient(to right, #06b6d4, #3b82f6);
-      color: #fff;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 0.5rem;
     }
     button:hover {
       background: linear-gradient(to right, #0284c7, #2563eb);
@@ -50,40 +59,88 @@
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2>Formulario de Contacto</h2>
-    <form id="miFormulario">
-      <input type="text" name="nombre" placeholder="Nombre completo" required>
-      <input type="email" name="email" placeholder="Correo electrónico" required>
-      <textarea name="mensaje" placeholder="Escriba su mensaje" required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
-  </div>
+  <header>
+    <h1>Formulario de Reporte - IPS Interconsultas</h1>
+  </header>
 
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
-    const form = document.getElementById("miFormulario");
+  <form method="POST" action="YOUR_SCRIPT_URL">
+    <!-- DATOS BÁSICOS -->
+    <h2>Datos básicos</h2>
+    <label>Marca temporal <input type="datetime-local" name="Marca temporal"></label>
+    <label>Dirección de correo electrónico <input type="email" name="Correo"></label>
+    <label>Fecha <input type="date" name="Fecha"></label>
+    <label>Hora <input type="time" name="Hora"></label>
+    <label>Nombre completo <input type="text" name="Nombre"></label>
+    <label>Reporte ingresa por <input type="text" name="Ingreso"></label>
 
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      const data = {
-        nombre: form.nombre.value,
-        email: form.email.value,
-        mensaje: form.mensaje.value
-      };
+    <!-- INFORMACIÓN DEL REPORTE -->
+    <h2>Información del reporte</h2>
+    <label>El reporte se relaciona con
+      <select name="Relacion">
+        <option>Infraestructura</option>
+        <option>Equipos médicos</option>
+        <option>Soporte tecnológico</option>
+        <option>Otro</option>
+      </select>
+    </label>
+    <label>Área específica <input type="text" name="Area"></label>
+    <label>Ubicación específica <input type="text" name="Ubicacion"></label>
+    <label>Sede donde está ubicado <input type="text" name="Sede"></label>
+    <label>Clasificación de prioridad
+      <select name="Prioridad">
+        <option>Baja</option>
+        <option>Media</option>
+        <option>Alta</option>
+        <option>Crítica</option>
+      </select>
+    </label>
+    <label>Categoría del reporte <input type="text" name="Categoria"></label>
+    <label>El equipo a reportar es <input type="text" name="Equipo"></label>
 
-      fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(data)
-      })
-      .then(res => {
-        alert("✅ Enviado correctamente");
-        form.reset();
-      })
-      .catch(err => {
-        alert("❌ Error al enviar: " + err);
-      });
-    });
-  </script>
+    <!-- DETALLES DEL DAÑO -->
+    <h2>Detalles del daño</h2>
+    <label>Daño a reportar <input type="text" name="Daño"></label>
+    <label>Prioridad del caso <input type="text" name="PrioridadCaso"></label>
+    <label>Infraestructura y equipos de apoyo - Descripción
+      <textarea name="DescInfraestructura"></textarea>
+    </label>
+    <label>Equipos eléctricos - Descripción
+      <textarea name="DescElectricos"></textarea>
+    </label>
+    <label>Equipos electrónicos - Descripción
+      <textarea name="DescElectronicos"></textarea>
+    </label>
+    <label>Equipos de cómputo - Descripción
+      <textarea name="DescComputo"></textarea>
+    </label>
+    <label>Muebles y enseres - Descripción
+      <textarea name="DescMuebles"></textarea>
+    </label>
+
+    <!-- ESTADO Y CIERRE -->
+    <h2>Seguimiento y cierre</h2>
+    <label>Estado
+      <select name="Estado">
+        <option>Pendiente</option>
+        <option>En gestión</option>
+        <option>Finalizado</option>
+      </select>
+    </label>
+    <label>Descripción <textarea name="DescripcionEstado"></textarea></label>
+    <label>Fecha de cierre <input type="date" name="FechaCierre"></label>
+    <label>Hora de cierre <input type="time" name="HoraCierre"></label>
+    <label>Observación <textarea name="Observacion"></textarea></label>
+    <label>Responsable <input type="text" name="Responsable"></label>
+    <label>Enviado al correo <input type="email" name="EnviadoCorreo"></label>
+    <label>Se cumplió
+      <select name="Cumplio">
+        <option>Sí</option>
+        <option>No</option>
+      </select>
+    </label>
+    <label>Tiempo de respuesta <input type="text" name="TiempoRespuesta"></label>
+
+    <button type="submit">Enviar Reporte</button>
+  </form>
 </body>
 </html>
