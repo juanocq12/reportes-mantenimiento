@@ -155,103 +155,99 @@
       <!-- DATOS BÁSICOS -->
       <div class="section-title">Datos básicos</div>
       <label>Fecha</label>
-      <input type="date" name="fecha" required>
+      <input type="text" name="fecha" id="fecha" readonly>
       <label>Hora</label>
-      <input type="time" name="hora" required>
+      <input type="text" name="hora" id="hora" readonly>
       <label>Nombre completo</label>
       <input type="text" name="nombre" required>
-      <label>Correo electrónico</label>
-      <input type="email" name="correo" required>
-
-      <!-- UBICACIÓN -->
-      <div class="section-title">Ubicación y relación</div>
-      <label>Reporte ingresa por</label>
-      <select name="ingresa_por" required>
+      <label>Tipo de reporte</label>
+      <select id="tipo_reporte" name="tipo_reporte" required>
         <option value="">Seleccione...</option>
-        <option>Personal asistencial</option>
-        <option>Administrativo</option>
-        <option>Mantenimiento</option>
-      </select>
-      <label>Se relaciona con</label>
-      <select name="relacion" required>
-        <option value="">Seleccione...</option>
-        <option>Infraestructura</option>
-        <option>Equipos biomédicos</option>
-        <option>Equipos de cómputo</option>
-        <option>Otros</option>
-      </select>
-      <label>Área específica</label>
-      <input type="text" name="area" placeholder="Ej: Hospitalización">
-      <label>Ubicación específica</label>
-      <input type="text" name="ubicacion" placeholder="Ej: Consultorio 106">
-      <label>Sede</label>
-      <select name="sede" required>
-        <option value="">Seleccione...</option>
-        <option>Sede 1</option>
-        <option>Sede 2</option>
-        <option>Sede 3</option>
-        <option>Sede 4</option>
+        <option value="infraestructura">Infraestructura</option>
+        <option value="equipo_medico">Equipo médico</option>
       </select>
 
-      <!-- CLASIFICACIÓN -->
-      <div class="section-title">Clasificación</div>
-      <label>Prioridad</label>
-      <select name="prioridad" required>
-        <option value="">Seleccione...</option>
-        <option>Alta</option>
-        <option>Media</option>
-        <option>Baja</option>
-      </select>
-      <label>Categoría del reporte</label>
-      <select id="categoria" name="categoria" required>
-        <option value="">Seleccione...</option>
-        <option value="infraestructura">Infraestructura y equipos de apoyo</option>
-        <option value="electricos">Equipos eléctricos</option>
-        <option value="electronicos">Equipos electrónicos</option>
-        <option value="computo">Equipos de cómputo</option>
-        <option value="muebles">Muebles y enseres</option>
-      </select>
-      <label>Equipo a reportar</label>
-      <input type="text" name="equipo" placeholder="Ej: Monitor de signos vitales">
-      <label>Daño a reportar</label>
-      <input type="text" name="danio" placeholder="Ej: No enciende">
-
-      <!-- DETALLES DINÁMICOS -->
+      <!-- INFRAESTRUCTURA -->
       <div id="infraestructura" class="form-section">
-        <label>Descripción de la novedad en infraestructura</label>
-        <textarea name="detalle_infra" rows="3"></textarea>
-      </div>
-      <div id="electricos" class="form-section">
-        <label>Descripción de la falla eléctrica</label>
-        <textarea name="detalle_electrico" rows="3"></textarea>
-      </div>
-      <div id="electronicos" class="form-section">
-        <label>Descripción de la falla electrónica</label>
-        <textarea name="detalle_electronico" rows="3"></textarea>
-      </div>
-      <div id="computo" class="form-section">
-        <label>Descripción del problema de cómputo</label>
-        <textarea name="detalle_computo" rows="3"></textarea>
-      </div>
-      <div id="muebles" class="form-section">
-        <label>Descripción del daño en muebles</label>
-        <textarea name="detalle_muebles" rows="3"></textarea>
+        <div class="section-title">Reporte de Infraestructura</div>
+        <label>Área específica</label>
+        <select name="area_infra">
+          <option value="">Seleccione...</option>
+          <option>Recepción</option>
+          <option>Hospitalización</option>
+          <option>Urgencias</option>
+          <option>Laboratorio</option>
+          <option>Farmacia</option>
+        </select>
+        <label>Ubicación específica</label>
+        <select name="ubicacion_infra">
+          <option>Piso 1</option>
+          <option>Piso 2</option>
+          <option>Piso 3</option>
+          <option>Sótano</option>
+        </select>
+        <label>Sede donde está ubicado</label>
+        <select name="sede_infra">
+          <option>Sede Principal</option>
+          <option>Sede Norte</option>
+          <option>Sede Centro</option>
+        </select>
+        <label>Clasificación de prioridad</label>
+        <select name="prioridad_infra">
+          <option>Urgente</option>
+          <option>Alta</option>
+          <option>Media</option>
+          <option>Baja</option>
+        </select>
+        <label>Categoría del reporte</label>
+        <select id="categoria_infra" name="categoria_infra">
+          <option>Eléctrico</option>
+          <option>Pintura</option>
+          <option>Iluminación</option>
+          <option>Plomería</option>
+          <option>Aire acondicionado</option>
+          <option>Otros</option>
+        </select>
+        <label>Descripción detallada</label>
+        <textarea name="descripcion_infra" rows="3"></textarea>
       </div>
 
-      <!-- CAMPOS OCULTOS PARA COLUMNAS EXTRAS -->
-      <input type="hidden" name="estado" value="">
-      <input type="hidden" name="descripcion_estado" value="">
-      <input type="hidden" name="fecha_cierre" value="">
-      <input type="hidden" name="hora_cierre" value="">
-      <input type="hidden" name="observacion" value="">
-      <input type="hidden" name="responsable" value="">
-      <input type="hidden" name="enviado_correo" value="">
-      <input type="hidden" name="cumplio" value="">
-      <input type="hidden" name="tiempo_respuesta" value="">
-      <input type="hidden" name="columna37" value="">
-      <input type="hidden" name="columna38" value="">
-      <input type="hidden" name="columna39" value="">
-      <input type="hidden" name="columna40" value="">
+      <!-- EQUIPO MÉDICO -->
+      <div id="equipo_medico" class="form-section">
+        <div class="section-title">Reporte de Equipo Médico</div>
+        <label>Equipo a reportar</label>
+        <select name="equipo_medico_nombre">
+          <option>Desfibrilador</option>
+          <option>Electrocardiógrafo</option>
+          <option>Tensiómetro</option>
+          <option>Báscula pediátrica</option>
+          <option>Centrífuga</option>
+        </select>
+        <label>Sede donde se ubica</label>
+        <select name="sede_medica">
+          <option>Sede Principal</option>
+          <option>Sede Norte</option>
+          <option>Sede Centro</option>
+        </select>
+        <label>Área</label>
+        <select name="area_medica">
+          <option>Hospitalización</option>
+          <option>Laboratorio</option>
+          <option>Urgencias</option>
+          <option>Farmacia</option>
+        </select>
+        <label>Ubicación específica</label>
+        <input type="text" name="ubicacion_medica" placeholder="Ej: Cubículo 2 o consultorio 5">
+        <label>Daño a reportar</label>
+        <textarea name="danio_medico" rows="3"></textarea>
+        <label>Prioridad del caso</label>
+        <select name="prioridad_medica">
+          <option>Crítica</option>
+          <option>Alta</option>
+          <option>Media</option>
+          <option>Baja</option>
+        </select>
+      </div>
 
       <button type="submit" class="btn primary">Enviar Reporte</button>
     </form>
@@ -262,9 +258,10 @@
     &copy; 2025 IPS Interconsultas - Todos los derechos reservados
   </footer>
 
-  <!-- PARTICULAS -->
+  <!-- PARTICULAS Y LÓGICA -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
+    // Efecto de partículas
     particlesJS("particles-js", {
       "particles": {
         "number": { "value": 60 },
@@ -274,12 +271,16 @@
       }
     });
 
-    // Mostrar campos según categoría
-    document.getElementById('categoria').addEventListener('change', function() {
-      document.querySelectorAll('.form-section').forEach(sec => sec.style.display = 'none');
-      if (this.value) {
-        document.getElementById(this.value).style.display = 'block';
-      }
+    // Fecha y hora automáticas
+    const ahora = new Date();
+    document.getElementById("fecha").value = ahora.toLocaleDateString();
+    document.getElementById("hora").value = ahora.toLocaleTimeString();
+
+    // Mostrar secciones condicionales
+    const tipo = document.getElementById("tipo_reporte");
+    tipo.addEventListener("change", function() {
+      document.querySelectorAll(".form-section").forEach(sec => sec.style.display = "none");
+      if (this.value) document.getElementById(this.value).style.display = "block";
     });
 
     // Envío a Google Apps Script
@@ -287,7 +288,7 @@
     const form = document.getElementById("reporteForm");
     form.addEventListener("submit", e => {
       e.preventDefault();
-      fetch(scriptURL, { method: "POST", body: new FormData(form)})
+      fetch(scriptURL, { method: "POST", body: new FormData(form) })
         .then(() => { alert("✅ Reporte enviado correctamente"); form.reset(); })
         .catch(error => alert("❌ Error al enviar: " + error.message));
     });
