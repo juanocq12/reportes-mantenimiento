@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IPS Interconsultas - Formulario de Reporte</title>
+  <title>IPS Interconsultas - Reporte de Novedad</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #061c36;
       color: #fff;
-      line-height: 1.6;
     }
 
     #particles-js {
@@ -27,9 +25,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
     }
-
     .nav-inner {
       display: flex;
       align-items: center;
@@ -37,7 +33,6 @@
       max-width: 1100px;
       margin: 0 auto;
     }
-
     .brand {
       display: flex;
       align-items: center;
@@ -47,9 +42,7 @@
       font-weight: bold;
       font-size: 1.2rem;
     }
-
-    .brand img { height: 42px; }
-
+    .brand img { height: 40px; }
     .nav-links a {
       margin-left: 1.2rem;
       text-decoration: none;
@@ -57,55 +50,48 @@
       font-weight: 500;
       transition: color 0.3s;
     }
-
     .nav-links a:hover { color: #06b6d4; }
 
-    /* FORMULARIO */
     .form-container {
       max-width: 900px;
       margin: 3rem auto;
       background: rgba(16, 44, 87, 0.95);
-      padding: 2.5rem;
+      padding: 2rem;
       border-radius: 1rem;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-      animation: fadeIn 0.6s ease;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
     }
-
     .form-container h2 {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       color: #06b6d4;
-      font-size: 1.8rem;
     }
-
-    .section {
-      background: rgba(13, 39, 77, 0.8);
-      border-radius: 0.8rem;
-      padding: 1.2rem 1.5rem;
+    .progress-bar {
+      height: 8px;
+      background: #0a2a57;
+      border-radius: 5px;
       margin-bottom: 1.5rem;
-      transition: all 0.3s ease;
+      overflow: hidden;
     }
-
-    .section:hover {
-      background: rgba(18, 54, 100, 0.9);
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #06b6d4, #3b82f6);
+      transition: width 0.3s ease;
     }
-
     .section-title {
+      margin-top: 1.5rem;
+      margin-bottom: 0.8rem;
       font-size: 1.1rem;
       color: #3b82f6;
-      font-weight: bold;
-      margin-bottom: 0.8rem;
-      border-left: 4px solid #06b6d4;
-      padding-left: 0.6rem;
+      border-bottom: 1px solid #0a2a57;
+      padding-bottom: 0.3rem;
     }
-
     label {
-      font-weight: 600;
+      font-weight: bold;
       display: block;
-      margin-top: 0.9rem;
+      margin-top: 1rem;
       margin-bottom: 0.3rem;
     }
-
     input, select, textarea {
       width: 100%;
       padding: 0.7rem;
@@ -115,43 +101,29 @@
       color: #fff;
       font-size: 1rem;
     }
-
     input:focus, select:focus, textarea:focus {
       outline: 2px solid #06b6d4;
     }
-
     textarea { resize: vertical; }
 
-    .form-section {
-      display: none;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.4s ease;
-    }
-
-    .form-section.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 0.9rem;
+      display: inline-block;
+      padding: 0.9rem 1.5rem;
       border-radius: 2rem;
+      text-decoration: none;
       font-weight: bold;
-      font-size: 1.1rem;
-      border: none;
-      cursor: pointer;
-      background: linear-gradient(to right, #06b6d4, #3b82f6);
-      color: #fff;
       transition: background 0.3s ease;
       margin-top: 1.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      text-align: center;
     }
-
-    .btn:hover {
+    .btn.primary {
+      background: linear-gradient(to right, #06b6d4, #3b82f6);
+      color: white;
+      border: none;
+    }
+    .btn.primary:hover {
       background: linear-gradient(to right, #0284c7, #2563eb);
     }
 
@@ -162,12 +134,32 @@
       font-size: 0.9rem;
       border-top: 1px solid #0a2a57;
       margin-top: 3rem;
-      color: #a0aec0;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .form-section { display: none; margin-top: 1rem; }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    .modal-content {
+      background: rgba(16,44,87,0.95);
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 0 15px #06b6d4;
+    }
+    .modal-content h3 {
+      margin-bottom: 1rem;
+      color: #06b6d4;
     }
   </style>
 </head>
@@ -183,130 +175,87 @@
       </a>
       <div class="nav-links">
         <a href="#">Inicio</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#contacto">Contacto</a>
-        <a href="#formulario">Formulario</a>
-        <a href="#reportes">Reportes</a>
+        <a href="#">Servicios</a>
+        <a href="#">Contacto</a>
+        <a href="#">Formulario</a>
+        <a href="#">Reportes</a>
       </div>
     </div>
   </nav>
 
   <!-- FORM -->
-  <section class="form-container" id="formulario">
-    <h2>📋 Reportar una Novedad</h2>
+  <section class="form-container">
+    <h2>📋 Reportar una novedad</h2>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+
     <form id="reporteForm">
+      <label>ID del Reporte</label>
+      <input type="text" id="idReporte" name="idReporte" readonly>
 
-      <!-- DATOS BÁSICOS -->
-      <div class="section">
-        <div class="section-title">Datos básicos</div>
-        <label>Fecha</label>
-        <input type="text" name="fecha" id="fecha" readonly>
-        <label>Hora</label>
-        <input type="text" name="hora" id="hora" readonly>
-        <label>Nombre completo</label>
-        <input type="text" name="nombre" required>
-        <label>Tipo de reporte</label>
-        <select id="tipo_reporte" name="tipo_reporte" required>
-          <option value="">Seleccione...</option>
-          <option value="infraestructura">Infraestructura</option>
-          <option value="equipo_medico">Equipo médico</option>
-        </select>
-      </div>
+      <label>Fecha</label>
+      <input type="text" id="fecha" name="fecha" readonly>
 
-      <!-- INFRAESTRUCTURA -->
-      <div id="infraestructura" class="form-section section">
-        <div class="section-title">🏗️ Reporte de Infraestructura</div>
+      <label>Hora</label>
+      <input type="text" id="hora" name="hora" readonly>
+
+      <label>Nombre completo</label>
+      <input type="text" name="nombre" required>
+
+      <label>Tipo de reporte</label>
+      <select id="tipo_reporte" name="tipo_reporte" required>
+        <option value="">Seleccione...</option>
+        <option value="infraestructura">Infraestructura</option>
+        <option value="equipo_medico">Equipo médico</option>
+      </select>
+
+      <!-- Infraestructura -->
+      <div id="infraestructura" class="form-section">
+        <div class="section-title">Infraestructura</div>
         <label>Área específica</label>
         <select name="area_infra">
-          <option>Recepción</option>
-          <option>Hospitalización</option>
-          <option>Urgencias</option>
-          <option>Laboratorio</option>
-          <option>Farmacia</option>
+          <option>Recepción</option><option>Hospitalización</option><option>Urgencias</option>
+          <option>Laboratorio</option><option>Farmacia</option>
         </select>
-        <label>Ubicación específica</label>
-        <select name="ubicacion_infra">
-          <option>Piso 1</option>
-          <option>Piso 2</option>
-          <option>Piso 3</option>
-          <option>Sótano</option>
-        </select>
-        <label>Sede donde está ubicado</label>
-        <select name="sede_infra">
-          <option>Sede Principal</option>
-          <option>Sede Norte</option>
-          <option>Sede Centro</option>
-        </select>
-        <label>Clasificación de prioridad</label>
-        <select name="prioridad_infra">
-          <option>Urgente</option>
-          <option>Alta</option>
-          <option>Media</option>
-          <option>Baja</option>
-        </select>
-        <label>Categoría del reporte</label>
-        <select id="categoria_infra" name="categoria_infra">
-          <option>Eléctrico</option>
-          <option>Pintura</option>
-          <option>Iluminación</option>
-          <option>Plomería</option>
-          <option>Aire acondicionado</option>
-          <option>Otros</option>
-        </select>
-        <label>Descripción detallada</label>
-        <textarea name="descripcion_infra" rows="3" placeholder="Describa el problema..."></textarea>
+        <label>Descripción</label>
+        <textarea name="desc_infra" rows="3"></textarea>
       </div>
 
-      <!-- EQUIPO MÉDICO -->
-      <div id="equipo_medico" class="form-section section">
-        <div class="section-title">⚙️ Reporte de Equipo Médico</div>
-        <label>Equipo a reportar</label>
+      <!-- Equipo médico -->
+      <div id="equipo_medico" class="form-section">
+        <div class="section-title">Equipo Médico</div>
+        <label>Equipo</label>
         <select name="equipo_medico_nombre">
-          <option>Desfibrilador</option>
-          <option>Electrocardiógrafo</option>
-          <option>Tensiómetro</option>
-          <option>Báscula pediátrica</option>
-          <option>Centrífuga</option>
+          <option>Desfibrilador</option><option>Electrocardiógrafo</option>
+          <option>Tensiómetro</option><option>Centrífuga</option>
         </select>
-        <label>Sede donde se ubica</label>
-        <select name="sede_medica">
-          <option>Sede Principal</option>
-          <option>Sede Norte</option>
-          <option>Sede Centro</option>
-        </select>
-        <label>Área</label>
-        <select name="area_medica">
-          <option>Hospitalización</option>
-          <option>Laboratorio</option>
-          <option>Urgencias</option>
-          <option>Farmacia</option>
-        </select>
-        <label>Ubicación específica</label>
-        <input type="text" name="ubicacion_medica" placeholder="Ej: Cubículo 2 o consultorio 5">
-        <label>Daño a reportar</label>
-        <textarea name="danio_medico" rows="3" placeholder="Describa el daño o la falla..."></textarea>
-        <label>Prioridad del caso</label>
-        <select name="prioridad_medica">
-          <option>Crítica</option>
-          <option>Alta</option>
-          <option>Media</option>
-          <option>Baja</option>
-        </select>
+        <label>Daño o novedad</label>
+        <textarea name="danio_medico" rows="3"></textarea>
       </div>
 
-      <button type="submit" class="btn">Enviar Reporte</button>
+      <label>Adjuntar imagen o evidencia</label>
+      <input type="file" name="imagen" accept="image/*">
+
+      <button type="submit" class="btn primary">Enviar Reporte</button>
     </form>
   </section>
 
-  <!-- FOOTER -->
+  <!-- Modal -->
+  <div class="modal" id="modalExito">
+    <div class="modal-content">
+      <h3>✅ Reporte enviado correctamente</h3>
+      <p>Su novedad ha sido registrada exitosamente.</p>
+      <button class="btn primary" id="cerrarModal">Cerrar</button>
+    </div>
+  </div>
+
   <footer>
-    &copy; 2025 IPS Interconsultas - Desarrollado por CorreQ
+    &copy; 2025 IPS Interconsultas - Todos los derechos reservados
   </footer>
 
-  <!-- PARTICULAS Y LÓGICA -->
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
-    // Fondo animado
+    // Partículas
     particlesJS("particles-js", {
       "particles": {
         "number": { "value": 60 },
@@ -316,29 +265,49 @@
       }
     });
 
-    // Fecha y hora automáticas
-    const ahora = new Date();
-    document.getElementById("fecha").value = ahora.toLocaleDateString();
-    document.getElementById("hora").value = ahora.toLocaleTimeString();
+    // Fecha, hora e ID
+    const fecha = new Date();
+    document.getElementById("fecha").value = fecha.toLocaleDateString();
+    document.getElementById("hora").value = fecha.toLocaleTimeString();
+    document.getElementById("idReporte").value = "REP-" + fecha.getFullYear() + "-" + Math.floor(Math.random()*10000);
 
-    // Mostrar secciones condicionales con animación
-    const tipo = document.getElementById("tipo_reporte");
-    tipo.addEventListener("change", function() {
-      document.querySelectorAll(".form-section").forEach(sec => sec.classList.remove("show"));
-      if (this.value) document.getElementById(this.value).classList.add("show");
+    // Mostrar secciones según tipo
+    document.getElementById("tipo_reporte").addEventListener("change", function(){
+      document.querySelectorAll(".form-section").forEach(s=>s.style.display="none");
+      if(this.value) document.getElementById(this.value).style.display="block";
     });
 
-    // Envío al script de Google Apps Script
+    // Barra de progreso
+    const inputs = document.querySelectorAll("input, select, textarea");
+    const progress = document.getElementById("progress");
+    inputs.forEach(el=>{
+      el.addEventListener("input", ()=>{
+        const filled = [...inputs].filter(i=>i.value.trim()!=="").length;
+        const percent = Math.round((filled / inputs.length) * 100);
+        progress.style.width = percent + "%";
+      });
+    });
+
+    // Modal
+    const modal = document.getElementById("modalExito");
+    const cerrar = document.getElementById("cerrarModal");
+
+    cerrar.onclick = ()=>modal.style.display="none";
+
+    // Envío de datos
     const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
     const form = document.getElementById("reporteForm");
-    form.addEventListener("submit", e => {
+    form.addEventListener("submit", e=>{
       e.preventDefault();
-      fetch(scriptURL, { method: "POST", body: new FormData(form) })
-        .then(() => { alert("✅ Reporte enviado correctamente"); form.reset(); })
-        .catch(error => alert("❌ Error al enviar: " + error.message));
+      fetch(scriptURL, { method: "POST", body: new FormData(form)})
+        .then(()=>{
+          modal.style.display="flex";
+          form.reset();
+          progress.style.width="0%";
+        })
+        .catch(err=>alert("❌ Error al enviar: " + err.message));
     });
   </script>
 </body>
 </html>
-
 
