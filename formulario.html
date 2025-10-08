@@ -1,258 +1,476 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IPS Interconsultas - Reporte de Novedad</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IPS Interconsultas - Formulario avanzado de mantenimiento</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* Manteniendo su paleta y estilo, pero mejorando la lectura y jerarquía */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body { height: 100%; }
     body {
       font-family: Arial, sans-serif;
       background-color: #061c36;
       color: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+      padding-bottom: 60px;
     }
 
-    #particles-js {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-    }
+    #particles-js { position: fixed; inset: 0; z-index: -1; }
 
     nav {
-      background: rgba(10, 42, 87, 0.95);
+      background: rgba(10,42,87,0.95);
       padding: 1rem 2rem;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
     }
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .brand img { height: 40px; }
-    .nav-links a {
-      margin-left: 1.2rem;
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: #06b6d4; }
+    .nav-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+    .brand { display:flex; gap:.6rem; align-items:center; color:#fff; text-decoration:none; font-weight:700; }
+    .brand img { height:40px; }
+    .nav-links a { color:#fff; text-decoration:none; margin-left:1.2rem; font-weight:500; }
+    .nav-links a:hover { color:#06b6d4; }
+
+    .wrap { max-width:1100px; margin: 2.5rem auto; padding: 0 1rem; }
 
     .form-container {
-      max-width: 900px;
-      margin: 3rem auto;
-      background: rgba(16, 44, 87, 0.95);
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-    }
-    .form-container h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: #06b6d4;
-    }
-    .progress-bar {
-      height: 8px;
-      background: #0a2a57;
-      border-radius: 5px;
-      margin-bottom: 1.5rem;
-      overflow: hidden;
-    }
-    .progress {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, #06b6d4, #3b82f6);
-      transition: width 0.3s ease;
-    }
-    .section-title {
-      margin-top: 1.5rem;
-      margin-bottom: 0.8rem;
-      font-size: 1.1rem;
-      color: #3b82f6;
-      border-bottom: 1px solid #0a2a57;
-      padding-bottom: 0.3rem;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 1rem;
-      margin-bottom: 0.3rem;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.7rem;
-      border: none;
-      border-radius: 0.5rem;
-      background: #0d274d;
-      color: #fff;
-      font-size: 1rem;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: 2px solid #06b6d4;
-    }
-    textarea { resize: vertical; }
-
-    .btn {
-      display: inline-block;
-      padding: 0.9rem 1.5rem;
-      border-radius: 2rem;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-      margin-top: 1.5rem;
-      cursor: pointer;
-      font-size: 1rem;
-      text-align: center;
-    }
-    .btn.primary {
-      background: linear-gradient(to right, #06b6d4, #3b82f6);
-      color: white;
-      border: none;
-    }
-    .btn.primary:hover {
-      background: linear-gradient(to right, #0284c7, #2563eb);
-    }
-
-    footer {
-      text-align: center;
-      background: #061c36;
-      padding: 1rem;
-      font-size: 0.9rem;
-      border-top: 1px solid #0a2a57;
-      margin-top: 3rem;
-    }
-
-    .form-section { display: none; margin-top: 1rem; }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    .modal-content {
       background: rgba(16,44,87,0.95);
-      padding: 2rem;
-      border-radius: 1rem;
-      text-align: center;
-      color: #fff;
-      box-shadow: 0 0 15px #06b6d4;
+      padding: 1.6rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
     }
-    .modal-content h3 {
-      margin-bottom: 1rem;
-      color: #06b6d4;
+
+    .header-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:0.75rem; }
+    .title {
+      display:flex; gap:.8rem; align-items:center;
+    }
+    .title h1 { color:#06b6d4; font-size:1.3rem; margin-bottom:.1rem; }
+    .subtitle { color:#a8c5e6; font-size:.9rem; }
+
+    .progress-bar { height:8px; background:#0a2a57; border-radius:6px; overflow:hidden; margin: 1rem 0; }
+    .progress { width:0%; height:100%; background:linear-gradient(90deg,#06b6d4,#3b82f6); transition:width .25s ease; }
+
+    form .card { background: rgba(13,39,77,0.85); padding:1rem; border-radius:10px; margin-bottom:1rem; border:1px solid rgba(6,182,212,0.06); }
+    .card .section-title { display:flex; align-items:center; gap:.6rem; font-weight:700; color:#3b82f6; margin-bottom:.6rem; border-left:4px solid #06b6d4; padding-left:.6rem; }
+    label { display:block; margin-top:.5rem; margin-bottom:.35rem; font-weight:600; color:#e5f4ff; }
+    input[type="text"], input[type="email"], input[type="file"], select, textarea {
+      width:100%; padding:.7rem; border-radius:8px; background:#0d274d; border:none; color:#fff; font-size:1rem;
+    }
+    input[readonly] { opacity:.9; background:#09203f; }
+    textarea { min-height:80px; resize:vertical; }
+
+    .row { display:flex; gap:1rem; margin-top:.5rem; }
+    .col { flex:1; }
+
+    .small { font-size:.9rem; color:#9fc7e2; margin-top:.4rem; }
+
+    .btn { display:inline-block; border-radius:30px; padding:.9rem 1.2rem; font-weight:700; cursor:pointer; border:none; }
+    .btn.primary { background:linear-gradient(90deg,#06b6d4,#3b82f6); color:#fff; }
+    .btn.ghost { background:transparent; color:#a8c5e6; border:1px solid rgba(255,255,255,0.06); }
+
+    .footer { text-align:center; color:#a0aec0; margin-top:1rem; font-size:.9rem; }
+
+    /* modal */
+    .modal { position:fixed; inset:0; display:none; background:rgba(0,0,0,0.7); z-index:60; align-items:center; justify-content:center; padding:1rem; }
+    .modal .box { background:rgba(16,44,87,0.98); padding:1.4rem; border-radius:10px; width:100%; max-width:520px; box-shadow:0 6px 18px rgba(6,182,212,0.08); text-align:center; color:#fff; }
+    .modal h3 { color:#06b6d4; margin-bottom:.6rem; }
+
+    /* responsive */
+    @media (max-width:800px) {
+      .row { flex-direction:column; }
+      .header-row { flex-direction:column; align-items:flex-start; gap:.5rem; }
     }
   </style>
 </head>
 <body>
   <div id="particles-js"></div>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-inner">
       <a class="brand" href="#">
-        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo IPS Interconsultas">
-        <span class="title">IPS Interconsultas</span>
+        <img src="Logo-Interconsultas-01b-500px.png" alt="Logo">
+        <div>
+          <div style="font-weight:800">IPS Interconsultas</div>
+          <div style="font-size:.85rem;color:#a8c5e6">Solicitudes a Mantenimiento (locativo y biomédico)</div>
+        </div>
       </a>
       <div class="nav-links">
         <a href="#">Inicio</a>
-        <a href="#">Servicios</a>
-        <a href="#">Contacto</a>
-        <a href="#">Formulario</a>
-        <a href="#">Reportes</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#formulario">Formulario</a>
+        <a href="#reportes">Reportes</a>
       </div>
     </div>
   </nav>
 
-  <!-- FORM -->
-  <section class="form-container">
-    <h2>📋 Reportar una novedad</h2>
-    <div class="progress-bar"><div class="progress" id="progress"></div></div>
-
-    <form id="reporteForm">
-      <label>ID del Reporte</label>
-      <input type="text" id="idReporte" name="idReporte" readonly>
-
-      <label>Fecha</label>
-      <input type="text" id="fecha" name="fecha" readonly>
-
-      <label>Hora</label>
-      <input type="text" id="hora" name="hora" readonly>
-
-      <label>Nombre completo</label>
-      <input type="text" name="nombre" required>
-
-      <label>Tipo de reporte</label>
-      <select id="tipo_reporte" name="tipo_reporte" required>
-        <option value="">Seleccione...</option>
-        <option value="infraestructura">Infraestructura</option>
-        <option value="equipo_medico">Equipo médico</option>
-      </select>
-
-      <!-- Infraestructura -->
-      <div id="infraestructura" class="form-section">
-        <div class="section-title">Infraestructura</div>
-        <label>Área específica</label>
-        <select name="area_infra">
-          <option>Recepción</option><option>Hospitalización</option><option>Urgencias</option>
-          <option>Laboratorio</option><option>Farmacia</option>
-        </select>
-        <label>Descripción</label>
-        <textarea name="desc_infra" rows="3"></textarea>
+  <div class="wrap">
+    <section class="form-container" id="formulario">
+      <div class="header-row">
+        <div class="title">
+          <h1>📋 Solicitud a Mantenimiento — Formulario</h1>
+          <div class="subtitle">Sección 1 de 8 · Este formulario captura correo, fecha y hora automáticas.</div>
+        </div>
+        <div style="text-align:right">
+          <div id="userEmail" class="small">Usuario: (correo se captura al enviar)</div>
+          <div class="small" id="idNote">ID: -</div>
+        </div>
       </div>
 
-      <!-- Equipo médico -->
-      <div id="equipo_medico" class="form-section">
-        <div class="section-title">Equipo Médico</div>
-        <label>Equipo</label>
-        <select name="equipo_medico_nombre">
-          <option>Desfibrilador</option><option>Electrocardiógrafo</option>
-          <option>Tensiómetro</option><option>Centrífuga</option>
-        </select>
-        <label>Daño o novedad</label>
-        <textarea name="danio_medico" rows="3"></textarea>
-      </div>
+      <div class="progress-bar"><div class="progress" id="progress"></div></div>
 
-      <label>Adjuntar imagen o evidencia</label>
-      <input type="file" name="imagen" accept="image/*">
+      <form id="reporteForm" class="report-form">
 
-      <button type="submit" class="btn primary">Enviar Reporte</button>
-    </form>
-  </section>
+        <!-- ID + fecha/hora + nombre + tipo -->
+        <div class="card">
+          <div class="section-title">Datos básicos</div>
+          <div class="row">
+            <div class="col">
+              <label>ID del reporte</label>
+              <input type="text" id="idReporte" name="idReporte" readonly>
+            </div>
+            <div class="col">
+              <label>Fecha del reporte</label>
+              <input type="text" id="fecha" name="fecha" readonly>
+            </div>
+            <div class="col">
+              <label>Hora del reporte</label>
+              <input type="text" id="hora" name="hora" readonly>
+            </div>
+          </div>
 
-  <!-- Modal -->
+          <label>Nombre completo <span style="color:#ffdede">*</span></label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Manuel Correa">
+
+          <div class="row">
+            <div class="col">
+              <label>El reporte se relaciona con <span style="color:#ffdede">*</span></label>
+              <select id="tipo_reporte" name="tipo_reporte" required>
+                <option value="">Seleccione...</option>
+                <option value="infraestructura">Infraestructura</option>
+                <option value="equipo_medico">Equipo Médicos</option>
+              </select>
+              <div class="small">Elija Infraestructura para temas locativos; Equipo Médicos para dispositivos biomédicos.</div>
+            </div>
+
+            <div class="col">
+              <label>Correo electrónico (opcional)</label>
+              <input type="email" id="email" name="email" placeholder="Su correo (se registra automáticamente cuando envía)">
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: INFRAESTRUCTURA (detalle amplio) -->
+        <div id="section_infra" class="card" style="display:none;">
+          <div class="section-title">Sección 2 de 8 — REPORTE: INFRAESTRUCTURA</div>
+
+          <label>Descripción (opcional)</label>
+          <textarea id="desc_infra_general" name="desc_infra_general" placeholder="Resumen breve (opcional)"></textarea>
+
+          <div class="row">
+            <div class="col">
+              <label>Área específica <span style="color:#ffdede">*</span></label>
+              <select id="area_infra" name="area_infra" required>
+                <option value="">Seleccione...</option>
+                <option>Laboratorio</option>
+                <option>Enfermeria</option>
+                <option>Consulta externa</option>
+                <option>Odontologia</option>
+                <option>Administración</option>
+                <option>Atencion Al Usuario</option>
+                <option>Areas Comunes</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <label>Sede donde está ubicado <span style="color:#ffdede">*</span></label>
+              <select id="sede_infra" name="sede_infra" required>
+                <option value="">Seleccione...</option>
+                <option>Sede 1</option>
+                <option>Sede 2</option>
+                <option>Sede 3</option>
+                <option>Sede 4</option>
+                <option>Sede 5</option>
+              </select>
+            </div>
+          </div>
+
+          <label>Ubicación específica <span style="color:#ffdede">*</span></label>
+          <select id="ubicacion_infra" name="ubicacion_infra" required>
+            <!-- Se carga con JS (lista larga) -->
+          </select>
+
+          <div class="row">
+            <div class="col">
+              <label>Clasificación de prioridad <span style="color:#ffdede">*</span></label>
+              <select id="prioridad_infra" name="prioridad_infra" required>
+                <option value="">Seleccione...</option>
+                <option>Urgente: se detiene el servicio por este daño (6 horas)</option>
+                <option>Prioritario: no detiene el servicio pero debe ser resuelto prontamente (48 horas)</option>
+                <option>Programado: no detiene el servicio y puede ser resuelto dentro del cronograma del área (192 horas)</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <label>Categoría del reporte <span style="color:#ffdede">*</span></label>
+              <select id="categoria_infra" name="categoria_infra" required>
+                <option value="">Seleccione...</option>
+                <option>Equipos de cómputo (conexiones físicas, error "relación de confianza")</option>
+                <option>Muebles y enseres (Escritorios, portateclados, puertas, sillas)</option>
+                <option>Equipos electrónicos (Partes físicas del teléfono, televisores, camaras, timbres)</option>
+                <option>Equipos eléctricos (Radios, video beam, lámparas, hornos microondas, grecas)</option>
+                <option>Infraestructura y equipos de apoyo (Paredes, techos, pisos, tanques se reserva de agua, plantas eléctricas, ascensores, salvaescaleras, aires acondicionados, compresores)</option>
+              </select>
+            </div>
+          </div>
+
+          <label>Descripción detallada del reporte (obligatorio si aplica)</label>
+          <textarea id="detalle_infra" name="detalle_infra" placeholder="Describa con detalle la falla o novedad..."></textarea>
+
+          <!-- Infraestructura sub-opciones (sección 4) -->
+          <div style="margin-top:1rem;">
+            <div class="section-title">Sección 4 de 8 — Infraestructura y equipos de apoyo</div>
+            <label>Seleccione el elemento (si aplica)</label>
+            <select id="infra_elemento" name="infra_elemento">
+              <option value="">(No aplica)</option>
+              <option>Cambiador de bebés</option>
+              <option>Pared (resanar, pintar, grietas, humedad)</option>
+              <option>Techo (humedad, goteras, plafones, claraboyas, celosías, acrilico)</option>
+              <option>Piso (despegado, deteriorado, húmedo)</option>
+              <option>Ventana (vidrio, marcos, cortinas)</option>
+              <option>Puerta principal (chapa, bisagra, cierre)</option>
+              <option>Tanque de reserva de agua</option>
+              <option>Planta eléctrica</option>
+              <option>Ascensor</option>
+              <option>Salvaescaleras</option>
+              <option>Aire acondicionado</option>
+              <option>Compresor de aire</option>
+              <option>Extractor o ventilador de techo</option>
+              <option>Canaletas o bajantes</option>
+              <option>Señalización o letreros</option>
+              <option>Accesos (rampas, pasamanos, barandas)</option>
+              <option>Lavamanos (Filtración de agua, daño de manija)</option>
+              <option>Puerta (Chapa, deterioro, fisura)</option>
+              <option>Poceta (Filtración de agua, humedad)</option>
+              <option>Sanitario (Filtración de agua, daño de manija)</option>
+              <option>Dispensadores (Despegados, robo de insumo)</option>
+              <option>Luminaria (Fundida, opaca)</option>
+              <option>Timbre de emergencia</option>
+              <option>Lavaplatos (Filtración de agua, daño de manija)</option>
+              <option>Gabinete (Suelto, manija despegada)</option>
+              <option>Nevera o congelador</option>
+            </select>
+
+            <label>Descripción detallada de la falla o del problema</label>
+            <textarea id="detalle_infra2" name="detalle_infra2" placeholder="Describa la falla del elemento seleccionado..."></textarea>
+          </div>
+
+          <!-- Sección 5: Equipos eléctricos -->
+          <div style="margin-top:1rem;">
+            <div class="section-title">Sección 5 de 8 — Equipos eléctricos</div>
+            <label>Elemento eléctrico</label>
+            <select id="equipo_electrico" name="equipo_electrico">
+              <option value="">(No aplica)</option>
+              <option>Lámpara LED / Fluorescente</option>
+              <option>Bombillo</option>
+              <option>Video beam</option>
+              <option>Radio</option>
+              <option>Horno microondas</option>
+              <option>Greca</option>
+              <option>Calentador</option>
+              <option>Prolongadores y multitomas</option>
+              <option>Toma corriente</option>
+              <option>Enchufe o interruptor</option>
+            </select>
+            <label>Descripción detallada de la falla o del problema</label>
+            <textarea id="detalle_electrico" name="detalle_electrico" placeholder="Describa la falla eléctrica..."></textarea>
+          </div>
+
+          <!-- Sección 6: Equipos electrónicos -->
+          <div style="margin-top:1rem;">
+            <div class="section-title">Sección 6 de 8 — Equipos electrónicos</div>
+            <label>Elemento electrónico</label>
+            <select id="equipo_electronico" name="equipo_electronico">
+              <option value="">(No aplica)</option>
+              <option>Teléfono fijo (físico o inalámbrico)</option>
+              <option>Cámara de seguridad</option>
+              <option>Timbre o citófono</option>
+              <option>Control remoto</option>
+              <option>Televisor</option>
+              <option>Grabadora</option>
+              <option>Bocina o parlante</option>
+            </select>
+            <label>Descripción detallada de la falla o del problema</label>
+            <textarea id="detalle_electronico" name="detalle_electronico" placeholder="Describa la falla electrónica..."></textarea>
+          </div>
+
+          <!-- Sección 7: Equipos de cómputo -->
+          <div style="margin-top:1rem;">
+            <div class="section-title">Sección 7 de 8 — Equipos de cómputo</div>
+            <label>Elemento de cómputo</label>
+            <select id="equipo_computo" name="equipo_computo">
+              <option value="">(No aplica)</option>
+              <option>Computador de escritorio</option>
+              <option>Portátil</option>
+              <option>Teclado</option>
+              <option>Mouse</option>
+              <option>Monitor</option>
+              <option>Cable de red / punto de red</option>
+              <option>Fuente de poder</option>
+              <option>UPS</option>
+              <option>Problema de "relación de confianza"</option>
+              <option>Daño en el sistema operativo</option>
+              <option>Daño en disco duro</option>
+              <option>Daño en conexión HDMI / VGA / USB</option>
+              <option>Impresora</option>
+            </select>
+            <label>Descripción detallada del reporte (cómputo)</label>
+            <textarea id="detalle_computo" name="detalle_computo" placeholder="Describa la falla de cómputo..."></textarea>
+          </div>
+
+          <!-- Sección 8: Muebles y enseres -->
+          <div style="margin-top:1rem;">
+            <div class="section-title">Sección 8 de 8 — Muebles y enseres</div>
+            <label>Elemento (muebles y enseres)</label>
+            <select id="mueble_ensenes" name="mueble_ensenes">
+              <option value="">(No aplica)</option>
+              <option>Escritorio</option>
+              <option>Portateclado</option>
+              <option>Archivador</option>
+              <option>Silla Interlocutora</option>
+              <option>Butaco giratorio</option>
+              <option>Silla odontológica</option>
+              <option>Puertas internas</option>
+              <option>Camilla</option>
+              <option>Lockers</option>
+              <option>Módulo de toma de muestras</option>
+              <option>Cajonera</option>
+              <option>Repisa</option>
+              <option>Divisiones / biombos</option>
+              <option>Escalerilla</option>
+              <option>Recipiente de residuos</option>
+              <option>Descansa pies</option>
+              <option>Silla Anfitrión</option>
+              <option>Silla Secretarial</option>
+              <option>Persianas y cortinas</option>
+              <option>Cambiador de bebe</option>
+              <option>Silla plástica</option>
+            </select>
+            <label>Descripción detallada del reporte (muebles)</label>
+            <textarea id="detalle_muebles" name="detalle_muebles" placeholder="Describa el daño en muebles..."></textarea>
+          </div>
+        </div>
+
+        <!-- SECTION 3: EQUIPOS MÉDICOS -->
+        <div id="section_med" class="card" style="display:none;">
+          <div class="section-title">Sección 3 de 8 — REPORTE: EQUIPOS MÉDICOS</div>
+
+          <label>Descripción (opcional)</label>
+          <textarea id="desc_med_general" name="desc_med_general" placeholder="Resumen breve (opcional)"></textarea>
+
+          <div class="row">
+            <div class="col">
+              <label>El equipo a reportar es: <span style="color:#ffdede">*</span></label>
+              <select id="equipo_medico_select" name="equipo_medico_select" required>
+                <!-- se llena con JS -->
+              </select>
+            </div>
+            <div class="col">
+              <label>Sede donde está ubicado <span style="color:#ffdede">*</span></label>
+              <select id="sede_med" name="sede_med" required>
+                <option value="">Seleccione...</option>
+                <option>Sede 1</option>
+                <option>Sede 2</option>
+                <option>Sede 3</option>
+                <option>Sede 4</option>
+                <option>Sede 5</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label>Área <span style="color:#ffdede">*</span></label>
+              <select id="area_med" name="area_med" required>
+                <option value="">Seleccione...</option>
+                <option>Administración</option>
+                <option>Consulta externa</option>
+                <option>Enfermeria</option>
+                <option>Oficina Experiencia del usuario</option>
+                <option>Laboratorio</option>
+                <option>Salud oral</option>
+                <option>Áreas comunes</option>
+              </select>
+            </div>
+            <div class="col">
+              <label>Ubicación específica <span style="color:#ffdede">*</span></label>
+              <input type="text" id="ubicacion_med" name="ubicacion_med" required placeholder='Ej: "Consultorio 101"'>
+            </div>
+          </div>
+
+          <label>Daño a reportar <span style="color:#ffdede">*</span></label>
+          <textarea id="danio_med" name="danio_med" required placeholder="Brinde una descripción clara y delimitada del daño"></textarea>
+
+          <label>Prioridad del caso <span style="color:#ffdede">*</span></label>
+          <select id="prioridad_med" name="prioridad_med" required>
+            <option value="">Seleccione...</option>
+            <option>Urgente: se detiene el servicio por este daño (6 horas)</option>
+            <option>Prioritario: no detiene el servicio pero debe ser resuelto prontamente (48 horas)</option>
+            <option>Programado: no detiene el servicio y puede ser resuelto dentro del cronograma del área (192 horas)</option>
+          </select>
+        </div>
+
+        <!-- Adjuntos y seguimiento -->
+        <div class="card">
+          <div class="section-title">Adjuntos y seguimiento</div>
+          <label>Adjuntar imagen o evidencia (foto)</label>
+          <input type="file" id="evidence" name="evidence" accept="image/*">
+
+          <div class="row" style="margin-top:.8rem;">
+            <div class="col">
+              <label>Responsable (opcional)</label>
+              <input type="text" name="responsable" placeholder="Nombre del responsable asignado">
+            </div>
+            <div class="col">
+              <label>Estado inicial</label>
+              <select name="estado" id="estado">
+                <option value="">Seleccione...</option>
+                <option>PENDIENTE</option>
+                <option>EN PROCESO</option>
+                <option>CERRADO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center; margin-top:6px;">
+          <button type="submit" class="btn primary">Enviar Reporte</button>
+          <button type="button" id="btnClear" class="btn ghost">Limpiar formulario</button>
+          <div style="flex:1;text-align:right;">
+            <small style="color:#a8c5e6">CorreQ · IPS Interconsultas</small>
+          </div>
+        </div>
+      </form>
+
+      <div class="footer">&copy; 2025 IPS Interconsultas - Todos los derechos reservados</div>
+    </section>
+  </div>
+
+  <!-- Modal de éxito -->
   <div class="modal" id="modalExito">
-    <div class="modal-content">
+    <div class="box">
       <h3>✅ Reporte enviado correctamente</h3>
-      <p>Su novedad ha sido registrada exitosamente.</p>
-      <button class="btn primary" id="cerrarModal">Cerrar</button>
+      <p id="modalText">Su novedad ha sido registrada. Recibirá confirmación al correo si lo dejó en el formulario.</p>
+      <div style="margin-top:1rem;">
+        <button class="btn primary" id="cerrarModal">Cerrar</button>
+      </div>
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 IPS Interconsultas - Todos los derechos reservados
-  </footer>
-
-  <!-- Scripts -->
+  <!-- Partículas y lógica -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
     // Partículas
@@ -265,49 +483,197 @@
       }
     });
 
-    // Fecha, hora e ID
-    const fecha = new Date();
-    document.getElementById("fecha").value = fecha.toLocaleDateString();
-    document.getElementById("hora").value = fecha.toLocaleTimeString();
-    document.getElementById("idReporte").value = "REP-" + fecha.getFullYear() + "-" + Math.floor(Math.random()*10000);
+    // --------------------------
+    // Datos largos (listas) - populamos dinámicamente
+    // --------------------------
+    const ubicaciones = [
+      "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
+      "Bodega enfermería 1","Bodega enfermería 2","Bodega insumos salud oral","Bodega laboratorio","Bodega mantenimiento",
+      "Bodega PYP medicamentos","Bodega servicios generales","Bodega unidad 8","Bodega Vacunación","Cafetin","Centro de acopio",
+      "Citología cervicouterina 1","Citología cervicouterina 2","Coagulación","Compras","Consultorio 101","Consultorio 102",
+      "Consultorio 103","Consultorio 104","Consultorio 105","Consultorio 106","Consultorio 107","Consultorio 200",
+      "Consultorio 201","Consultorio 202","Consultorio 203","Consultorio 204","Consultorio 205","Consultorio 206",
+      "Consultorio 207","Consultorio 301","Consultorio 302","Consultorio 303","Consultorio 304","Consultorio 305",
+      "Consultorio 306","Consultorio 307","Consultorio 308","Consultorio 309","Consultorio 310","Consultorio 311",
+      "Consultorio 312","Consultorio L1","Consultorio L2","Consultorio L3","Consultorio L5","Consultorio L6","Consultorio L7",
+      "Consultorio L8","Consultorio PAC","Consultorio S1","Consultorio S10","Consultorio S11","Consultorio S12","Consultorio S13",
+      "Consultorio S14","Consultorio S15","Consultorio S16","Consultorio S17","Consultorio S2","Consultorio S3","Consultorio S4",
+      "Consultorio S5","Consultorio S6","Consultorio S7","Consultorio S8","Consultorio S9","Consultorio101","Contingencia",
+      "Contingencia Sede 1","Contingencia Sede 2","Crecimiento y desarrollo","Cuarto de aseo","Cuarto de planta","Cuarto de tanques",
+      "Enfermería","Entrevista enfermera 1","Entrevista enfermera 2","Esterilización","Gerencia","Gestión documental","Immunología",
+      "Laboratorio","Lavado de material","Microbiología","Microelisa","Microscopía","Módulos Autorizaciones","Modulo 1","Modulo 10",
+      "Modulo 11","Modulo 12","Modulo 13","Modulo 14","Modulo 15","Modulo 2","Modulo 3","Modulo 4","Modulo 5","Modulo 6","Modulo 7",
+      "Modulo 8","Modulo 9","Módulo PAC","Mueble Instrumental general","Odontología","Oficina compartida","Oficina contabilidad",
+      "Oficna Coworking","Oficina de riesgo cardiovascular","Oficina líder Consulta externa","Oficina Líder de Desarrollo Humano",
+      "Oficina líder PYM","Oficina líder salud oral","Oficina SIAU","Pasillo","PBX","Procedimientos Enfermería 1",
+      "Procedimientos Enfermería 2","Procedimientos menores","Puerta principal","Química","RCV","Sala de espera","Sala de lactancia",
+      "Sala eda","Sala ERA","Salud oral","Seroteca","Toma de electrocardiograma","Toma de muestras ginecológicas",
+      "Toma de muestras pediátricas","Toma de muestras piso -1","Toma de muestras piso 1","Toma de muestras piso 2",
+      "Toma de rayos x","Unidad odontológica 1","Unidad odontológica 10","Unidad odontológica 11","Unidad odontológica 2",
+      "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
+      "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado",
+      "Líder de Calidad y Experiencia del Usuario"
+    ];
 
-    // Mostrar secciones según tipo
-    document.getElementById("tipo_reporte").addEventListener("change", function(){
-      document.querySelectorAll(".form-section").forEach(s=>s.style.display="none");
-      if(this.value) document.getElementById(this.value).style.display="block";
-    });
+    const equipos_medicos = [
+      "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
+      "Diapasón","Termohigrómetro","Negatoscopio","Contra Angulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
+      "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
+      "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoximetro","Báscula Pediátrica digital",
+      "Báscula de residuos","Pieza de alta","Pipeta automática","Fonendoscopio Pediátrico","Termometro","Termometro Digital",
+      "Lampara de fotocurado","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para trasporte de vacunas","Centrífuga",
+      "Báscula Tallimetro","Nebulizador","Baños","Tensiómetro de pared","Pesas Individua 20kg","Termohigrometro","Autoclave",
+      "Microscopio","Pipeta mono canal","Báscula Pediátrica","Dinamómetro 1","Báscula digital","Baño serológico","Equipo de rayos x",
+      "Piano cuenta células","Dinamómetro 2","Otoscopio","Congelador modelo WC-","Refrigerador modelo MK304","Electrocauterio",
+      "Termo MVE","Agitador de Mazzini","Incubadora de controles biológicos","Termómetro infrarrojo","Horno de cultivo",
+      "Monitor de signos vitales","Horno de secado","Pieza de alta velocidad","Monofilamento de diagnostico","Incubadora",
+      "Termo de crioterapia","Tallímetro pediátrico","Dinamómetro","Nevera de vacunas caja térmica"
+    ];
 
-    // Barra de progreso
-    const inputs = document.querySelectorAll("input, select, textarea");
-    const progress = document.getElementById("progress");
-    inputs.forEach(el=>{
-      el.addEventListener("input", ()=>{
-        const filled = [...inputs].filter(i=>i.value.trim()!=="").length;
-        const percent = Math.round((filled / inputs.length) * 100);
-        progress.style.width = percent + "%";
+    // Cuando el DOM esté listo, llenamos select con las listas largas
+    document.addEventListener('DOMContentLoaded', () => {
+      const ubicSelect = document.getElementById('ubicacion_infra');
+      ubicaciones.forEach((u,i) => {
+        const opt = document.createElement('option'); opt.value = u; opt.textContent = (i+1) + ". " + u;
+        ubicSelect.appendChild(opt);
       });
+
+      const equipMedSelect = document.getElementById('equipo_medico_select');
+      equipos_medicos.forEach((e,i) => {
+        const opt = document.createElement('option'); opt.value = e; opt.textContent = (i+1) + ". " + e;
+        equipMedSelect.appendChild(opt);
+      });
+
+      // inicializar fecha/hora/ID
+      const now = new Date();
+      document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
+      document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
+      const id = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
+      document.getElementById('idReporte').value = id;
+      document.getElementById('idNote').textContent = id;
     });
 
-    // Modal
-    const modal = document.getElementById("modalExito");
-    const cerrar = document.getElementById("cerrarModal");
+    // --------------------------
+    // UI: mostrar secciones segun tipo_reporte
+    // --------------------------
+    const tipoSelect = document.getElementById('tipo_reporte');
+    tipoSelect.addEventListener('change', (e) => {
+      const v = e.target.value;
+      document.getElementById('section_infra').style.display = v === 'infraestructura' ? 'block' : 'none';
+      document.getElementById('section_med').style.display = v === 'equipo_medico' ? 'block' : 'none';
+      updateProgress();
+      // scroll hacia la sección mostrada para mejor UX en móvil
+      setTimeout(()=> {
+        const el = v === 'infraestructura' ? document.getElementById('section_infra') : document.getElementById('section_med');
+        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      }, 100);
+    });
 
-    cerrar.onclick = ()=>modal.style.display="none";
+    // --------------------------
+    // Barra de progreso simple (cuenta campos no vacíos)
+    // --------------------------
+    function updateProgress() {
+      const inputs = Array.from(document.querySelectorAll('#reporteForm input[type="text"], #reporteForm input[type="email"], #reporteForm select, #reporteForm textarea'));
+      const filled = inputs.filter(i => i.value && i.value.trim() !== '').length;
+      const percent = Math.round((filled / inputs.length) * 100);
+      document.getElementById('progress').style.width = percent + '%';
+    }
+    document.getElementById('reporteForm').addEventListener('input', updateProgress);
 
-    // Envío de datos
+    // --------------------------
+    // Limpiar formulario
+    // --------------------------
+    document.getElementById('btnClear').addEventListener('click', () => {
+      if (confirm("¿Desea limpiar todos los campos del formulario?")) {
+        document.getElementById('reporteForm').reset();
+        updateProgress();
+      }
+    });
+
+    // --------------------------
+    // Envío al Google Apps Script
+    // --------------------------
     const scriptURL = "https://script.google.com/macros/s/AKfycbyhTYQlEpLFZIObGFLiFtOAStwuEUw6xsTTVjh-xDmWfVDunYO_ccszitMLtFYv9p7e1w/exec";
-    const form = document.getElementById("reporteForm");
-    form.addEventListener("submit", e=>{
+    const form = document.getElementById('reporteForm');
+
+    form.addEventListener('submit', e => {
       e.preventDefault();
-      fetch(scriptURL, { method: "POST", body: new FormData(form)})
-        .then(()=>{
-          modal.style.display="flex";
+
+      // Validaciones condicionales
+      const tipo = document.getElementById('tipo_reporte').value;
+      const nombre = document.getElementById('nombre').value.trim();
+      if (!nombre) { alert("Por favor ingrese el Nombre completo."); return; }
+      if (!tipo) { alert("Por favor seleccione si el reporte es de Infraestructura o Equipo Médico."); return; }
+
+      if (tipo === 'infraestructura') {
+        if (!document.getElementById('area_infra').value) { alert("Seleccione el Área específica."); return; }
+        if (!document.getElementById('ubicacion_infra').value) { alert("Seleccione la Ubicación específica."); return; }
+        if (!document.getElementById('sede_infra').value) { alert("Seleccione la Sede."); return; }
+        if (!document.getElementById('prioridad_infra').value) { alert("Seleccione la Clasificación de prioridad."); return; }
+        if (!document.getElementById('categoria_infra').value) { alert("Seleccione la Categoría del reporte."); return; }
+      } else {
+        // equipo médico
+        if (!document.getElementById('equipo_medico_select').value) { alert("Seleccione el equipo a reportar."); return; }
+        if (!document.getElementById('sede_med').value) { alert("Seleccione la Sede del equipo."); return; }
+        if (!document.getElementById('area_med').value) { alert("Seleccione el Área del equipo."); return; }
+        if (!document.getElementById('ubicacion_med').value.trim()) { alert("Detalle la Ubicación específica del equipo."); return; }
+        if (!document.getElementById('danio_med').value.trim()) { alert("Describa el daño o la falla reportada."); return; }
+        if (!document.getElementById('prioridad_med').value) { alert("Seleccione la Prioridad del caso."); return; }
+      }
+
+      // Prepara FormData
+      const fd = new FormData(form);
+      // agregamos un campo con marca de tiempo real
+      fd.append('timestamp', new Date().toISOString());
+
+      // Mostrar loading básico (deshabilitar enviar)
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Enviando...';
+
+      // Enviar
+      fetch(scriptURL, { method: 'POST', body: fd })
+        .then(response => {
+          // reactivar boton
+          btn.disabled = false; btn.textContent = 'Enviar Reporte';
+
+          // abrir modal de confirmación con info breve
+          document.getElementById('modalText').textContent = "Su novedad ha sido registrada correctamente. ID: " + document.getElementById('idReporte').value;
+          document.getElementById('modalExito').style.display = 'flex';
+
+          // limpiar el formulario manteniendo ID y fecha/hora
+          const savedID = document.getElementById('idReporte').value;
+          const savedFecha = document.getElementById('fecha').value;
+          const savedHora = document.getElementById('hora').value;
           form.reset();
-          progress.style.width="0%";
+          document.getElementById('idReporte').value = savedID;
+          document.getElementById('fecha').value = savedFecha;
+          document.getElementById('hora').value = savedHora;
+          updateProgress();
         })
-        .catch(err=>alert("❌ Error al enviar: " + err.message));
+        .catch(err => {
+          btn.disabled = false; btn.textContent = 'Enviar Reporte';
+          alert("❌ Error al enviar el formulario: " + err.message);
+        });
     });
+
+    // Cerrar modal
+    document.getElementById('cerrarModal').addEventListener('click', () => {
+      document.getElementById('modalExito').style.display = 'none';
+    });
+    // cerrar modal con click fuera
+    document.getElementById('modalExito').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('modalExito')) document.getElementById('modalExito').style.display = 'none';
+    });
+
+    // actualizar email en UI si el usuario lo escribe
+    document.getElementById('email').addEventListener('input', () => {
+      document.getElementById('userEmail').textContent = "Usuario: " + (document.getElementById('email').value || "(correo se captura al enviar)");
+    });
+
+    // inicial update progress
+    setTimeout(updateProgress, 200);
   </script>
 </body>
 </html>
+
 
