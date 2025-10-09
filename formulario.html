@@ -1,262 +1,213 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Solicitudes a Mantenimiento - IPS Interconsultas</title>
-<style>
-  body {
-    font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at center, #0f172a, #020617);
-    color: #fff;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-  h2 {
-    text-align: center;
-    color: #00bcd4;
-    margin-top: 20px;
-  }
-  form {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(6px);
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 720px;
-    margin: 30px auto;
-    box-shadow: 0 0 20px rgba(0,188,212,0.2);
-  }
-  label { display:block; margin-top:10px; color:#cbd5e1; }
-  input, select, textarea {
-    width:100%;
-    padding:10px;
-    border-radius:8px;
-    border:none;
-    margin-top:5px;
-    background:rgba(255,255,255,0.15);
-    color:#fff;
-  }
-  input::placeholder, textarea::placeholder { color:#94a3b8; }
-  button {
-    background:#00bcd4;
-    color:#fff;
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    margin-top:15px;
-  }
-  button:hover { background:#06b6d4; }
-  #particles-js {
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0; left:0;
-    z-index:-1;
-  }
-  #modalExito {
-    display:none;
-    position:fixed;
-    top:0; left:0; right:0; bottom:0;
-    background:rgba(0,0,0,0.6);
-    justify-content:center;
-    align-items:center;
-  }
-  #modalExito div {
-    background:#1e293b;
-    padding:30px;
-    border-radius:10px;
-    text-align:center;
-    box-shadow:0 0 10px #00bcd4;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitudes a Mantenimiento - IPS Interconsultas</title>
+  <style>
+    /* Fondo oscuro con degradado y partículas */
+    body {
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: rgba(20, 33, 61, 0.95);
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
+      position: relative;
+      z-index: 2;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00d4ff;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      color: #b8c1ec;
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      margin-top: 5px;
+      font-size: 14px;
+      background: #1e293b;
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      background: #334155;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #00d4ff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #00aacc;
+      transform: scale(1.02);
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      top: 0;
+      left: 0;
+    }
+
+    .mensaje {
+      text-align: center;
+      color: #00ffbf;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
 </head>
 <body>
+
 <div id="particles-js"></div>
-<h2>IPS Interconsultas - Reporte de Mantenimiento</h2>
 
-<form id="reporteForm">
-  <label>Fecha</label>
-  <input type="text" id="fecha" readonly>
-  
-  <label>Hora</label>
-  <input type="text" id="hora" readonly>
+<div class="container">
+  <h2>Solicitud a Mantenimiento</h2>
+  <form id="formulario">
+    
+    <label>Fecha *</label>
+    <input type="date" name="fecha" required>
 
-  <label>Nombre completo *</label>
-  <input type="text" id="nombre" required placeholder="Ingrese su nombre completo">
+    <label>Hora *</label>
+    <input type="time" name="hora" required>
 
-  <label>Correo (opcional)</label>
-  <input type="email" id="email" placeholder="correo@ejemplo.com">
+    <label>Nombre completo *</label>
+    <input type="text" name="nombre" placeholder="Ej: Juan Manuel Correa Quiceno" required>
 
-  <label>El reporte se relaciona con *</label>
-  <select id="tipo_reporte" required>
-    <option value="">Seleccione...</option>
-    <option value="infraestructura">Infraestructura</option>
-    <option value="equipo_medico">Equipo Médico</option>
-  </select>
+    <label>Correo (opcional)</label>
+    <input type="email" name="correo" placeholder="correo@ejemplo.com">
 
-  <!-- Infraestructura -->
-  <div id="section_infra" style="display:none">
-    <label>Sede *</label>
-    <select id="sede_infra">
-      <option value="">Seleccione sede</option>
-      <option value="Sede 1">Sede 1</option>
-      <option value="Sede 2">Sede 2</option>
-      <option value="Sede 3">Sede 3</option>
+    <label>El reporte se relaciona con *</label>
+    <select name="tipo" required>
+      <option value="">Seleccione...</option>
+      <option>Infraestructura</option>
+      <option>Equipo Médico</option>
     </select>
 
     <label>Área específica *</label>
-    <input type="text" id="area_infra" placeholder="Ej: Laboratorio, Enfermería, etc.">
+    <select name="area" required>
+      <option value="">Seleccione...</option>
+      <option>Urgencias</option>
+      <option>Consulta Externa</option>
+      <option>Hospitalización</option>
+      <option>Laboratorio</option>
+      <option>Farmacia</option>
+      <option>Rayos X</option>
+      <option>Administración</option>
+    </select>
+
+    <label>Sede *</label>
+    <select name="sede" required>
+      <option value="">Seleccione...</option>
+      <option>Sede 1</option>
+      <option>Sede 2</option>
+      <option>Sede 3</option>
+    </select>
 
     <label>Ubicación específica *</label>
-    <select id="ubicacion_infra"></select>
+    <input type="text" name="ubicacion" placeholder="Ej: Citología cervicouterina 2" required>
 
-    <label>Prioridad</label>
-    <select id="prioridad_infra">
-      <option value="">Seleccione</option>
+    <label>Prioridad *</label>
+    <select name="prioridad" required>
+      <option value="">Seleccione...</option>
       <option>Urgente (6h)</option>
       <option>Alta (12h)</option>
       <option>Media (24h)</option>
       <option>Baja (48h)</option>
     </select>
 
-    <label>Descripción breve</label>
-    <textarea id="detalle_infra" rows="3" placeholder="Describa brevemente la novedad"></textarea>
-  </div>
+    <label>Descripción (breve) *</label>
+    <textarea name="descripcion" rows="3" placeholder="Ej: El tomógrafo no enciende o presenta error E-45." required></textarea>
 
-  <!-- Equipo médico -->
-  <div id="section_med" style="display:none">
-    <label>Sede *</label>
-    <select id="sede_med">
-      <option value="">Seleccione sede</option>
-      <option value="Sede 1">Sede 1</option>
-      <option value="Sede 2">Sede 2</option>
-      <option value="Sede 3">Sede 3</option>
-    </select>
-
-    <label>Área específica *</label>
-    <input type="text" id="area_med" placeholder="Ej: Odontología, Laboratorio, etc.">
-
-    <label>Equipo médico *</label>
-    <select id="equipo_medico_select"></select>
-
-    <label>Ubicación específica *</label>
-    <input type="text" id="ubicacion_med" placeholder="Ej: Consultorio 205, Sala ERA, etc.">
-
-    <label>Prioridad</label>
-    <select id="prioridad_med">
-      <option value="">Seleccione</option>
-      <option>Urgente (6h)</option>
-      <option>Alta (12h)</option>
-      <option>Media (24h)</option>
-      <option>Baja (48h)</option>
-    </select>
-
-    <label>Descripción del daño</label>
-    <textarea id="danio_med" rows="3" placeholder="Describa el daño o falla observada"></textarea>
-  </div>
-
-  <input type="hidden" id="idReporte">
-  <button type="submit" id="submitBtn">Enviar Reporte</button>
-  <button type="button" id="btnClear">Limpiar</button>
-</form>
-
-<div id="modalExito">
-  <div>
-    <h3>✅ Reporte enviado</h3>
-    <p id="modalText"></p>
-    <button onclick="document.getElementById('modalExito').style.display='none'">Cerrar</button>
-  </div>
+    <button type="submit">Enviar reporte</button>
+    <div class="mensaje" id="mensaje"></div>
+  </form>
 </div>
+
+<footer>CorreQ • IPS Interconsultas © 2025</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 <script>
-  // Configuración visual partículas
+  /* Partículas animadas de fondo */
   particlesJS("particles-js", {
-    particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
+    "particles": {
+      "number": { "value": 60 },
+      "size": { "value": 3 },
+      "move": { "speed": 1 },
+      "line_linked": { "enable": true, "color": "#00d4ff" }
+    }
   });
 
-  const ubicaciones = ["Laboratorio","Sala ERA","Odontología","Citología cervicouterina 1","Citología cervicouterina 2","Recepción","Sala de espera","Consultorio 101","Consultorio 205","Consultorio 307"];
-  const equipos_medicos = ["Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Báscula digital","Unidad odontológica","Pulsoxímetro","Electrocardiógrafo","Monitor de signos vitales","Centrífuga","Microscopio"];
-
-  const ubicSelect = document.getElementById('ubicacion_infra');
-  const equipoMedSelect = document.getElementById('equipo_medico_select');
-
-  document.addEventListener('DOMContentLoaded', () => {
-    ubicaciones.forEach(v => {
-      const opt = document.createElement('option');
-      opt.value = v; opt.textContent = v;
-      ubicSelect.appendChild(opt);
-    });
-    equipos_medicos.forEach(v => {
-      const opt = document.createElement('option');
-      opt.value = v; opt.textContent = v;
-      equipoMedSelect.appendChild(opt);
-    });
-    const now = new Date();
-    document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
-    document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
-    document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
-  });
-
-  document.getElementById('tipo_reporte').addEventListener('change', (e) => {
-    document.getElementById('section_infra').style.display = e.target.value === 'infraestructura' ? 'block' : 'none';
-    document.getElementById('section_med').style.display = e.target.value === 'equipo_medico' ? 'block' : 'none';
-  });
-
-  document.getElementById('btnClear').addEventListener('click', () => {
-    if (confirm('¿Desea limpiar el formulario?')) document.getElementById('reporteForm').reset();
-  });
-
-  const scriptURL = "https://script.google.com/macros/s/AKfycbzKSlYtOTRGyZ4hepJj0-yrdw6hmwKXq-I1KBadtQllsi7wOf-7pTX0q2-hXvDJDuO0/exec";
-
-  document.getElementById('reporteForm').addEventListener('submit', function(e){
+  /* Envío del formulario */
+  document.getElementById("formulario").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const tipo = document.getElementById('tipo_reporte').value;
-    if (!tipo) { alert('Seleccione el tipo de reporte'); return; }
+    const form = e.target;
+    const data = new FormData(form);
+    const mensaje = document.getElementById("mensaje");
 
-    const payload = {
-      idReporte: document.getElementById('idReporte').value,
-      nombre: document.getElementById('nombre').value,
-      email: document.getElementById('email').value,
-      tipoReporte: tipo,
-      sede: tipo === 'infraestructura' ? document.getElementById('sede_infra').value : document.getElementById('sede_med').value,
-      area: tipo === 'infraestructura' ? document.getElementById('area_infra').value : document.getElementById('area_med').value,
-      ubicacion: tipo === 'infraestructura' ? document.getElementById('ubicacion_infra').value : document.getElementById('ubicacion_med').value,
-      prioridad: tipo === 'infraestructura' ? document.getElementById('prioridad_infra').value : document.getElementById('prioridad_med').value,
-      descripcion: tipo === 'infraestructura' ? document.getElementById('detalle_infra').value : document.getElementById('danio_med').value,
-      timestamp: new Date().toISOString()
-    };
+    mensaje.textContent = "⏳ Enviando...";
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbwZGkp_6s5e7QqUdBlIFtt1p_AHHul_7AHrgbY8JE2lVRSCK0Tx3DMNDzN_pscM5hbB/exec", {
+        method: "POST",
+        body: data,
+      });
 
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Enviando...';
-
-    fetch(scriptURL, {
-      method: 'POST',
-      mode: 'cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(r => r.json())
-    .then(res => {
-      btn.disabled = false;
-      btn.textContent = 'Enviar Reporte';
-      if (res.result === 'success' || res.ok) {
-        document.getElementById('modalText').textContent = `Su novedad fue registrada exitosamente. ID: ${payload.idReporte}`;
-        document.getElementById('modalExito').style.display = 'flex';
-        document.getElementById('reporteForm').reset();
+      if (response.ok) {
+        mensaje.textContent = "✅ Enviado correctamente.";
+        form.reset(); // 🔹 Limpia todos los campos
+        setTimeout(() => (mensaje.textContent = ""), 4000);
       } else {
-        alert('Error al enviar: ' + (res.message || 'No se pudo registrar.'));
+        mensaje.textContent = "❌ Error al enviar. Intente nuevamente.";
       }
-    })
-    .catch(err => {
-      btn.disabled = false;
-      btn.textContent = 'Enviar Reporte';
-      alert('Error de conexión. Revise permisos del Script. Detalle: ' + err.message);
-    });
+    } catch (error) {
+      mensaje.textContent = "⚠️ Error de conexión. Revise el script o permisos.";
+    }
   });
 </script>
+
 </body>
 </html>
+
