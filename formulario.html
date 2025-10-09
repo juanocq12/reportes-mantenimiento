@@ -1,241 +1,298 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solicitud a Mantenimiento</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(circle at 50% 50%, #0a1f3d, #020b18);
-      color: white;
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 500px;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 25px 30px;
-      border-radius: 16px;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
-      position: relative;
-      z-index: 2;
-    }
-
-    h2 {
-      text-align: center;
-      color: #00e0ff;
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    input, select, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 8px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      background: #111a33;
-      color: white;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      background: #15204a;
-      border: 1px solid #00e0ff;
-    }
-
-    button {
-      background: #00bcd4;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: #0097a7;
-    }
-
-    #mensaje {
-      text-align: center;
-      font-weight: 600;
-      margin-top: 10px;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IPS Interconsultas - Solicitud de Mantenimiento</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: Arial, sans-serif;
+  background: linear-gradient(180deg,#041428 0%, #061c36 60%);
+  color:#fff;
+  -webkit-font-smoothing:antialiased;
+  padding:24px;
+}
+#particles-js { position: fixed; inset:0; z-index:-1; }
+.wrap { max-width:980px;margin: 24px auto; }
+.card {
+  background: rgba(255,255,255,0.06);
+  border-radius:12px;
+  padding:18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  border: 1px solid rgba(6,182,212,0.06);
+}
+.header {
+  display:flex;justify-content:space-between;align-items:center; gap:12px;
+  margin-bottom:12px;
+}
+.brand h1 { color:#cfeefd; font-size:1.05rem; margin-bottom:4px; }
+.brand p { color:#a9d9ef; font-size:0.85rem; margin:0; }
+.row { display:flex; gap:12px; margin-top:8px; }
+.col { flex:1; }
+label {
+  display:block; font-weight:700; color:#e6f7ff;
+  margin-top:10px; font-size:0.95rem;
+}
+input[type="text"], input[type="email"], select, textarea {
+  width:100%; padding:10px 12px;
+  border-radius:8px; border:none;
+  background:#0d274d; color:#fff; font-size:0.95rem;
+}
+textarea { min-height:84px; resize:vertical; }
+.controls { display:flex; gap:10px; align-items:center; margin-top:14px; }
+.btn {
+  padding:10px 16px; border-radius:999px;
+  font-weight:700; cursor:pointer; border:none;
+}
+.btn.primary { background: linear-gradient(90deg,#06b6d4,#2563eb); color:#fff; }
+.btn.ghost { background:transparent; color:#a8d9ef; border:1px solid rgba(255,255,255,0.06); }
+.small { font-size:0.85rem; color:#9fc7e2; }
+.modal {
+  position:fixed; inset:0; display:none;
+  background:rgba(0,0,0,0.6); z-index:80;
+  align-items:center; justify-content:center;
+}
+.modal .box {
+  background: rgba(2,30,50,0.98);
+  padding:18px;border-radius:10px;color:#fff;
+  max-width:520px; text-align:center;
+}
+.modal h3 { color:#06b6d4; margin-bottom:6px; }
+@media (max-width:820px){ .row{flex-direction:column} }
+</style>
 </head>
 <body>
-  <canvas id="particulas"></canvas>
+<div id="particles-js"></div>
+<div class="wrap">
+  <div class="card">
+    <div class="header">
+      <div class="brand">
+        <img src="Logo-Interconsultas-01b-500px.png" alt="logo" style="height:44px;margin-right:10px">
+        <div>
+          <h1>IPS Interconsultas</h1>
+          <p>Solicitudes a Mantenimiento (locativo y biomédico)</p>
+        </div>
+      </div>
+      <div style="text-align:right"><div class="small">Rápido · Claro · Profesional</div></div>
+    </div>
 
-  <div class="container">
-    <h2>Solicitud a Mantenimiento</h2>
-    <form id="formulario">
-      <label for="fecha">Fecha *</label>
-      <input type="date" id="fecha" name="fecha" required />
+    <form id="reporteForm">
+      <div class="row">
+        <div class="col"><label>Fecha</label><input type="text" id="fecha" readonly></div>
+        <div class="col"><label>Hora</label><input type="text" id="hora" readonly></div>
+        <div class="col"><label>ID</label><input type="text" id="idReporte" readonly></div>
+      </div>
 
-      <label for="hora">Hora *</label>
-      <input type="time" id="hora" name="hora" required />
+      <label>Nombre completo *</label>
+      <input type="text" id="nombre" placeholder="Ej: Juan Manuel Correa" required>
 
-      <label for="nombre">Nombre completo *</label>
-      <input type="text" id="nombre" name="nombre" required />
+      <div class="row">
+        <div class="col">
+          <label>Correo (opcional)</label>
+          <input type="email" id="email" placeholder="ejemplo@interconsultas.com">
+        </div>
+        <div class="col">
+          <label>El reporte se relaciona con *</label>
+          <select id="tipo_reporte" required>
+            <option value="">Seleccione...</option>
+            <option value="infraestructura">Infraestructura</option>
+            <option value="equipo_medico">Equipo Médico</option>
+          </select>
+        </div>
+      </div>
 
-      <label for="correo">Correo (opcional)</label>
-      <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" />
+      <!-- Secciones -->
+      <div id="section_infra" style="display:none;margin-top:8px">
+        <label>Área específica *</label>
+        <select id="area_infra">
+          <option value="">Seleccione...</option>
+          <option>Laboratorio</option><option>Enfermería</option>
+          <option>Consulta externa</option><option>Odontología</option>
+          <option>Administración</option><option>Atención Al Usuario</option>
+          <option>Áreas Comunes</option>
+        </select>
+        <label>Sede *</label>
+        <select id="sede_infra">
+          <option value="">Seleccione...</option>
+          <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
+        </select>
+        <label>Ubicación específica *</label>
+        <select id="ubicacion_infra"><option value="">Seleccione...</option></select>
+        <div class="row">
+          <div class="col">
+            <label>Prioridad</label>
+            <select id="prioridad_infra">
+              <option value="">Seleccione...</option>
+              <option>Urgente (6 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Categoría</label>
+            <select id="categoria_infra">
+              <option value="">Seleccione...</option>
+              <option>Equipos de cómputo</option><option>Muebles y enseres</option>
+              <option>Equipos electrónicos</option><option>Equipos eléctricos</option>
+              <option>Infraestructura y equipos de apoyo</option>
+            </select>
+          </div>
+        </div>
+        <label>Descripción (breve)</label>
+        <textarea id="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
+      </div>
 
-      <label for="relacion">El reporte se relaciona con *</label>
-      <select id="relacion" name="relacion" required>
-        <option value="">Seleccione...</option>
-        <option value="Infraestructura">Infraestructura</option>
-        <option value="Equipo Médico">Equipo Médico</option>
-      </select>
+      <div id="section_med" style="display:none;margin-top:8px">
+        <label>Equipo a reportar *</label>
+        <select id="equipo_medico_select"><option value="">Seleccione...</option></select>
+        <div class="row">
+          <div class="col">
+            <label>Sede *</label>
+            <select id="sede_med">
+              <option value="">Seleccione...</option>
+              <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Área *</label>
+            <select id="area_med">
+              <option value="">Seleccione...</option>
+              <option>Administración</option><option>Consulta externa</option><option>Enfermería</option>
+              <option>Laboratorio</option><option>Salud oral</option><option>Áreas comunes</option>
+            </select>
+          </div>
+        </div>
+        <label>Ubicación específica *</label>
+        <input type="text" id="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
+        <label>Daño / falla *</label>
+        <textarea id="danio_med" placeholder="Describa el daño..."></textarea>
+        <label>Prioridad</label>
+        <select id="prioridad_med">
+          <option value="">Seleccione...</option>
+          <option>Urgente (6 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
+        </select>
+      </div>
 
-      <label for="area">Área específica *</label>
-      <select id="area" name="area" required>
-        <option value="">Seleccione...</option>
-        <option>Consulta Externa</option>
-        <option>Hospitalización</option>
-        <option>Urgencias</option>
-        <option>Imágenes Diagnósticas</option>
-        <option>Laboratorio</option>
-        <option>Farmacia</option>
-        <option>Administrativa</option>
-      </select>
-
-      <label for="sede">Sede *</label>
-      <select id="sede" name="sede" required>
-        <option value="">Seleccione...</option>
-        <option>Sede 1</option>
-        <option>Sede 2</option>
-        <option>Sede 3</option>
-      </select>
-
-      <label for="ubicacion">Ubicación específica *</label>
-      <input type="text" id="ubicacion" name="ubicacion" placeholder="Ej: Consultorio 101" required />
-
-      <label for="prioridad">Prioridad *</label>
-      <select id="prioridad" name="prioridad" required>
-        <option value="">Seleccione...</option>
-        <option>Baja (48h)</option>
-        <option>Media (24h)</option>
-        <option>Alta (12h)</option>
-        <option>Urgente (6h)</option>
-      </select>
-
-      <label for="descripcion">Descripción (breve) *</label>
-      <textarea id="descripcion" name="descripcion" rows="3" required></textarea>
-
-      <button type="submit">Enviar reporte</button>
-      <div id="mensaje"></div>
+      <div class="controls">
+        <button type="submit" class="btn primary" id="submitBtn">Enviar Reporte</button>
+        <button type="button" class="btn ghost" id="btnClear">Limpiar</button>
+        <div style="flex:1;text-align:right" class="small">CorreQ · IPS Interconsultas</div>
+      </div>
     </form>
   </div>
 
-  <script>
-    // URL del Google Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwZGKp_6s5e7QqUdBIIFtt1p_AHHul_7AHrgbY8JE2lVRSCK0Tx3DMNDzN_pscM5hbB/exec';
-    const form = document.getElementById('formulario');
-    const mensaje = document.getElementById('mensaje');
+  <div class="modal" id="modalExito">
+    <div class="box">
+      <h3>✅ Reporte enviado</h3>
+      <p id="modalText">Su novedad fue registrada. ID: <span id="modalID">-</span></p>
+      <div style="margin-top:12px"><button class="btn primary" id="cerrarModal">Cerrar</button></div>
+    </div>
+  </div>
+</div>
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-        .then(() => {
-          mensaje.textContent = '✅ Solicitud enviada correctamente';
-          mensaje.style.color = '#00ffcc';
-          form.reset();
-          setTimeout(() => mensaje.textContent = '', 4000);
-        })
-        .catch(() => {
-          mensaje.textContent = '⚠️ Error de conexión. Revise el script o permisos.';
-          mensaje.style.color = 'orange';
-        });
-    });
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+// --- CONFIGURACIÓN ---
+const scriptURL = "https://script.google.com/macros/s/AKfycbwZGKp_6s5e7QqUdBIIFtt1p_AHHul_7AHrgbY8JE2lVRSCK0Tx3DMNDzN_pscM5hbB/exec";
 
-    // Efecto partículas
-    const canvas = document.getElementById("particulas");
-    const ctx = canvas.getContext("2d");
-    let particulasArray;
+// --- EFECTOS Y CARGA INICIAL ---
+particlesJS("particles-js", {
+  particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
+});
 
-    const config = {
-      cantidad: 80,
-      tamaño: 2,
-      velocidad: 0.3,
-      color: "rgba(0,255,255,0.5)"
-    };
+const ubicaciones = ["Consultorio 101","Consultorio 102","Enfermería","Laboratorio","Odontología","Pasillo","Sala de espera","Vacunación"];
+const equipos_medicos = ["Fonendoscopio","Tensiómetro","Monitor de signos vitales","Desfibrilador","Electrocardiógrafo","Centrífuga","Autoclave","Nebulizador"];
 
-    function redimensionar() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+const ubicSelect = document.getElementById('ubicacion_infra');
+const equipoSelect = document.getElementById('equipo_medico_select');
+
+// --- Cargar listas + Fecha/Hora/ID ---
+document.addEventListener('DOMContentLoaded', () => {
+  ubicaciones.forEach(v => ubicSelect.add(new Option(v,v)));
+  equipos_medicos.forEach(v => equipoSelect.add(new Option(v,v)));
+  actualizarCamposTemporales();
+});
+
+function actualizarCamposTemporales(){
+  const now = new Date();
+  document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
+  document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
+  document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
+}
+
+// --- Mostrar secciones ---
+document.getElementById('tipo_reporte').addEventListener('change', e=>{
+  const v = e.target.value;
+  document.getElementById('section_infra').style.display = v==='infraestructura'?'block':'none';
+  document.getElementById('section_med').style.display = v==='equipo_medico'?'block':'none';
+});
+
+// --- Limpiar manual ---
+document.getElementById('btnClear').addEventListener('click', ()=>{
+  if(confirm('¿Desea limpiar el formulario?')){
+    document.getElementById('reporteForm').reset();
+    actualizarCamposTemporales();
+    document.getElementById('section_infra').style.display='none';
+    document.getElementById('section_med').style.display='none';
+  }
+});
+
+// --- Enviar datos ---
+document.getElementById('reporteForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  const form = e.target;
+  const tipo = document.getElementById('tipo_reporte').value;
+  const nombre = document.getElementById('nombre').value.trim();
+  if(!nombre || !tipo){ alert("Complete los campos obligatorios"); return; }
+
+  const payload = {
+    idReporte: document.getElementById('idReporte').value,
+    fecha: document.getElementById('fecha').value,
+    hora: document.getElementById('hora').value,
+    nombre, email: document.getElementById('email').value,
+    tipoReporte: tipo,
+    sede: tipo==='infraestructura'?document.getElementById('sede_infra').value:document.getElementById('sede_med').value,
+    area: tipo==='infraestructura'?document.getElementById('area_infra').value:document.getElementById('area_med').value,
+    ubicacion: tipo==='infraestructura'?document.getElementById('ubicacion_infra').value:document.getElementById('ubicacion_med').value,
+    descripcion: tipo==='infraestructura'?document.getElementById('detalle_infra').value:document.getElementById('danio_med').value,
+    prioridad: tipo==='infraestructura'?document.getElementById('prioridad_infra').value:document.getElementById('prioridad_med').value,
+    timestamp: new Date().toISOString()
+  };
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = "Enviando...";
+
+  fetch(scriptURL,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'application/json'}})
+  .then(r=>r.json())
+  .then(res=>{
+    btn.disabled=false; btn.textContent="Enviar Reporte";
+    if(res.result==='success' || res.success){
+      document.getElementById('modalID').textContent = payload.idReporte;
+      document.getElementById('modalText').textContent = "Su novedad fue registrada. ID: "+payload.idReporte;
+      document.getElementById('modalExito').style.display='flex';
+
+      // ✅ LIMPIEZA TOTAL
+      form.reset();
+      actualizarCamposTemporales();
+      document.getElementById('section_infra').style.display='none';
+      document.getElementById('section_med').style.display='none';
+    } else {
+      alert("Error al enviar. Verifique conexión o script.");
     }
-    window.addEventListener('resize', redimensionar);
-    redimensionar();
+  })
+  .catch(err=>{
+    btn.disabled=false; btn.textContent="Enviar Reporte";
+    alert("Error de red: "+err.message);
+  });
+});
 
-    class Particula {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.dx = (Math.random() - 0.5) * config.velocidad;
-        this.dy = (Math.random() - 0.5) * config.velocidad;
-        this.size = config.tamaño;
-      }
-      mover() {
-        this.x += this.dx;
-        this.y += this.dy;
-        if (this.x < 0 || this.x > canvas.width) this.dx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.dy *= -1;
-      }
-      dibujar() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = config.color;
-        ctx.fill();
-      }
-    }
-
-    function iniciar() {
-      particulasArray = [];
-      for (let i = 0; i < config.cantidad; i++) {
-        particulasArray.push(new Particula());
-      }
-    }
-
-    function animar() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particulasArray.forEach(p => {
-        p.mover();
-        p.dibujar();
-      });
-      requestAnimationFrame(animar);
-    }
-
-    iniciar();
-    animar();
-  </script>
+// --- Cerrar modal ---
+document.getElementById('cerrarModal').addEventListener('click',()=>document.getElementById('modalExito').style.display='none');
+document.getElementById('modalExito').addEventListener('click',e=>{
+  if(e.target.id==='modalExito') e.currentTarget.style.display='none';
+});
+</script>
 </body>
 </html>
+
 
