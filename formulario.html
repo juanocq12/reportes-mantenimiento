@@ -1,348 +1,262 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IPS Interconsultas · Solicitud de Mantenimiento</title>
-  <style>
-    * { box-sizing: border-box; margin:0; padding:0 }
-    html, body { height: 100%; }
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(180deg,#041428 0%, #061c36 60%);
-      color: #fff;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      padding: 20px;
-    }
-    #particles-js { position: fixed; inset:0; z-index:-1; }
-
-    .wrap {
-      max-width: 780px;
-      margin: auto;
-    }
-    .card {
-      background: rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    }
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-    .brand div h1 {
-      color: #cfeefd;
-      font-size: 1.2rem;
-    }
-    .brand div p {
-      margin-top: 4px;
-      color: #a9d9ef;
-      font-size: 0.85rem;
-    }
-    .row { display: flex; gap: 12px; flex-wrap: wrap; }
-    .col { flex: 1; min-width: 120px; }
-
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: 600;
-      color: #e0f7ff;
-    }
-    input[type="text"], input[type="email"], select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: none;
-      border-radius: 8px;
-      background: #0d274d;
-      color: #fff;
-      font-size: 0.95rem;
-    }
-    textarea { min-height: 80px; resize: vertical; }
-
-    .controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 16px;
-    }
-    .btn {
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-    }
-    .btn.primary {
-      background: linear-gradient(90deg,#06b6d4,#2563eb);
-      color: #fff;
-    }
-    .btn.ghost {
-      background: transparent;
-      color: #a9d9ef;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .small {
-      font-size: 0.85rem;
-      color: #9fc7e2;
-    }
-
-    .modal {
-      position: fixed;
-      inset:0;
-      display: none;
-      background: rgba(0,0,0,0.6);
-      z-index: 80;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal .box {
-      background: rgba(2,30,50,0.98);
-      padding: 24px;
-      border-radius: 10px;
-      max-width: 450px;
-      text-align: center;
-      color: #fff;
-    }
-    .modal h3 { color: #06b6d4; margin-bottom: 12px; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Solicitudes a Mantenimiento - IPS Interconsultas</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at center, #0f172a, #020617);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  h2 {
+    text-align: center;
+    color: #00bcd4;
+    margin-top: 20px;
+  }
+  form {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 720px;
+    margin: 30px auto;
+    box-shadow: 0 0 20px rgba(0,188,212,0.2);
+  }
+  label { display:block; margin-top:10px; color:#cbd5e1; }
+  input, select, textarea {
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    margin-top:5px;
+    background:rgba(255,255,255,0.15);
+    color:#fff;
+  }
+  input::placeholder, textarea::placeholder { color:#94a3b8; }
+  button {
+    background:#00bcd4;
+    color:#fff;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:15px;
+  }
+  button:hover { background:#06b6d4; }
+  #particles-js {
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0; left:0;
+    z-index:-1;
+  }
+  #modalExito {
+    display:none;
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+  }
+  #modalExito div {
+    background:#1e293b;
+    padding:30px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 0 10px #00bcd4;
+  }
+</style>
 </head>
 <body>
-  <div id="particles-js"></div>
-  <div class="wrap">
-    <div class="card">
-      <div class="header">
-        <div class="brand">
-          <img src="Logo-Interconsultas-01b-500px.png" alt="Logo" style="height:44px;margin-right:10px">
-          <div>
-            <h1>IPS Interconsultas</h1>
-            <p>Solicitudes a Mantenimiento (locativo y biomédico)</p>
-          </div>
-        </div>
-      </div>
+<div id="particles-js"></div>
+<h2>IPS Interconsultas - Reporte de Mantenimiento</h2>
 
-      <form id="reporteForm">
-        <div class="row">
-          <div class="col">
-            <label for="fecha">Fecha</label>
-            <input type="text" id="fecha" name="fecha" readonly>
-          </div>
-          <div class="col">
-            <label for="hora">Hora</label>
-            <input type="text" id="hora" name="hora" readonly>
-          </div>
-          <div class="col">
-            <label for="idReporte">ID</label>
-            <input type="text" id="idReporte" name="idReporte" readonly>
-          </div>
-        </div>
+<form id="reporteForm">
+  <label>Fecha</label>
+  <input type="text" id="fecha" readonly>
+  
+  <label>Hora</label>
+  <input type="text" id="hora" readonly>
 
-        <label for="nombre">Nombre completo *</label>
-        <input type="text" id="nombre" name="nombre" required>
+  <label>Nombre completo *</label>
+  <input type="text" id="nombre" required placeholder="Ingrese su nombre completo">
 
-        <div class="row">
-          <div class="col">
-            <label for="email">Correo electrónico (opcional)</label>
-            <input type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com">
-          </div>
-          <div class="col">
-            <label for="tipo_reporte">El reporte se relaciona con *</label>
-            <select id="tipo_reporte" name="tipo_reporte" required>
-              <option value="">Seleccione...</option>
-              <option value="infraestructura">Infraestructura</option>
-              <option value="equipo_medico">Equipo Médico</option>
-            </select>
-          </div>
-        </div>
+  <label>Correo (opcional)</label>
+  <input type="email" id="email" placeholder="correo@ejemplo.com">
 
-        <!-- Infraestructura sección -->
-        <div id="section_infra" style="display:none;margin-top:12px;">
-          <label>Área específica *</label>
-          <select id="area_infra" name="area_infra">
-            <option value="">Seleccione...</option>
-            <option>Laboratorio</option>
-            <option>Enfermería</option>
-            <option>Consulta externa</option>
-            <option>Odontología</option>
-            <option>Administración</option>
-            <option>Atención Al Usuario</option>
-            <option>Áreas Comunes</option>
-          </select>
+  <label>El reporte se relaciona con *</label>
+  <select id="tipo_reporte" required>
+    <option value="">Seleccione...</option>
+    <option value="infraestructura">Infraestructura</option>
+    <option value="equipo_medico">Equipo Médico</option>
+  </select>
 
-          <label>Sede *</label>
-          <select id="sede_infra" name="sede_infra">
-            <option value="">Seleccione...</option>
-            <option>Sede 1</option>
-            <option>Sede 2</option>
-            <option>Sede 3</option>
-            <option>Sede 4</option>
-            <option>Sede 5</option>
-          </select>
+  <!-- Infraestructura -->
+  <div id="section_infra" style="display:none">
+    <label>Sede *</label>
+    <select id="sede_infra">
+      <option value="">Seleccione sede</option>
+      <option value="Sede 1">Sede 1</option>
+      <option value="Sede 2">Sede 2</option>
+      <option value="Sede 3">Sede 3</option>
+    </select>
 
-          <label>Ubicación específica *</label>
-          <select id="ubicacion_infra" name="ubicacion_infra">
-            <option value="">Seleccione...</option>
-            <!-- se llena por JS -->
-          </select>
+    <label>Área específica *</label>
+    <input type="text" id="area_infra" placeholder="Ej: Laboratorio, Enfermería, etc.">
 
-          <div class="row">
-            <div class="col">
-              <label>Prioridad</label>
-              <select id="prioridad_infra" name="prioridad_infra">
-                <option value="">Seleccione...</option>
-                <option>Urgente (6 h)</option>
-                <option>Prioritario (48 h)</option>
-                <option>Programado (192 h)</option>
-              </select>
-            </div>
-            <div class="col">
-              <label>Categoría</label>
-              <select id="categoria_infra" name="categoria_infra">
-                <option value="">Seleccione...</option>
-                <option>Equipos de cómputo</option>
-                <option>Muebles y enseres</option>
-                <option>Equipos electrónicos</option>
-                <option>Equipos eléctricos</option>
-                <option>Infraestructura y equipos de apoyo</option>
-              </select>
-            </div>
-          </div>
+    <label>Ubicación específica *</label>
+    <select id="ubicacion_infra"></select>
 
-          <label>Descripción del reporte</label>
-          <textarea id="detalle_infra" name="detalle_infra" placeholder="Describa la novedad..."></textarea>
-        </div>
+    <label>Prioridad</label>
+    <select id="prioridad_infra">
+      <option value="">Seleccione</option>
+      <option>Urgente (6h)</option>
+      <option>Alta (12h)</option>
+      <option>Media (24h)</option>
+      <option>Baja (48h)</option>
+    </select>
 
-        <!-- Equipo médico sección -->
-        <div id="section_med" style="display:none;margin-top:12px;">
-          <label>Equipo a reportar *</label>
-          <select id="equipo_medico_select" name="equipo_medico_select">
-            <option value="">Seleccione...</option>
-            <!-- se llena por JS -->
-          </select>
-
-          <div class="row">
-            <div class="col">
-              <label>Sede *</label>
-              <select id="sede_med" name="sede_med">
-                <option value="">Seleccione...</option>
-                <option>Sede 1</option>
-                <option>Sede 2</option>
-                <option>Sede 3</option>
-                <option>Sede 4</option>
-                <option>Sede 5</option>
-              </select>
-            </div>
-            <div class="col">
-              <label>Área *</label>
-              <select id="area_med" name="area_med">
-                <option value="">Seleccione...</option>
-                <option>Administración</option>
-                <option>Consulta externa</option>
-                <option>Enfermería</option>
-                <option>Laboratorio</option>
-                <option>Salud oral</option>
-                <option>Áreas comunes</option>
-              </select>
-            </div>
-          </div>
-
-          <label>Ubicación específica *</label>
-          <input type="text" id="ubicacion_med" name="ubicacion_med">
-
-          <label>Daño / falla *</label>
-          <textarea id="danio_med" name="danio_med"></textarea>
-
-          <label>Prioridad</label>
-          <select id="prioridad_med" name="prioridad_med">
-            <option value="">Seleccione...</option>
-            <option>Urgente (6 h)</option>
-            <option>Prioritario (48 h)</option>
-            <option>Programado (192 h)</option>
-          </select>
-        </div>
-
-        <div class="controls">
-          <button type="submit" class="btn primary" id="submitBtn">Enviar Reporte</button>
-          <button type="button" class="btn ghost" id="btnClear">Limpiar</button>
-          <div style="flex:1;text-align:right" class="small">CorreQ · IPS Interconsultas</div>
-        </div>
-      </form>
-    </div>
-
-    <div class="modal" id="modalExito">
-      <div class="box">
-        <h3>✅ Reporte enviado</h3>
-        <p id="modalText">Su novedad ha sido registrada. ID: <span id="modalID">-</span></p>
-        <div style="margin-top:12px">
-          <button class="btn primary" id="cerrarModal">Cerrar</button>
-        </div>
-      </div>
-    </div>
-
+    <label>Descripción breve</label>
+    <textarea id="detalle_infra" rows="3" placeholder="Describa brevemente la novedad"></textarea>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    particlesJS("particles-js", {
-      particles: { number:{value:40}, size:{value:2.5}, move:{speed:1.6}, line_linked:{enable:true, color:"#06b6d4"} }
+  <!-- Equipo médico -->
+  <div id="section_med" style="display:none">
+    <label>Sede *</label>
+    <select id="sede_med">
+      <option value="">Seleccione sede</option>
+      <option value="Sede 1">Sede 1</option>
+      <option value="Sede 2">Sede 2</option>
+      <option value="Sede 3">Sede 3</option>
+    </select>
+
+    <label>Área específica *</label>
+    <input type="text" id="area_med" placeholder="Ej: Odontología, Laboratorio, etc.">
+
+    <label>Equipo médico *</label>
+    <select id="equipo_medico_select"></select>
+
+    <label>Ubicación específica *</label>
+    <input type="text" id="ubicacion_med" placeholder="Ej: Consultorio 205, Sala ERA, etc.">
+
+    <label>Prioridad</label>
+    <select id="prioridad_med">
+      <option value="">Seleccione</option>
+      <option>Urgente (6h)</option>
+      <option>Alta (12h)</option>
+      <option>Media (24h)</option>
+      <option>Baja (48h)</option>
+    </select>
+
+    <label>Descripción del daño</label>
+    <textarea id="danio_med" rows="3" placeholder="Describa el daño o falla observada"></textarea>
+  </div>
+
+  <input type="hidden" id="idReporte">
+  <button type="submit" id="submitBtn">Enviar Reporte</button>
+  <button type="button" id="btnClear">Limpiar</button>
+</form>
+
+<div id="modalExito">
+  <div>
+    <h3>✅ Reporte enviado</h3>
+    <p id="modalText"></p>
+    <button onclick="document.getElementById('modalExito').style.display='none'">Cerrar</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script>
+  // Configuración visual partículas
+  particlesJS("particles-js", {
+    particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
+  });
+
+  const ubicaciones = ["Laboratorio","Sala ERA","Odontología","Citología cervicouterina 1","Citología cervicouterina 2","Recepción","Sala de espera","Consultorio 101","Consultorio 205","Consultorio 307"];
+  const equipos_medicos = ["Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Báscula digital","Unidad odontológica","Pulsoxímetro","Electrocardiógrafo","Monitor de signos vitales","Centrífuga","Microscopio"];
+
+  const ubicSelect = document.getElementById('ubicacion_infra');
+  const equipoMedSelect = document.getElementById('equipo_medico_select');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    ubicaciones.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v; opt.textContent = v;
+      ubicSelect.appendChild(opt);
     });
-
-    const ubicaciones = [
-      "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
-      "Bodega enfermería 1","Bodega enfermería 2","Bodega insumos salud oral","Bodega laboratorio","Bodega mantenimiento",
-      "Bodega PYP medicamentos","Bodega servicios generales","Bodega unidad 8","Bodega Vacunación","Cafetin","Centro de acopio",
-      "Citología cervicouterina 1","Citología cervicouterina 2","Coagulación","Compras","Consultorio 101","Consultorio 102",
-      "Consultorio 103","Consultorio 104","Consultorio 105","Consultorio 106","Consultorio 107","Consultorio 200",
-      "Consultorio 201","Consultorio 202","Consultorio 203","Consultorio 204","Consultorio 205","Consultorio 206",
-      "Consultorio 207","Consultorio 301","Consultorio 302","Consultorio 303","Consultorio 304","Consultorio 305",
-      "Consultorio 306","Consultorio 307","Consultorio 308","Consultorio 309","Consultorio 310","Consultorio 311",
-      "Consultorio 312","Consultorio L1","Consultorio L2","Consultorio L3","Consultorio L5","Consultorio L6","Consultorio L7",
-      "Consultorio L8","Consultorio PAC","Consultorio S1","Consultorio S10","Consultorio S11","Consultorio S12","Consultorio S13",
-      "Consultorio S14","Consultorio S15","Consultorio S16","Consultorio S17","Consultorio S2","Consultorio S3","Consultorio S4",
-      "Consultorio S5","Consultorio S6","Consultorio S7","Consultorio S8","Consultorio S9","Consultorio101","Contingencia",
-      "Contingencia Sede 1","Contingencia Sede 2","Crecimiento y desarrollo","Cuarto de aseo","Cuarto de planta","Cuarto de tanques",
-      "Enfermería","Entrevista enfermera 1","Entrevista enfermera 2","Esterilización","Gerencia","Gestión documental","Inmunología",
-      "Laboratorio","Lavado de material","Microbiología","Microelisa","Microscopía","Módulos Autorizaciones","Modulo 1","Modulo 10",
-      "Modulo 11","Modulo 12","Modulo 13","Modulo 14","Modulo 15","Modulo 2","Modulo 3","Modulo 4","Modulo 5","Modulo 6","Modulo 7",
-      "Modulo 8","Modulo 9","Módulo PAC","Mueble Instrumental general","Odontología","Oficina compartida","Oficina contabilidad",
-      "Oficina Coworking","Oficina de riesgo cardiovascular","Oficina líder Consulta externa","Oficina Líder de Desarrollo Humano",
-      "Oficina líder PYM","Oficina líder salud oral","Oficina SIAU","Pasillo","PBX","Procedimientos Enfermería 1",
-      "Procedimientos Enfermería 2","Procedimientos menores","Puerta principal","Química","RCV","Sala de espera","Sala de lactancia",
-      "Sala eda","Sala ERA","Salud oral","Seroteca","Toma de electrocardiograma","Toma de muestras ginecológicas",
-      "Toma de muestras pediátricas","Toma de muestras piso -1","Toma de muestras piso 1","Toma de muestras piso 2",
-      "Toma de rayos x","Unidad odontológica 1","Unidad odontológica 10","Unidad odontológica 11","Unidad odontológica 2",
-      "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
-      "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad"
-    ];
-
-    const equipos_medicos = [
-      "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
-      "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
-      "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
-      "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
-      "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo transporte vacunas",
-      "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador MK304","Incubadora"
-    ];
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const ub = document.getElementById('ubicacion_infra');
-      ubicaciones.forEach((v,i) => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = (i+1) + ". " + v;
-        ub.appendChild(opt);
-      });
-      const em = document.getElementById('equipo_medico_select');
-      equipos_medicos.forEach((v,i) => {
-        const opt = document.createElement('option');
-        opt.value = v;
-        opt.textContent = (i+1) + ". " + v;
-        em.appendChild(opt);
-      });
+    equipos_medicos.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v; opt.textContent = v;
+      equipoMedSelect.appendChild(opt);
     });
-  </script>
+    const now = new Date();
+    document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
+    document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
+    document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
+  });
+
+  document.getElementById('tipo_reporte').addEventListener('change', (e) => {
+    document.getElementById('section_infra').style.display = e.target.value === 'infraestructura' ? 'block' : 'none';
+    document.getElementById('section_med').style.display = e.target.value === 'equipo_medico' ? 'block' : 'none';
+  });
+
+  document.getElementById('btnClear').addEventListener('click', () => {
+    if (confirm('¿Desea limpiar el formulario?')) document.getElementById('reporteForm').reset();
+  });
+
+  const scriptURL = "https://script.google.com/macros/s/AKfycbzKSlYtOTRGyZ4hepJj0-yrdw6hmwKXq-I1KBadtQllsi7wOf-7pTX0q2-hXvDJDuO0/exec";
+
+  document.getElementById('reporteForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const tipo = document.getElementById('tipo_reporte').value;
+    if (!tipo) { alert('Seleccione el tipo de reporte'); return; }
+
+    const payload = {
+      idReporte: document.getElementById('idReporte').value,
+      nombre: document.getElementById('nombre').value,
+      email: document.getElementById('email').value,
+      tipoReporte: tipo,
+      sede: tipo === 'infraestructura' ? document.getElementById('sede_infra').value : document.getElementById('sede_med').value,
+      area: tipo === 'infraestructura' ? document.getElementById('area_infra').value : document.getElementById('area_med').value,
+      ubicacion: tipo === 'infraestructura' ? document.getElementById('ubicacion_infra').value : document.getElementById('ubicacion_med').value,
+      prioridad: tipo === 'infraestructura' ? document.getElementById('prioridad_infra').value : document.getElementById('prioridad_med').value,
+      descripcion: tipo === 'infraestructura' ? document.getElementById('detalle_infra').value : document.getElementById('danio_med').value,
+      timestamp: new Date().toISOString()
+    };
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    fetch(scriptURL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(r => r.json())
+    .then(res => {
+      btn.disabled = false;
+      btn.textContent = 'Enviar Reporte';
+      if (res.result === 'success' || res.ok) {
+        document.getElementById('modalText').textContent = `Su novedad fue registrada exitosamente. ID: ${payload.idReporte}`;
+        document.getElementById('modalExito').style.display = 'flex';
+        document.getElementById('reporteForm').reset();
+      } else {
+        alert('Error al enviar: ' + (res.message || 'No se pudo registrar.'));
+      }
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.textContent = 'Enviar Reporte';
+      alert('Error de conexión. Revise permisos del Script. Detalle: ' + err.message);
+    });
+  });
+</script>
 </body>
 </html>
