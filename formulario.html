@@ -15,7 +15,7 @@ body{
   padding:24px;
 }
 #particles-js { position: fixed; inset:0; z-index:-1; }
-.wrap { max-width:980px;margin: 24px auto; }
+.wrap { max-width:980px; margin:24px auto; }
 .card {
   background: rgba(255,255,255,0.06);
   border-radius:12px;
@@ -24,7 +24,7 @@ body{
   border: 1px solid rgba(6,182,212,0.06);
 }
 .header {
-  display:flex;justify-content:space-between;align-items:center; gap:12px;
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
   margin-bottom:12px;
 }
 .brand h1 { color:#cfeefd; font-size:1.05rem; margin-bottom:4px; }
@@ -35,42 +35,19 @@ label {
   display:block; font-weight:700; color:#e6f7ff;
   margin-top:10px; font-size:0.95rem;
 }
-
-/* --- CAMPOS UNIFORMES OSCUROS --- */
 input[type="text"], input[type="email"], select, textarea {
-  width:100%;
-  padding:10px 12px;
-  border-radius:8px;
-  border:1px solid rgba(6,182,212,0.2);
-  background-color:#0d274d;
-  color:#ffffff;
-  font-size:0.95rem;
-  transition:all 0.3s ease;
+  width:100%; padding:10px 12px;
+  border-radius:8px; border:none;
+  background:#0d274d; color:#fff; font-size:0.95rem;
 }
-input::placeholder, textarea::placeholder { color:#9fc7e2; }
-input:focus, select:focus, textarea:focus {
-  outline:none;
-  background-color:#123463;
-  border-color:#06b6d4;
-}
-
-/* Corrige autofill de Chrome */
-input:-webkit-autofill {
-  -webkit-box-shadow:0 0 0px 1000px #0d274d inset !important;
-  -webkit-text-fill-color:#ffffff !important;
-}
-
 textarea { min-height:84px; resize:vertical; }
-
 .controls { display:flex; gap:10px; align-items:center; margin-top:14px; }
 .btn {
   padding:10px 16px; border-radius:999px;
   font-weight:700; cursor:pointer; border:none;
 }
 .btn.primary { background: linear-gradient(90deg,#06b6d4,#2563eb); color:#fff; }
-.btn.ghost { background:transparent; color:#a8d9ef; border:1px solid rgba(255,255,255,0.1); }
-.btn.primary:hover { background: linear-gradient(90deg,#0ea5e9,#1d4ed8); }
-.btn.ghost:hover { background:rgba(255,255,255,0.08); }
+.btn.ghost { background:transparent; color:#a8d9ef; border:1px solid rgba(255,255,255,0.06); }
 .small { font-size:0.85rem; color:#9fc7e2; }
 .modal {
   position:fixed; inset:0; display:none;
@@ -79,8 +56,8 @@ textarea { min-height:84px; resize:vertical; }
 }
 .modal .box {
   background: rgba(2,30,50,0.98);
-  padding:18px;border-radius:10px;color:#fff;
-  max-width:520px; text-align:center;
+  padding:18px; border-radius:10px;
+  color:#fff; max-width:520px; text-align:center;
 }
 .modal h3 { color:#06b6d4; margin-bottom:6px; }
 @media (max-width:820px){ .row{flex-direction:column} }
@@ -91,7 +68,7 @@ textarea { min-height:84px; resize:vertical; }
 <div class="wrap">
   <div class="card">
     <div class="header">
-      <div class="brand" style="display:flex;align-items:center;">
+      <div class="brand">
         <img src="Logo-Interconsultas-01b-500px.png" alt="logo" style="height:44px;margin-right:10px">
         <div>
           <h1>IPS Interconsultas</h1>
@@ -126,8 +103,7 @@ textarea { min-height:84px; resize:vertical; }
         </div>
       </div>
 
-      <!-- INFRAESTRUCTURA -->
-      <div id="section_infra" style="display:none;margin-top:8px">
+      <div id="section_infra" style="display:none; margin-top:8px">
         <label>Área específica *</label>
         <select id="area_infra">
           <option value="">Seleccione...</option>
@@ -136,13 +112,16 @@ textarea { min-height:84px; resize:vertical; }
           <option>Administración</option><option>Atención Al Usuario</option>
           <option>Áreas Comunes</option>
         </select>
+
         <label>Sede *</label>
         <select id="sede_infra">
           <option value="">Seleccione...</option>
           <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
         </select>
+
         <label>Ubicación específica *</label>
         <select id="ubicacion_infra"><option value="">Seleccione...</option></select>
+
         <div class="row">
           <div class="col">
             <label>Prioridad</label>
@@ -161,14 +140,15 @@ textarea { min-height:84px; resize:vertical; }
             </select>
           </div>
         </div>
+
         <label>Descripción (breve)</label>
         <textarea id="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
       </div>
 
-      <!-- EQUIPO MÉDICO -->
-      <div id="section_med" style="display:none;margin-top:8px">
+      <div id="section_med" style="display:none; margin-top:8px">
         <label>Equipo a reportar *</label>
         <select id="equipo_medico_select"><option value="">Seleccione...</option></select>
+
         <div class="row">
           <div class="col">
             <label>Sede *</label>
@@ -186,10 +166,13 @@ textarea { min-height:84px; resize:vertical; }
             </select>
           </div>
         </div>
+
         <label>Ubicación específica *</label>
         <input type="text" id="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
+
         <label>Daño / falla *</label>
         <textarea id="danio_med" placeholder="Describa el daño..."></textarea>
+
         <label>Prioridad</label>
         <select id="prioridad_med">
           <option value="">Seleccione...</option>
@@ -216,87 +199,111 @@ textarea { min-height:84px; resize:vertical; }
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbwZGKp_6s5e7QqUdBIIFtt1p_AHHul_7AHrgbY8JE2lVRSCK0Tx3DMNDzN_pscM5hbB/exec";
-particlesJS("particles-js", { particles:{ number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} } });
+  // CONFIGURACIÓN
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxQFeIuJlc1yXOFFWJFpxyIXS1eG8OWnsYm4vhrloYbWDprosTmP_kfS4JAFIavaeFg/exec";
 
-const ubicaciones=["Consultorio 101","Consultorio 102","Enfermería","Laboratorio","Odontología","Pasillo","Sala de espera","Vacunación"];
-const equipos_medicos=["Fonendoscopio","Tensiómetro","Monitor de signos vitales","Desfibrilador","Electrocardiógrafo","Centrífuga","Autoclave","Nebulizador"];
-const ubicSelect=document.getElementById('ubicacion_infra');
-const equipoSelect=document.getElementById('equipo_medico_select');
-
-document.addEventListener('DOMContentLoaded',()=>{
-  ubicaciones.forEach(v=>ubicSelect.add(new Option(v,v)));
-  equipos_medicos.forEach(v=>equipoSelect.add(new Option(v,v)));
-  actualizarCamposTemporales();
-});
-
-function actualizarCamposTemporales(){
-  const now=new Date();
-  document.getElementById('fecha').value=now.toLocaleDateString('es-CO');
-  document.getElementById('hora').value=now.toLocaleTimeString('es-CO');
-  document.getElementById('idReporte').value="REP-"+now.getFullYear()+"-"+String(now.getTime()).slice(-6);
-}
-
-document.getElementById('tipo_reporte').addEventListener('change',e=>{
-  const v=e.target.value;
-  document.getElementById('section_infra').style.display=v==='infraestructura'?'block':'none';
-  document.getElementById('section_med').style.display=v==='equipo_medico'?'block':'none';
-});
-
-document.getElementById('btnClear').addEventListener('click',()=>{
-  if(confirm('¿Desea limpiar el formulario?')){
-    document.getElementById('reporteForm').reset();
-    actualizarCamposTemporales();
-    document.getElementById('section_infra').style.display='none';
-    document.getElementById('section_med').style.display='none';
-  }
-});
-
-document.getElementById('reporteForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  const form=e.target;
-  const tipo=document.getElementById('tipo_reporte').value;
-  const nombre=document.getElementById('nombre').value.trim();
-  if(!nombre||!tipo){alert("Complete los campos obligatorios");return;}
-
-  const payload={
-    idReporte:document.getElementById('idReporte').value,
-    fecha:document.getElementById('fecha').value,
-    hora:document.getElementById('hora').value,
-    nombre,
-    email:document.getElementById('email').value,
-    tipoReporte:tipo,
-    sede:tipo==='infraestructura'?document.getElementById('sede_infra').value:document.getElementById('sede_med').value,
-    area:tipo==='infraestructura'?document.getElementById('area_infra').value:document.getElementById('area_med').value,
-    ubicacion:tipo==='infraestructura'?document.getElementById('ubicacion_infra').value:document.getElementById('ubicacion_med').value,
-    descripcion:tipo==='infraestructura'?document.getElementById('detalle_infra').value:document.getElementById('danio_med').value,
-    prioridad:tipo==='infraestructura'?document.getElementById('prioridad_infra').value:document.getElementById('prioridad_med').value,
-    timestamp:new Date().toISOString()
-  };
-
-  const btn=document.getElementById('submitBtn');
-  btn.disabled=true; btn.textContent="Enviando...";
-
-  fetch(scriptURL,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'application/json'}})
-  .then(r=>r.json())
-  .then(res=>{
-    btn.disabled=false; btn.textContent="Enviar Reporte";
-    if(res.result==='success'||res.success){
-      document.getElementById('modalID').textContent=payload.idReporte;
-      document.getElementById('modalExito').style.display='flex';
-      form.reset(); actualizarCamposTemporales();
-      document.getElementById('section_infra').style.display='none';
-      document.getElementById('section_med').style.display='none';
-    } else alert("Error al enviar. Verifique conexión o script.");
-  })
-  .catch(err=>{
-    btn.disabled=false; btn.textContent="Enviar Reporte";
-    alert("Error de red: "+err.message);
+  particlesJS("particles-js", {
+    particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
   });
-});
 
-document.getElementById('cerrarModal').addEventListener('click',()=>document.getElementById('modalExito').style.display='none');
-document.getElementById('modalExito').addEventListener('click',e=>{if(e.target.id==='modalExito')e.currentTarget.style.display='none';});
+  const ubicaciones = ["Consultorio 101","Consultorio 102","Enfermería","Laboratorio","Odontología","Pasillo","Sala de espera","Vacunación"];
+  const equipos_medicos = ["Fonendoscopio","Tensiómetro","Monitor de signos vitales","Desfibrilador","Electrocardiógrafo","Centrífuga","Autoclave","Nebulizador"];
+
+  const ubicSelect = document.getElementById('ubicacion_infra');
+  const equipoSelect = document.getElementById('equipo_medico_select');
+
+  document.addEventListener('DOMContentLoaded', () => {
+    ubicaciones.forEach(v => ubicSelect.add(new Option(v, v)));
+    equipos_medicos.forEach(v => equipoSelect.add(new Option(v, v)));
+    actualizarCamposTemporales();
+  });
+
+  function actualizarCamposTemporales() {
+    const now = new Date();
+    document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
+    document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
+    document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
+  }
+
+  document.getElementById('tipo_reporte').addEventListener('change', e => {
+    const v = e.target.value;
+    document.getElementById('section_infra').style.display = v === 'infraestructura' ? 'block' : 'none';
+    document.getElementById('section_med').style.display = v === 'equipo_medico' ? 'block' : 'none';
+  });
+
+  document.getElementById('btnClear').addEventListener('click', () => {
+    if (confirm('¿Desea limpiar el formulario?')) {
+      document.getElementById('reporteForm').reset();
+      actualizarCamposTemporales();
+      document.getElementById('section_infra').style.display = 'none';
+      document.getElementById('section_med').style.display = 'none';
+    }
+  });
+
+  document.getElementById('reporteForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const form = e.target;
+    const tipo = document.getElementById('tipo_reporte').value;
+    const nombre = document.getElementById('nombre').value.trim();
+    if (!nombre || !tipo) {
+      alert("Complete los campos obligatorios");
+      return;
+    }
+
+    const payload = {
+      idReporte: document.getElementById('idReporte').value,
+      fecha: document.getElementById('fecha').value,
+      hora: document.getElementById('hora').value,
+      nombre: nombre,
+      email: document.getElementById('email').value,
+      tipoReporte: tipo,
+      sede: tipo === 'infraestructura' ? document.getElementById('sede_infra').value : document.getElementById('sede_med').value,
+      area: tipo === 'infraestructura' ? document.getElementById('area_infra').value : document.getElementById('area_med').value,
+      ubicacion: tipo === 'infraestructura' ? document.getElementById('ubicacion_infra').value : document.getElementById('ubicacion_med').value,
+      descripcion: tipo === 'infraestructura' ? document.getElementById('detalle_infra').value : document.getElementById('danio_med').value,
+      prioridad: tipo === 'infraestructura' ? document.getElementById('prioridad_infra').value : document.getElementById('prioridad_med').value,
+      timestamp: new Date().toISOString()
+    };
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = "Enviando...";
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(r => r.json())
+    .then(res => {
+      btn.disabled = false;
+      btn.textContent = "Enviar Reporte";
+      if (res.result === 'success') {
+        document.getElementById('modalID').textContent = payload.idReporte;
+        document.getElementById('modalText').textContent = "Su novedad fue registrada. ID: " + payload.idReporte;
+        document.getElementById('modalExito').style.display = 'flex';
+
+        form.reset();
+        actualizarCamposTemporales();
+        document.getElementById('section_infra').style.display = 'none';
+        document.getElementById('section_med').style.display = 'none';
+      } else {
+        alert("Error al enviar. Verifique conexión o script.");
+      }
+    })
+    .catch(err => {
+      btn.disabled = false;
+      btn.textContent = "Enviar Reporte";
+      alert("Error de red: " + err.message);
+    });
+  });
+
+  document.getElementById('cerrarModal').addEventListener('click', () => {
+    document.getElementById('modalExito').style.display = 'none';
+  });
+  document.getElementById('modalExito').addEventListener('click', e => {
+    if (e.target.id === 'modalExito') e.currentTarget.style.display = 'none';
+  });
 </script>
 </body>
 </html>
