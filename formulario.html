@@ -85,20 +85,20 @@ textarea.input-plain { min-height:84px; resize:vertical; }
     </div>
     <form id="reporteForm">
       <div class="row">
-        <div class="col"><label>Fecha</label><input class="input-plain" type="text" id="fecha" name="fecha" readonly></div>
-        <div class="col"><label>Hora</label><input class="input-plain" type="text" id="hora" name="hora" readonly></div>
-        <div class="col"><label>ID</label><input class="input-plain" type="text" id="idReporte" name="idReporte" readonly></div>
+        <div class="col"><label>Fecha</label><input class="input-plain" type="text" id="fecha" readonly></div>
+        <div class="col"><label>Hora</label><input class="input-plain" type="text" id="hora" readonly></div>
+        <div class="col"><label>ID</label><input class="input-plain" type="text" id="idReporte" readonly></div>
       </div>
       <label>Nombre completo *</label>
-      <input class="input-plain" type="text" id="nombre" name="nombre" placeholder="Ej: Juan Manuel Correa" required>
+      <input class="input-plain" type="text" id="nombre" placeholder="Ej: Juan Manuel Correa" required>
       <div class="row">
         <div class="col">
           <label>Correo (opcional)</label>
-          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com">
+          <input class="input-plain" type="email" id="email" placeholder="ejemplo@interconsultas.com">
         </div>
         <div class="col">
           <label>El reporte se relaciona con *</label>
-          <select class="input-plain" id="tipo_reporte" name="tipo_reporte" required>
+          <select class="input-plain" id="tipo_reporte" required>
             <option value="">Seleccione...</option>
             <option value="infraestructura">Infraestructura</option>
             <option value="equipo_medico">Equipo Médico</option>
@@ -108,7 +108,7 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <!-- Sección INFRA -->
       <div id="section_infra" style="display:none;margin-top:8px">
         <label>Área específica *</label>
-        <select class="input-plain" id="area_infra" name="area_infra">
+        <select class="input-plain" id="area_infra">
           <option value="">Seleccione...</option>
           <option>Laboratorio</option><option>Enfermería</option>
           <option>Consulta externa</option><option>Odontología</option>
@@ -116,23 +116,23 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           <option>Áreas Comunes</option>
         </select>
         <label>Sede *</label>
-        <select class="input-plain" id="sede_infra" name="sede_infra">
+        <select class="input-plain" id="sede_infra">
           <option value="">Seleccione...</option>
           <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
         </select>
         <label>Ubicación específica *</label>
-        <select class="input-plain" id="ubicacion_infra" name="ubicacion_infra"><option value="">Seleccione...</option></select>
+        <select class="input-plain" id="ubicacion_infra"><option value="">Seleccione...</option></select>
         <div class="row">
           <div class="col">
             <label>Prioridad</label>
-            <select class="input-plain" id="prioridad_infra" name="prioridad_infra">
+            <select class="input-plain" id="prioridad_infra">
               <option value="">Seleccione...</option>
               <option>Urgente (6 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
             </select>
           </div>
           <div class="col">
             <label>Categoría</label>
-            <select class="input-plain" id="categoria_infra" name="categoria_infra">
+            <select class="input-plain" id="categoria_infra">
               <option value="">Seleccione...</option>
               <option>Equipos de cómputo</option><option>Muebles y enseres</option>
               <option>Equipos electrónicos</option><option>Equipos eléctricos</option>
@@ -141,23 +141,23 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Descripción (breve)</label>
-        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
+        <textarea class="input-plain" id="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
       </div>
       <!-- Sección MED -->
       <div id="section_med" style="display:none;margin-top:8px">
         <label>Equipo a reportar *</label>
-        <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select"><option value="">Seleccione...</option></select>
+        <select class="input-plain" id="equipo_medico_select"><option value="">Seleccione...</option></select>
         <div class="row">
           <div class="col">
             <label>Sede *</label>
-            <select class="input-plain" id="sede_med" name="sede_med">
+            <select class="input-plain" id="sede_med">
               <option value="">Seleccione...</option>
               <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
             </select>
           </div>
           <div class="col">
             <label>Área *</label>
-            <select class="input-plain" id="area_med" name="area_med">
+            <select class="input-plain" id="area_med">
               <option value="">Seleccione...</option>
               <option>Administración</option><option>Consulta externa</option><option>Enfermería</option>
               <option>Laboratorio</option><option>Salud oral</option><option>Áreas comunes</option>
@@ -165,11 +165,11 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Ubicación específica *</label>
-        <input class="input-plain" type="text" id="ubicacion_med" name="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
+        <input class="input-plain" type="text" id="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
         <label>Daño / falla *</label>
-        <textarea class="input-plain" id="danio_med" name="danio_med" placeholder="Describa el daño..."></textarea>
+        <textarea class="input-plain" id="danio_med" placeholder="Describa el daño..."></textarea>
         <label>Prioridad</label>
-        <select class="input-plain" id="prioridad_med" name="prioridad_med">
+        <select class="input-plain" id="prioridad_med">
           <option value="">Seleccione...</option>
           <option>Urgente (6 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
         </select>
@@ -193,12 +193,49 @@ textarea.input-plain { min-height:84px; resize:vertical; }
 <!-- particles -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+/* ------------------------
+   CONFIGURACIÓN: URL ya puesta
+   ------------------------ */
 const scriptURL = "https://script.google.com/macros/s/AKfycbxfVVdI0Dd-OSZMZhO2anRzXJ_G0VrU39SWXHENhTbxxpwyZa43qYAA-EqOaU_985Ck/exec";
+/* ---- Particulas (sutil) ---- */
 particlesJS("particles-js", {
   particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
 });
-const ubicaciones = [/* ... tu lista ... */];
-const equipos_medicos = [/* ... tu lista ... */];
+const ubicaciones = [
+  "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
+  "Bodega enfermería 1","Bodega enfermería 2","Bodega insumos salud oral","Bodega laboratorio","Bodega mantenimiento",
+  "Bodega PYP medicamentos","Bodega servicios generales","Bodega unidad 8","Bodega Vacunación","Cafetin","Centro de acopio",
+  "Citología cervicouterina 1","Citología cervicouterina 2","Coagulación","Compras","Consultorio 101","Consultorio 102",
+  "Consultorio 103","Consultorio 104","Consultorio 105","Consultorio 106","Consultorio 107","Consultorio 200",
+  "Consultorio 201","Consultorio 202","Consultorio 203","Consultorio 204","Consultorio 205","Consultorio 206",
+  "Consultorio 207","Consultorio 301","Consultorio 302","Consultorio 303","Consultorio 304","Consultorio 305",
+  "Consultorio 306","Consultorio 307","Consultorio 308","Consultorio 309","Consultorio 310","Consultorio 311",
+  "Consultorio 312","Consultorio L1","Consultorio L2","Consultorio L3","Consultorio L5","Consultorio L6","Consultorio L7",
+  "Consultorio L8","Consultorio PAC","Consultorio S1","Consultorio S10","Consultorio S11","Consultorio S12","Consultorio S13",
+  "Consultorio S14","Consultorio S15","Consultorio S16","Consultorio S17","Consultorio S2","Consultorio S3","Consultorio S4",
+  "Consultorio S5","Consultorio S6","Consultorio S7","Consultorio S8","Consultorio S9","Consultorio101","Contingencia",
+  "Contingencia Sede 1","Contingencia Sede 2","Crecimiento y desarrollo","Cuarto de aseo","Cuarto de planta","Cuarto de tanques",
+  "Enfermería","Entrevista enfermera 1","Entrevista enfermera 2","Esterilización","Gerencia","Gestión documental","Inmunología",
+  "Laboratorio","Lavado de material","Microbiología","Microelisa","Microscopía","Módulos Autorizaciones","Modulo 1","Modulo 10",
+  "Modulo 11","Modulo 12","Modulo 13","Modulo 14","Modulo 15","Modulo 2","Modulo 3","Modulo 4","Modulo 5","Modulo 6","Modulo 7",
+  "Modulo 8","Modulo 9","Módulo PAC","Mueble Instrumental general","Odontología","Oficina compartida","Oficina contabilidad",
+  "Oficina Coworking","Oficina de riesgo cardiovascular","Oficina líder Consulta externa","Oficina Líder de Desarrollo Humano",
+  "Oficina líder PYM","Oficina líder salud oral","Oficina SIAU","Pasillo","PBX","Procedimientos Enfermería 1",
+  "Procedimientos Enfermería 2","Procedimientos menores","Puerta principal","Química","RCV","Sala de espera","Sala de lactancia",
+  "Sala eda","Sala ERA","Salud oral","Seroteca","Toma de electrocardiograma","Toma de muestras ginecológicas",
+  "Toma de muestras pediátricas","Toma de muestras piso -1","Toma de muestras piso 1","Toma de muestras piso 2",
+  "Toma de rayos x","Unidad odontológica 1","Unidad odontológica 10","Unidad odontológica 11","Unidad odontológica 2",
+  "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
+  "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad y Experiencia del Usuario"
+];
+const equipos_medicos = [
+  "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
+  "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
+  "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
+  "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
+  "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
+  "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora"
+];
 const ubicSelect = document.getElementById('ubicacion_infra');
 const equipoSelect = document.getElementById('equipo_medico_select');
 const form = document.getElementById('reporteForm');
