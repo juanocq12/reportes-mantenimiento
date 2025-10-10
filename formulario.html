@@ -311,6 +311,10 @@ form.addEventListener('submit', function(e){
         actualizarCamposTemporales();
         document.getElementById('section_infra').style.display = 'none';
         document.getElementById('section_med').style.display = 'none';
+        // Recarga la página a los 2 segundos de mostrar el modal de éxito
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
       } else {
         noteError.style.display = 'block';
         console.error('Respuesta inesperada del servidor:', res);
@@ -324,9 +328,15 @@ form.addEventListener('submit', function(e){
       alert('Error de red: ' + (err.message || err));
     });
 });
-document.getElementById('cerrarModal').addEventListener('click', ()=> document.getElementById('modalExito').style.display='none');
+document.getElementById('cerrarModal').addEventListener('click', ()=>{
+  document.getElementById('modalExito').style.display='none';
+  location.reload();
+});
 document.getElementById('modalExito').addEventListener('click', (e) => {
-  if(e.target === document.getElementById('modalExito')) document.getElementById('modalExito').style.display='none';
+  if(e.target === document.getElementById('modalExito')) {
+    document.getElementById('modalExito').style.display='none';
+    location.reload();
+  }
 });
 </script>
 </body>
