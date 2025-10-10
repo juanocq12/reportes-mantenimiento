@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>IPS Interconsultas - Solicitud de Mantenimiento</title>
 <style>
+/* ... (todo tu CSS original aquí, puedes copiarlo tal cual de tu versión previa) ... */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
@@ -35,25 +36,18 @@ label {
   display:block; font-weight:700; color:#e6f7ff;
   margin-top:10px; font-size:0.95rem;
 }
-
-/* inputs: fondo oscuro por defecto */
+/* ... el resto de tu CSS ... */
 .input-plain {
   width:100%; padding:10px 12px;
   border-radius:8px; border:none;
   background:#0d274d; color:#fff; font-size:0.95rem;
   transition: background .12s ease, color .12s ease;
 }
-
-/* cuando el campo tiene valor: fondo blanco y texto oscuro */
 .input-plain.filled {
   background: #ffffff !important;
   color: #052233 !important;
 }
-
-/* estilos de textarea y select comparten clase */
 textarea.input-plain { min-height:84px; resize:vertical; }
-
-/* controles y botones */
 .controls { display:flex; gap:10px; align-items:center; margin-top:14px; }
 .btn {
   padding:10px 16px; border-radius:999px;
@@ -62,7 +56,6 @@ textarea.input-plain { min-height:84px; resize:vertical; }
 .btn.primary { background: linear-gradient(90deg,#06b6d4,#2563eb); color:#fff; }
 .btn.ghost { background:transparent; color:#a8d9ef; border:1px solid rgba(255,255,255,0.06); }
 .small { font-size:0.85rem; color:#9fc7e2; }
-
 .modal {
   position:fixed; inset:0; display:none;
   background:rgba(0,0,0,0.6); z-index:80;
@@ -74,9 +67,7 @@ textarea.input-plain { min-height:84px; resize:vertical; }
   max-width:520px; text-align:center;
 }
 .modal h3 { color:#06b6d4; margin-bottom:6px; }
-
 .note-error { margin-top:12px; color:#ffd3a3; font-weight:700; display:none; }
-
 @media (max-width:820px){ .row{flex-direction:column} }
 </style>
 </head>
@@ -94,17 +85,14 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       </div>
       <div style="text-align:right"><div class="small">Rápido · Claro · Profesional</div></div>
     </div>
-
     <form id="reporteForm">
       <div class="row">
         <div class="col"><label>Fecha</label><input class="input-plain" type="text" id="fecha" readonly></div>
         <div class="col"><label>Hora</label><input class="input-plain" type="text" id="hora" readonly></div>
         <div class="col"><label>ID</label><input class="input-plain" type="text" id="idReporte" readonly></div>
       </div>
-
       <label>Nombre completo *</label>
       <input class="input-plain" type="text" id="nombre" placeholder="Ej: Juan Manuel Correa" required>
-
       <div class="row">
         <div class="col">
           <label>Correo (opcional)</label>
@@ -119,7 +107,6 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </select>
         </div>
       </div>
-
       <!-- Sección INFRA -->
       <div id="section_infra" style="display:none;margin-top:8px">
         <label>Área específica *</label>
@@ -130,16 +117,13 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           <option>Administración</option><option>Atención Al Usuario</option>
           <option>Áreas Comunes</option>
         </select>
-
         <label>Sede *</label>
         <select class="input-plain" id="sede_infra">
           <option value="">Seleccione...</option>
           <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
         </select>
-
         <label>Ubicación específica *</label>
         <select class="input-plain" id="ubicacion_infra"><option value="">Seleccione...</option></select>
-
         <div class="row">
           <div class="col">
             <label>Prioridad</label>
@@ -158,16 +142,13 @@ textarea.input-plain { min-height:84px; resize:vertical; }
             </select>
           </div>
         </div>
-
         <label>Descripción (breve)</label>
         <textarea class="input-plain" id="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
       </div>
-
       <!-- Sección MED -->
       <div id="section_med" style="display:none;margin-top:8px">
         <label>Equipo a reportar *</label>
         <select class="input-plain" id="equipo_medico_select"><option value="">Seleccione...</option></select>
-
         <div class="row">
           <div class="col">
             <label>Sede *</label>
@@ -185,30 +166,24 @@ textarea.input-plain { min-height:84px; resize:vertical; }
             </select>
           </div>
         </div>
-
         <label>Ubicación específica *</label>
         <input class="input-plain" type="text" id="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
-
         <label>Daño / falla *</label>
         <textarea class="input-plain" id="danio_med" placeholder="Describa el daño..."></textarea>
-
         <label>Prioridad</label>
         <select class="input-plain" id="prioridad_med">
           <option value="">Seleccione...</option>
           <option>Urgente (6 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
         </select>
       </div>
-
       <div class="controls">
         <button type="submit" class="btn primary" id="submitBtn">Enviar Reporte</button>
         <button type="button" class="btn ghost" id="btnClear">Limpiar</button>
         <div style="flex:1;text-align:right" class="small">CorreQ · IPS Interconsultas</div>
       </div>
-
       <div class="note-error" id="noteError">⚠ Error de conexión. Revise el script o permisos.</div>
     </form>
   </div>
-
   <div class="modal" id="modalExito">
     <div class="box">
       <h3>✅ Reporte enviado</h3>
@@ -217,21 +192,17 @@ textarea.input-plain { min-height:84px; resize:vertical; }
     </div>
   </div>
 </div>
-
 <!-- particles -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
 <script>
 /* ------------------------
-   CONFIG: pega aquí tu URL
+   CONFIGURACIÓN: Pega aquí tu URL de Apps Script
    ------------------------ */
-const scriptURL = "https://script.google.com/macros/s/AKfycbyTKRjKNU1b7jqC69AhaJH0dmx3EHmUrf_RusuBstLpDRmXBaFdq3MfIChtt8NVmrI/exec";
-
+const scriptURL = "AQUÍ_PON_LA_URL_DE_TU_WEBAPP";
 /* ---- Particulas (sutil) ---- */
 particlesJS("particles-js", {
   particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
 });
-
 /* ---- listas (expandir si quieres) ---- */
 const ubicaciones = [
   "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
@@ -260,7 +231,6 @@ const ubicaciones = [
   "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
   "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad y Experiencia del Usuario"
 ];
-
 const equipos_medicos = [
   "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
   "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
@@ -269,19 +239,16 @@ const equipos_medicos = [
   "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
   "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora"
 ];
-
 /* ---- referencias DOM ---- */
 const ubicSelect = document.getElementById('ubicacion_infra');
 const equipoSelect = document.getElementById('equipo_medico_select');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
-
 /* ---- cargar opciones y campos temporales ---- */
 document.addEventListener('DOMContentLoaded', () => {
   ubicaciones.forEach((v,i) => ubicSelect.add(new Option((i+1)+". "+v, v)));
   equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
   actualizarCamposTemporales();
-
   // aplicar listener a todos los inputs/selects/textarea para cambiar fondo cuando tengan valor
   const fields = form.querySelectorAll('input.input-plain, select.input-plain, textarea.input-plain');
   fields.forEach(f => {
@@ -290,7 +257,6 @@ document.addEventListener('DOMContentLoaded', () => {
     f.addEventListener('change', ()=> updateFilledClass(f));
   });
 });
-
 /* Genera Fecha/Hora/ID */
 function actualizarCamposTemporales(){
   const now = new Date();
@@ -298,7 +264,6 @@ function actualizarCamposTemporales(){
   document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
   document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
 }
-
 /* Actualiza clase filled para cambio visual */
 function updateFilledClass(el){
   if(!el) return;
@@ -309,17 +274,14 @@ function updateFilledClass(el){
     el.classList.remove('filled');
   }
 }
-
 /* Mostrar secciones por tipo */
 document.getElementById('tipo_reporte').addEventListener('change', (e)=>{
   const v = e.target.value;
   document.getElementById('section_infra').style.display = v==='infraestructura' ? 'block' : 'none';
   document.getElementById('section_med').style.display = v==='equipo_medico' ? 'block' : 'none';
-
   // marcar selects changed visually
   updateFilledClass(document.getElementById('tipo_reporte'));
 });
-
 /* Botón limpiar - reset form y volver a valores temporales */
 document.getElementById('btnClear').addEventListener('click', ()=>{
   if(!confirm('¿Desea limpiar el formulario?')) return;
@@ -330,17 +292,14 @@ document.getElementById('btnClear').addEventListener('click', ()=>{
   document.getElementById('section_infra').style.display = 'none';
   document.getElementById('section_med').style.display = 'none';
 });
-
 /* Envío con fetch + FormData (no header Content-Type para evitar preflight) */
 form.addEventListener('submit', function(e){
   e.preventDefault();
   noteError.style.display = 'none';
-
   const tipo = document.getElementById('tipo_reporte').value;
   const nombre = document.getElementById('nombre').value.trim();
   if(!nombre){ alert('Ingrese Nombre completo'); document.getElementById('nombre').focus(); return; }
   if(!tipo){ alert('Seleccione el tipo de reporte'); document.getElementById('tipo_reporte').focus(); return; }
-
   // validaciones condicionales
   if(tipo === 'infraestructura'){
     if(!document.getElementById('area_infra').value){ alert('Seleccione el Área'); return; }
@@ -352,16 +311,13 @@ form.addEventListener('submit', function(e){
     if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); return; }
   }
-
   // construir FormData desde el formulario (incluye selects/inputs/textarea)
   const fd = new FormData(form);
   fd.append('timestamp', new Date().toISOString());
   // Aseguramos idReporte enviado
   if(!fd.get('idReporte')) fd.set('idReporte', document.getElementById('idReporte').value);
-
   const btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Enviando...';
-
   fetch(scriptURL, { method: 'POST', body: fd })
     .then(resp => resp.json ? resp.json() : resp.text().then(t=> { try { return JSON.parse(t); } catch(e){ return { result: 'ok' }; } }) )
     .then(res => {
@@ -371,7 +327,6 @@ form.addEventListener('submit', function(e){
         document.getElementById('modalID').textContent = res.id || fd.get('idReporte') || document.getElementById('idReporte').value;
         document.getElementById('modalText').textContent = "Su novedad fue registrada. ID: " + document.getElementById('modalID').textContent;
         document.getElementById('modalExito').style.display = 'flex';
-
         // limpiar TODO: quitar clase filled y reset
         form.reset();
         form.querySelectorAll('.filled').forEach(el => el.classList.remove('filled'));
@@ -391,7 +346,6 @@ form.addEventListener('submit', function(e){
       alert('Error de red: ' + (err.message || err));
     });
 });
-
 /* modal close */
 document.getElementById('cerrarModal').addEventListener('click', ()=> document.getElementById('modalExito').style.display='none');
 document.getElementById('modalExito').addEventListener('click', (e) => {
@@ -400,6 +354,4 @@ document.getElementById('modalExito').addEventListener('click', (e) => {
 </script>
 </body>
 </html>
-
-
 
