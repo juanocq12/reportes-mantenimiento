@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>IPS Interconsultas - Solicitud de Mantenimiento</title>
 <style>
-/* ... (todo tu CSS original aquí, puedes copiarlo tal cual de tu versión previa) ... */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
@@ -36,7 +35,6 @@ label {
   display:block; font-weight:700; color:#e6f7ff;
   margin-top:10px; font-size:0.95rem;
 }
-/* ... el resto de tu CSS ... */
 .input-plain {
   width:100%; padding:10px 12px;
   border-radius:8px; border:none;
@@ -196,14 +194,13 @@ textarea.input-plain { min-height:84px; resize:vertical; }
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
 /* ------------------------
-   CONFIGURACIÓN: Pega aquí tu URL de Apps Script
+   CONFIGURACIÓN: URL ya puesta
    ------------------------ */
-const scriptURL = "AQUÍ_PON_LA_URL_DE_TU_WEBAPP";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxfVVdI0Dd-OSZMZhO2anRzXJ_G0VrU39SWXHENhTbxxpwyZa43qYAA-EqOaU_985Ck/exec";
 /* ---- Particulas (sutil) ---- */
 particlesJS("particles-js", {
   particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
 });
-/* ---- listas (expandir si quieres) ---- */
 const ubicaciones = [
   "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
   "Bodega enfermería 1","Bodega enfermería 2","Bodega insumos salud oral","Bodega laboratorio","Bodega mantenimiento",
@@ -239,17 +236,14 @@ const equipos_medicos = [
   "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
   "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora"
 ];
-/* ---- referencias DOM ---- */
 const ubicSelect = document.getElementById('ubicacion_infra');
 const equipoSelect = document.getElementById('equipo_medico_select');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
-/* ---- cargar opciones y campos temporales ---- */
 document.addEventListener('DOMContentLoaded', () => {
   ubicaciones.forEach((v,i) => ubicSelect.add(new Option((i+1)+". "+v, v)));
   equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
   actualizarCamposTemporales();
-  // aplicar listener a todos los inputs/selects/textarea para cambiar fondo cuando tengan valor
   const fields = form.querySelectorAll('input.input-plain, select.input-plain, textarea.input-plain');
   fields.forEach(f => {
     updateFilledClass(f);
@@ -257,14 +251,12 @@ document.addEventListener('DOMContentLoaded', () => {
     f.addEventListener('change', ()=> updateFilledClass(f));
   });
 });
-/* Genera Fecha/Hora/ID */
 function actualizarCamposTemporales(){
   const now = new Date();
   document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
   document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
   document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
 }
-/* Actualiza clase filled para cambio visual */
 function updateFilledClass(el){
   if(!el) return;
   const val = (el.value || "").toString().trim();
@@ -274,25 +266,20 @@ function updateFilledClass(el){
     el.classList.remove('filled');
   }
 }
-/* Mostrar secciones por tipo */
 document.getElementById('tipo_reporte').addEventListener('change', (e)=>{
   const v = e.target.value;
   document.getElementById('section_infra').style.display = v==='infraestructura' ? 'block' : 'none';
   document.getElementById('section_med').style.display = v==='equipo_medico' ? 'block' : 'none';
-  // marcar selects changed visually
   updateFilledClass(document.getElementById('tipo_reporte'));
 });
-/* Botón limpiar - reset form y volver a valores temporales */
 document.getElementById('btnClear').addEventListener('click', ()=>{
   if(!confirm('¿Desea limpiar el formulario?')) return;
   form.reset();
-  // quitar clase filled de todos
   form.querySelectorAll('.filled').forEach(el => el.classList.remove('filled'));
   actualizarCamposTemporales();
   document.getElementById('section_infra').style.display = 'none';
   document.getElementById('section_med').style.display = 'none';
 });
-/* Envío con fetch + FormData (no header Content-Type para evitar preflight) */
 form.addEventListener('submit', function(e){
   e.preventDefault();
   noteError.style.display = 'none';
@@ -300,7 +287,6 @@ form.addEventListener('submit', function(e){
   const nombre = document.getElementById('nombre').value.trim();
   if(!nombre){ alert('Ingrese Nombre completo'); document.getElementById('nombre').focus(); return; }
   if(!tipo){ alert('Seleccione el tipo de reporte'); document.getElementById('tipo_reporte').focus(); return; }
-  // validaciones condicionales
   if(tipo === 'infraestructura'){
     if(!document.getElementById('area_infra').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_infra').value){ alert('Seleccione la Ubicación'); return; }
@@ -311,10 +297,8 @@ form.addEventListener('submit', function(e){
     if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); return; }
   }
-  // construir FormData desde el formulario (incluye selects/inputs/textarea)
   const fd = new FormData(form);
   fd.append('timestamp', new Date().toISOString());
-  // Aseguramos idReporte enviado
   if(!fd.get('idReporte')) fd.set('idReporte', document.getElementById('idReporte').value);
   const btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Enviando...';
@@ -323,11 +307,9 @@ form.addEventListener('submit', function(e){
     .then(res => {
       btn.disabled = false; btn.textContent = 'Enviar Reporte';
       if(res && (res.result === 'success' || res.success === true || res.result === 'ok')){
-        // mostrar modal y limpiar formulario
         document.getElementById('modalID').textContent = res.id || fd.get('idReporte') || document.getElementById('idReporte').value;
         document.getElementById('modalText').textContent = "Su novedad fue registrada. ID: " + document.getElementById('modalID').textContent;
         document.getElementById('modalExito').style.display = 'flex';
-        // limpiar TODO: quitar clase filled y reset
         form.reset();
         form.querySelectorAll('.filled').forEach(el => el.classList.remove('filled'));
         actualizarCamposTemporales();
@@ -346,7 +328,6 @@ form.addEventListener('submit', function(e){
       alert('Error de red: ' + (err.message || err));
     });
 });
-/* modal close */
 document.getElementById('cerrarModal').addEventListener('click', ()=> document.getElementById('modalExito').style.display='none');
 document.getElementById('modalExito').addEventListener('click', (e) => {
   if(e.target === document.getElementById('modalExito')) document.getElementById('modalExito').style.display='none';
@@ -354,4 +335,3 @@ document.getElementById('modalExito').addEventListener('click', (e) => {
 </script>
 </body>
 </html>
-
