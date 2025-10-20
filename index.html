@@ -16,77 +16,91 @@
       scroll-behavior: smooth;
     }
 
-    /* ===== LOGIN OVERLAY ===== */
-    #login-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(6, 28, 54, 0.97);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
-    }
-    #login-box {
-      background: rgba(13, 39, 77, 0.9);
-      padding: 2rem 3rem;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(6,182,212,0.3);
-      text-align: center;
-      width: 90%;
-      max-width: 380px;
-      border: 1px solid rgba(6,182,212,0.4);
-      animation: fadeIn 1s ease-in-out;
-    }
-    #login-box img {
-      width: 90px;
-      margin-bottom: 1rem;
-    }
-    #login-box h2 {
-      margin-bottom: 1rem;
-      color: #06b6d4;
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-    #login-box input {
-      width: 100%;
-      padding: 0.7rem;
-      margin: 0.5rem 0;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-    }
-    #login-box button {
-      margin-top: 1rem;
-      background: linear-gradient(to right, #06b6d4, #3b82f6);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(6,182,212,0.2);
-    }
-    #login-box button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 20px rgba(6,182,212,0.5);
-    }
-    #login-error {
-      color: #ff5252;
-      font-size: 0.9rem;
-      margin-top: 0.8rem;
-      display: none;
-    }
-
     /* ===== PARTICULAS ===== */
     #particles-js {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
       z-index: -1;
+    }
+
+    /* ===== LOGIN ===== */
+    #login-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(6, 28, 54, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 999;
+      transition: opacity 0.6s ease;
+    }
+    #login-container.hidden {
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    #login-box {
+      background: rgba(10, 42, 87, 0.9);
+      padding: 2rem 3rem;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      backdrop-filter: blur(6px);
+      max-width: 380px;
+      width: 90%;
+      animation: fadeIn 1.2s ease;
+    }
+    #login-box img {
+      height: 80px;
+      margin-bottom: 1rem;
+    }
+    #login-box h2 {
+      margin-bottom: 1rem;
+      color: #06b6d4;
+    }
+    #login-box input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      outline: none;
+    }
+    #login-box input[type="text"],
+    #login-box input[type="password"] {
+      background: #0c244a;
+      color: #fff;
+    }
+    #login-box input::placeholder {
+      color: #a9bcd6;
+    }
+    #login-box button {
+      width: 100%;
+      padding: 0.9rem;
+      margin-top: 1rem;
+      border: none;
+      border-radius: 2rem;
+      background: linear-gradient(to right, #06b6d4, #3b82f6);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(6, 182, 212, 0.2);
+    }
+    #login-box button:hover {
+      background: linear-gradient(to right, #0284c7, #2563eb);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+    }
+    #error-message {
+      color: #ff6b6b;
+      margin-top: 0.8rem;
+      display: none;
+      font-size: 0.9rem;
     }
 
     /* ===== NAVBAR ===== */
@@ -135,6 +149,31 @@
       transform: translateY(-2px);
     }
 
+    /* ===== ADMIN STATUS ===== */
+    #admin-status {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    #admin-status span {
+      color: #06b6d4;
+      font-weight: bold;
+    }
+    #logout-btn {
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      background: linear-gradient(to right, #06b6d4, #3b82f6);
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #logout-btn:hover {
+      background: linear-gradient(to right, #0284c7, #2563eb);
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+    }
+
     /* ===== HERO ===== */
     .hero {
       text-align: center;
@@ -151,19 +190,11 @@
       font-size: 2.8rem;
       margin-bottom: 1rem;
       letter-spacing: 0.5px;
-      animation: slideDown 1.2s ease-out;
     }
     .hero p {
       font-size: 1.2rem;
       margin-bottom: 2rem;
       color: #cce7ff;
-      animation: fadeIn 2s ease-in-out;
-    }
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
     }
     .btn {
       padding: 0.9rem 1.6rem;
@@ -184,104 +215,31 @@
       transform: translateY(-3px);
     }
 
-    /* ===== SERVICES ===== */
-    .services {
-      padding: 4rem 1rem;
-      background: rgba(13, 39, 77, 0.9);
-      border-top: 1px solid rgba(6, 182, 212, 0.2);
-      border-bottom: 1px solid rgba(6, 182, 212, 0.2);
-    }
-    .services h2 {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      font-size: 2.2rem;
-      letter-spacing: 0.5px;
-    }
-    .service-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-      max-width: 1100px;
-      margin: auto;
-    }
-    .card {
-      background: #0c244a;
-      padding: 2rem;
-      border-radius: 1rem;
-      text-align: center;
-      transition: all 0.4s ease;
-      border: 1px solid rgba(6, 182, 212, 0.2);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
-      border-color: #06b6d4;
-    }
-    .card h3 {
-      margin-bottom: 0.8rem;
-      font-size: 1.4rem;
-      color: #06b6d4;
-    }
-
-    /* ===== CONTACTO ===== */
-    .contact {
-      padding: 4rem 1rem;
-      text-align: center;
-      background: rgba(6, 28, 54, 0.9);
-    }
-    .contact h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1.2rem;
-      letter-spacing: 0.5px;
-    }
-    .contact p {
-      margin-bottom: 0.6rem;
-      font-size: 1rem;
-      color: #e6f4ff;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      text-align: center;
-      background: #061c36;
-      padding: 1rem;
-      font-size: 0.9rem;
-      border-top: 1px solid #0a2a57;
-      color: #a9bcd6;
-    }
-
-    /* ===== ANIMACIONES ===== */
+    /* ===== ANIMACION ===== */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
+  <!-- PARTICULAS -->
+  <div id="particles-js"></div>
 
   <!-- LOGIN -->
-  <div id="login-overlay">
+  <div id="login-container">
     <div id="login-box">
-      <img src="Logo-Interconsultas-01b-500px.png" alt="Logo">
-      <h2>Acceso Restringido</h2>
-      <input type="text" id="username" placeholder="Usuario" autocomplete="off">
+      <img src="Logo-Interconsultas-01b-500px.png" alt="Logo Interconsultas">
+      <h2>Ingreso Administrador</h2>
+      <input type="text" id="username" placeholder="Usuario">
       <input type="password" id="password" placeholder="Contraseña">
       <button onclick="login()">Ingresar</button>
-      <div id="login-error">Usuario o contraseña incorrectos.</div>
+      <p id="error-message">Credenciales no válidas. Por favor verifique su usuario y contraseña.</p>
     </div>
   </div>
 
   <!-- CONTENIDO -->
   <div id="main-content" style="display:none;">
-
-    <!-- PARTICULAS -->
-    <div id="particles-js"></div>
-
     <!-- NAV -->
     <nav>
       <div class="nav-inner">
@@ -296,6 +254,10 @@
           <a href="formulario.html">Formulario</a>
           <a href="videos.html">Videos</a>
         </div>
+        <div id="admin-status">
+          <span>Administrador 🟢</span>
+          <button id="logout-btn" onclick="logout()">Cerrar sesión</button>
+        </div>
       </div>
     </nav>
 
@@ -303,46 +265,13 @@
     <section class="hero" id="inicio">
       <h1>Bienvenido a IPS Interconsultas</h1>
       <p>Gestión de reportes de mantenimiento y soporte tecnológico.</p>
-      <div class="actions">
-        <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank">
-          Reportar Mantenimiento
-        </a>
-      </div>
-    </section>
-
-    <!-- SERVICIOS -->
-    <section class="services" id="servicios">
-      <h2>Nuestros Servicios</h2>
-      <div class="service-cards">
-        <div class="card">
-          <h3>Mantenimiento Biomédico</h3>
-          <p>Prevención y corrección de fallas en equipos médicos.</p>
-        </div>
-        <div class="card">
-          <h3>Soporte Tecnológico</h3>
-          <p>Atención a incidencias en hardware, software e impresoras.</p>
-        </div>
-        <div class="card">
-          <h3>Gestión de Activos</h3>
-          <p>Registro y control de activos biomédicos e infraestructura.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACTO -->
-    <section class="contact" id="contacto">
-      <h2>Contacto</h2>
-      <p>Mantenimiento Biomédico</p>
-      <p>Interconsultas S.A.S</p>
-      <p>PBX: (606) 893 0350 | Cel: 317 5132548</p>
-      <p>Calle 56 # 24-29 Barrio Belén - Manizales, Caldas</p>
-      <p>Email: <a href="mailto:auxiliarmantenimiento.ips@gmail.com" style="color:#06b6d4;">auxiliarmantenimiento.ips@gmail.com</a></p>
-      <p>Web: <a href="http://www.ipsinterconsultas.com" style="color:#06b6d4;">www.ipsinterconsultas.com</a></p>
-      <p>@interconsultas</p>
+      <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSecDBk7SAgtcUd88NXNw6jDhk2ySoCqMEOVsIZaOqpkmMAZKw/viewform" target="_blank">
+        Reportar Mantenimiento
+      </a>
     </section>
 
     <!-- FOOTER -->
-    <footer>
+    <footer style="text-align:center; background:#061c36; padding:1rem; font-size:0.9rem; color:#a9bcd6;">
       &copy; 2025 IPS Interconsultas - Todos los derechos reservados
     </footer>
   </div>
@@ -350,28 +279,38 @@
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   <script>
+    // Configurar partículas
+    particlesJS("particles-js", {
+      "particles": { "number": { "value": 60 }, "size": { "value": 3 }, "move": { "speed": 2 },
+        "line_linked": { "enable": true, "color": "#06b6d4" } }
+    });
+
+    // Función de login
     function login() {
-      const user = document.getElementById("username").value;
-      const pass = document.getElementById("password").value;
-      const error = document.getElementById("login-error");
-      
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("error-message");
+
       if (user === "interconsultas" && pass === "mantenimiento2025") {
-        document.getElementById("login-overlay").style.display = "none";
-        document.getElementById("main-content").style.display = "block";
+        document.getElementById("login-container").classList.add("hidden");
+        setTimeout(() => {
+          document.getElementById("login-container").style.display = "none";
+          document.getElementById("main-content").style.display = "block";
+        }, 600);
       } else {
-        error.style.display = "block";
+        errorMsg.style.display = "block";
       }
     }
 
-    // partículas
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 60 },
-        "size": { "value": 3 },
-        "move": { "speed": 2 },
-        "line_linked": { "enable": true, "color": "#06b6d4" }
-      }
-    });
+    // Función de logout
+    function logout() {
+      document.getElementById("main-content").style.display = "none";
+      document.getElementById("login-container").style.display = "flex";
+      document.getElementById("login-container").classList.remove("hidden");
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("error-message").style.display = "none";
+    }
   </script>
 </body>
 </html>
