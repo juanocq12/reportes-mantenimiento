@@ -78,9 +78,10 @@ textarea.input-plain { min-height:84px; resize:vertical; }
         <img src="Logo-Interconsultas-01b-500px.png" alt="logo" style="height:44px;margin-right:10px">
         <div>
           <h1>IPS Interconsultas</h1>
-          <p>Solicitudes a Mantenimiento (locativo, dotación y biomédico)</p>
+          <p>Solicitudes a Mantenimiento (locativo y biomédico)</p>
         </div>
       </div>
+      <div style="text-align:right"><div class="small">Version 1.0 </div></div>
       <div style="text-align:right"><div class="small">Versión 1.0 </div></div>
     </div>
     <form id="reporteForm">
@@ -100,12 +101,12 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           <label>El reporte se relaciona con *</label>
           <select class="input-plain" id="tipo_reporte" name="tipo_reporte" required>
             <option value="">Seleccione...</option>
-            <option value="infraestructura">Infraestructura y Dotación</option>
+            <option value="infraestructura">Infraestructura</option>
             <option value="equipo_medico">Equipo Médico</option>
           </select>
         </div>
       </div>
-      <!-- Sección INFRA + DOTACIÓN -->
+      <!-- Sección INFRA -->
       <div id="section_infra" style="display:none;margin-top:8px">
         <label>Área específica *</label>
         <select class="input-plain" id="area_infra" name="area_infra">
@@ -135,16 +136,15 @@ textarea.input-plain { min-height:84px; resize:vertical; }
             <select class="input-plain" id="categoria_infra" name="categoria_infra">
               <option value="">Seleccione...</option>
               <option>Equipos de cómputo</option><option>Muebles y enseres</option>
-              <option>Equipos electrónicos y eléctricos</option>
-              <option>Infraestructura y Dotación</option>
+              <option>Equipos electrónicos y eléctricos</option>option>
+              <option>Infraestructura y equipos de apoyo</option>
             </select>
           </div>
         </div>
         <label>Descripción (breve)</label>
-        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, daño en mobiliario, filtración..."></textarea>
+        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
       </div>
-
-      <!-- Sección EQUIPO MÉDICO -->
+      <!-- Sección MED -->
       <div id="section_med" style="display:none;margin-top:8px">
         <label>Equipo a reportar *</label>
         <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select"><option value="">Seleccione...</option></select>
@@ -175,7 +175,6 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           <option>Urgente (12 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
         </select>
       </div>
-
       <div class="controls">
         <button type="submit" class="btn primary" id="submitBtn">Enviar Reporte</button>
         <button type="button" class="btn ghost" id="btnClear">Limpiar</button>
@@ -184,7 +183,6 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <div class="note-error" id="noteError">⚠ Error de conexión. Revise el script o permisos.</div>
     </form>
   </div>
-
   <div class="modal" id="modalExito">
     <div class="box">
       <h3>✅ Reporte enviado</h3>
@@ -193,7 +191,6 @@ textarea.input-plain { min-height:84px; resize:vertical; }
     </div>
   </div>
 </div>
-
 <!-- particles -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
@@ -201,13 +198,45 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbxfVVdI0Dd-OSZMZhO2an
 particlesJS("particles-js", {
   particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
 });
-const ubicaciones = ["Administrativo","Baños","Bodega","Consultorios","Pasillos","Odontología","Enfermería","Otro"];
-const equipos_medicos = ["Fonendoscopio","Tensiómetro","Lámpara","Báscula","Monitor","Autoclave","Otro"];
+const ubicaciones = [
+  "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
+  "Bodega enfermería 1","Bodega enfermería 2","Bodega insumos salud oral","Bodega laboratorio","Bodega mantenimiento",
+  "Bodega PYP medicamentos","Bodega servicios generales","Bodega unidad 8","Bodega Vacunación","Cafetin","Centro de acopio",
+  "Citología cervicouterina 1","Citología cervicouterina 2","Coagulación","Compras","Consultorio 101","Consultorio 102",
+  "Consultorio 103","Consultorio 104","Consultorio 105","Consultorio 106","Consultorio 107","Consultorio 200",
+  "Consultorio 201","Consultorio 202","Consultorio 203","Consultorio 204","Consultorio 205","Consultorio 206",
+  "Consultorio 207","Consultorio 301","Consultorio 302","Consultorio 303","Consultorio 304","Consultorio 305",
+  "Consultorio 306","Consultorio 307","Consultorio 308","Consultorio 309","Consultorio 310","Consultorio 311",
+  "Consultorio 312","Consultorio L1","Consultorio L2","Consultorio L3","Consultorio L5","Consultorio L6","Consultorio L7",
+  "Consultorio L8","Consultorio PAC","Consultorio S1","Consultorio S10","Consultorio S11","Consultorio S12","Consultorio S13",
+  "Consultorio S14","Consultorio S15","Consultorio S16","Consultorio S17","Consultorio S2","Consultorio S3","Consultorio S4",
+  "Consultorio S5","Consultorio S6","Consultorio S7","Consultorio S8","Consultorio S9","Consultorio101","Contingencia",
+  "Contingencia Sede 1","Contingencia Sede 2","Crecimiento y desarrollo","Cuarto de aseo","Cuarto de planta","Cuarto de tanques",
+  "Enfermería","Entrevista enfermera 1","Entrevista enfermera 2","Esterilización","Gerencia","Gestión documental","Inmunología",
+  "Laboratorio","Lavado de material","Microbiología","Microelisa","Microscopía","Módulos Autorizaciones","Modulo 1","Modulo 10",
+  "Modulo 11","Modulo 12","Modulo 13","Modulo 14","Modulo 15","Modulo 2","Modulo 3","Modulo 4","Modulo 5","Modulo 6","Modulo 7",
+  "Modulo 8","Modulo 9","Módulo PAC","Mueble Instrumental general","Odontología","Oficina compartida","Oficina contabilidad",
+  "Oficina Coworking","Oficina de riesgo cardiovascular","Oficina líder Consulta externa","Oficina Líder de Desarrollo Humano",
+  "Oficina líder PYM","Oficina líder salud oral","Oficina SIAU","Pasillo","PBX","Procedimientos Enfermería 1",
+  "Procedimientos Enfermería 2","Procedimientos menores","Puerta principal","Química","RCV","Sala de espera","Sala de lactancia",
+  "Sala eda","Sala ERA","Salud oral","Seroteca","Toma de electrocardiograma","Toma de muestras ginecológicas",
+  "Toma de muestras pediátricas","Toma de muestras piso -1","Toma de muestras piso 1","Toma de muestras piso 2",
+  "Toma de rayos x","Unidad odontológica 1","Unidad odontológica 10","Unidad odontológica 11","Unidad odontológica 2",
+  "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
+  "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad y Experiencia del Usuario","Otro"
+];
+const equipos_medicos = [
+  "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
+  "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
+  "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
+  "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
+  "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
+  "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora","Otro"
+];
 const ubicSelect = document.getElementById('ubicacion_infra');
 const equipoSelect = document.getElementById('equipo_medico_select');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
-
 document.addEventListener('DOMContentLoaded', () => {
   ubicaciones.forEach((v,i) => ubicSelect.add(new Option((i+1)+". "+v, v)));
   equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
@@ -219,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
     f.addEventListener('change', ()=> updateFilledClass(f));
   });
 });
-
 function actualizarCamposTemporales(){
   const now = new Date();
   document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
@@ -254,8 +282,8 @@ form.addEventListener('submit', function(e){
   noteError.style.display = 'none';
   const tipo = document.getElementById('tipo_reporte').value;
   const nombre = document.getElementById('nombre').value.trim();
-  if(!nombre){ alert('Ingrese Nombre completo'); return; }
-  if(!tipo){ alert('Seleccione el tipo de reporte'); return; }
+  if(!nombre){ alert('Ingrese Nombre completo'); document.getElementById('nombre').focus(); return; }
+  if(!tipo){ alert('Seleccione el tipo de reporte'); document.getElementById('tipo_reporte').focus(); return; }
   if(tipo === 'infraestructura'){
     if(!document.getElementById('area_infra').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_infra').value){ alert('Seleccione la Ubicación'); return; }
@@ -266,20 +294,17 @@ form.addEventListener('submit', function(e){
     if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); return; }
   }
-
   const fd = new FormData(form);
   fd.append('timestamp', new Date().toISOString());
   if(!fd.get('idReporte')) fd.set('idReporte', document.getElementById('idReporte').value);
-
   const btn = document.getElementById('submitBtn');
   btn.disabled = true; btn.textContent = 'Enviando...';
-
   fetch(scriptURL, { method: 'POST', body: fd })
     .then(resp => resp.json ? resp.json() : resp.text().then(t=> { try { return JSON.parse(t); } catch(e){ return { result: 'ok' }; } }) )
     .then(res => {
       btn.disabled = false; btn.textContent = 'Enviar Reporte';
       if(res && (res.result === 'success' || res.success === true || res.result === 'ok')){
-        document.getElementById('modalID').textContent = res.id || fd.get('idReporte');
+        document.getElementById('modalID').textContent = res.id || fd.get('idReporte') || document.getElementById('idReporte').value;
         document.getElementById('modalText').textContent = "Su novedad fue registrada. ID: " + document.getElementById('modalID').textContent;
         document.getElementById('modalExito').style.display = 'flex';
         form.reset();
@@ -287,14 +312,19 @@ form.addEventListener('submit', function(e){
         actualizarCamposTemporales();
         document.getElementById('section_infra').style.display = 'none';
         document.getElementById('section_med').style.display = 'none';
-        setTimeout(()=>location.reload(),2000);
+        // Recarga la página a los 2 segundos de mostrar el modal de éxito
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
       } else {
         noteError.style.display = 'block';
+        console.error('Respuesta inesperada del servidor:', res);
         alert('Error al enviar: respuesta inesperada del servidor.');
       }
     })
     .catch(err => {
       btn.disabled = false; btn.textContent = 'Enviar Reporte';
+      console.error('Fetch error', err);
       noteError.style.display = 'block';
       alert('Error de red: ' + (err.message || err));
     });
@@ -303,7 +333,14 @@ document.getElementById('cerrarModal').addEventListener('click', ()=>{
   document.getElementById('modalExito').style.display='none';
   location.reload();
 });
+document.getElementById('modalExito').addEventListener('click', (e) => {
+  if(e.target === document.getElementById('modalExito')) {
+    document.getElementById('modalExito').style.display='none';
+    location.reload();
+  }
+});
 </script>
 </body>
 </html>
+
 
