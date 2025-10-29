@@ -14,90 +14,341 @@ body{
   -webkit-font-smoothing:antialiased;
   padding:24px;
 }
-.input-plain {
-  width:100%;
-  padding:10px 12px;
-  border-radius:8px;
-  border:none;
-  background:#0d274d;
-  color:#fff;
-  font-size:0.95rem;
+#particles-js { position: fixed; inset:0; z-index:-1; }
+.wrap { max-width:980px;margin: 24px auto; }
+.card {
+  background: rgba(255,255,255,0.06);
+  border-radius:12px;
+  padding:18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  border: 1px solid rgba(6,182,212,0.06);
 }
-.input-plain.filled {background:#fff!important;color:#052233!important;}
-label{display:block;font-weight:700;margin-top:10px;}
-.btn{padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;border:none;}
-.btn.primary{background:linear-gradient(90deg,#06b6d4,#2563eb);color:#fff;}
-.btn.ghost{background:transparent;color:#a8d9ef;border:1px solid rgba(255,255,255,0.06);}
-.modal{position:fixed;inset:0;display:none;background:rgba(0,0,0,0.6);z-index:80;align-items:center;justify-content:center;}
-.modal .box{background:rgba(2,30,50,0.98);padding:18px;border-radius:10px;color:#fff;max-width:520px;text-align:center;}
-.small{font-size:0.85rem;color:#9fc7e2;}
+.header {
+  display:flex;justify-content:space-between;align-items:center; gap:12px;
+  margin-bottom:12px;
+}
+.brand h1 { color:#cfeefd; font-size:1.05rem; margin-bottom:4px; }
+.brand p { color:#a9d9ef; font-size:0.85rem; margin:0; }
+.row { display:flex; gap:12px; margin-top:8px; }
+.col { flex:1; }
+label {
+  display:block; font-weight:700; color:#e6f7ff;
+  margin-top:10px; font-size:0.95rem;
+}
+.input-plain {
+  width:100%; padding:10px 12px;
+  border-radius:8px; border:none;
+  background:#0d274d; color:#fff; font-size:0.95rem;
+  transition: background .12s ease, color .12s ease;
+}
+.input-plain.filled {
+  background: #ffffff !important;
+  color: #052233 !important;
+}
+textarea.input-plain { min-height:84px; resize:vertical; }
+.controls { display:flex; gap:10px; align-items:center; margin-top:14px; }
+.btn {
+  padding:10px 16px; border-radius:999px;
+  font-weight:700; cursor:pointer; border:none;
+}
+.btn.primary { background: linear-gradient(90deg,#06b6d4,#2563eb); color:#fff; }
+.btn.ghost { background:transparent; color:#a8d9ef; border:1px solid rgba(255,255,255,0.06); }
+.small { font-size:0.85rem; color:#9fc7e2; }
+.modal {
+  position:fixed; inset:0; display:none;
+  background:rgba(0,0,0,0.6); z-index:80;
+  align-items:center; justify-content:center;
+}
+.modal .box {
+  background: rgba(2,30,50,0.98);
+  padding:18px;border-radius:10px;color:#fff;
+  max-width:520px; text-align:center;
+}
+.modal h3 { color:#06b6d4; margin-bottom:6px; }
+.note-error { margin-top:12px; color:#ffd3a3; font-weight:700; display:none; }
+@media (max-width:820px){ .row{flex-direction:column} }
 </style>
 </head>
 <body>
+<div id="particles-js"></div>
 <div class="wrap">
-<div class="card">
-<div class="header">
-<div class="brand">
-<img src="Logo-Interconsultas-01b-500px.png" alt="logo" style="height:44px;margin-right:10px">
-<div>
-<h1>IPS Interconsultas</h1>
-<p>Solicitudes de Mantenimiento (locativo y biomédico)</p>
-</div>
-</div>
-</div>
-
-<form id="reporteForm">
-<!-- ... resto del formulario igual ... -->
-
-<label>Ubicación específica *</label>
-<select class="input-plain" id="ubicacion_infra" name="ubicacion_infra">
-  <option value="">Seleccione...</option>
-</select>
-
-<!-- ... resto del formulario igual ... -->
-
-<div class="controls">
-  <button type="submit" class="btn primary" id="submitBtn">Enviar Reporte</button>
-  <button type="button" class="btn ghost" id="btnClear">Limpiar</button>
-  <div style="flex:1;text-align:right" class="small">CorreQ · IPS Interconsultas</div>
-</div>
-</form>
-
-<div class="modal" id="modalExito">
-  <div class="box">
-    <h3>✅ Reporte enviado</h3>
-    <p id="modalText">Su novedad fue registrada. ID: <span id="modalID">-</span></p>
-    <div style="margin-top:12px"><button class="btn primary" id="cerrarModal">Cerrar</button></div>
+  <div class="card">
+    <div class="header">
+      <div class="brand">
+        <img src="Logo-Interconsultas-01b-500px.png" alt="logo" style="height:44px;margin-right:10px">
+        <div>
+          <h1>IPS Interconsultas</h1>
+          <p>Solicitudes a Mantenimiento (locativo y biomédico)</p>
+        </div>
+      </div>
+      <div style="text-align:right"><div class="small">Version 1.0 </div></div>
+      <div style="text-align:right"><div class="small">Versión 1.0 </div></div>
+    </div>
+    <form id="reporteForm">
+      <div class="row">
+        <div class="col"><label>Fecha</label><input class="input-plain" type="text" id="fecha" name="fecha" readonly></div>
+        <div class="col"><label>Hora</label><input class="input-plain" type="text" id="hora" name="hora" readonly></div>
+        <div class="col"><label>ID</label><input class="input-plain" type="text" id="idReporte" name="idReporte" readonly></div>
+      </div>
+      <label>Nombre completo *</label>
+      <input class="input-plain" type="text" id="nombre" name="nombre" placeholder="Ej: Juan Manuel Correa" required>
+      <div class="row">
+        <div class="col">
+          <label>Correo (opcional)</label>
+          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com">
+        </div>
+        <div class="col">
+          <label>El reporte se relaciona con *</label>
+          <select class="input-plain" id="tipo_reporte" name="tipo_reporte" required>
+            <option value="">Seleccione...</option>
+            <option value="infraestructura">Infraestructura</option>
+            <option value="equipo_medico">Equipo Médico</option>
+          </select>
+        </div>
+      </div>
+      <!-- Sección INFRA -->
+      <div id="section_infra" style="display:none;margin-top:8px">
+        <label>Área específica *</label>
+        <select class="input-plain" id="area_infra" name="area_infra">
+          <option value="">Seleccione...</option>
+          <option>Laboratorio</option><option>Enfermería</option>
+          <option>Consulta externa</option><option>Odontología</option>
+          <option>Administración</option><option>Atención Al Usuario</option>
+          <option>Áreas Comunes</option>
+        </select>
+        <label>Sede *</label>
+        <select class="input-plain" id="sede_infra" name="sede_infra">
+          <option value="">Seleccione...</option>
+          <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
+        </select>
+        <label>Ubicación específica *</label>
+        <!-- Cambia aquí a input con list -->
+        <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_infra" name="ubicacion_infra" placeholder="Escriba o seleccione..." autocomplete="off">
+        <datalist id="ubicacion_infra_list"></datalist>
+        <div class="row">
+          <div class="col">
+            <label>Prioridad</label>
+            <select class="input-plain" id="prioridad_infra" name="prioridad_infra">
+              <option value="">Seleccione...</option>
+              <option>Urgente (12 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Categoría</label>
+            <select class="input-plain" id="categoria_infra" name="categoria_infra">
+              <option value="">Seleccione...</option>
+              <option>Equipos de cómputo</option><option>Muebles y enseres</option>
+              <option>Equipos electrónicos y eléctricos</option>
+              <option>Infraestructura y equipos de apoyo</option>
+            </select>
+          </div>
+        </div>
+        <label>Descripción (breve)</label>
+        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
+      </div>
+      <!-- Sección MED -->
+      <div id="section_med" style="display:none;margin-top:8px">
+        <label>Equipo a reportar *</label>
+        <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select"><option value="">Seleccione...</option></select>
+        <div class="row">
+          <div class="col">
+            <label>Sede *</label>
+            <select class="input-plain" id="sede_med" name="sede_med">
+              <option value="">Seleccione...</option>
+              <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Área *</label>
+            <select class="input-plain" id="area_med" name="area_med">
+              <option value="">Seleccione...</option>
+              <option>Administración</option><option>Consulta externa</option><option>Enfermería</option>
+              <option>Laboratorio</option><option>Salud oral</option><option>Áreas comunes</option>
+            </select>
+          </div>
+        </div>
+        <label>Ubicación específica *</label>
+        <input class="input-plain" type="text" id="ubicacion_med" name="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
+        <label>Daño / falla *</label>
+        <textarea class="input-plain" id="danio_med" name="danio_med" placeholder="Describa el daño..."></textarea>
+        <label>Prioridad</label>
+        <select class="input-plain" id="prioridad_med" name="prioridad_med">
+          <option value="">Seleccione...</option>
+          <option>Urgente (12 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
+        </select>
+      </div>
+      <div class="controls">
+        <button type="submit" class="btn primary" id="submitBtn">Enviar Reporte</button>
+        <button type="button" class="btn ghost" id="btnClear">Limpiar</button>
+        <div style="flex:1;text-align:right" class="small">CorreQ · IPS Interconsultas</div>
+      </div>
+      <div class="note-error" id="noteError">⚠ Error de conexión. Revise el script o permisos.</div>
+    </form>
+  </div>
+  <div class="modal" id="modalExito">
+    <div class="box">
+      <h3>✅ Reporte enviado</h3>
+      <p id="modalText">Su novedad fue registrada. ID: <span id="modalID">-</span></p>
+      <div style="margin-top:12px"><button class="btn primary" id="cerrarModal">Cerrar</button></div>
+    </div>
   </div>
 </div>
-</div>
-</div>
-
+<!-- particles -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbxfVVdI0Dd-OSZMZhO2anRzXJ_G0VrU39SWXHENhTbxxpwyZa43qYAA-EqOaU_985Ck/exec";
+particlesJS("particles-js", {
+  particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
+});
 const ubicaciones = [
-  "Administrativo y áreas comunes","Atención domiciliaria","Auditorio","Baño discapacitados",
-  "Baño hombres","Baño mujeres","Bodega enfermería 1","Bodega enfermería 2","Bodega laboratorio",
-  "Consultorio 101","Consultorio 102","Consultorio 103","Odontología","Enfermería","Vacunación","Otro"
+  "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
+  "Bodega enfermería 1","Bodega enfermería 2","Bodega insumos salud oral","Bodega laboratorio","Bodega mantenimiento",
+  "Bodega PYP medicamentos","Bodega servicios generales","Bodega unidad 8","Bodega Vacunación","Cafetin","Centro de acopio",
+  "Citología cervicouterina 1","Citología cervicouterina 2","Coagulación","Compras","Consultorio 101","Consultorio 102",
+  "Consultorio 103","Consultorio 104","Consultorio 105","Consultorio 106","Consultorio 107","Consultorio 200",
+  "Consultorio 201","Consultorio 202","Consultorio 203","Consultorio 204","Consultorio 205","Consultorio 206",
+  "Consultorio 207","Consultorio 301","Consultorio 302","Consultorio 303","Consultorio 304","Consultorio 305",
+  "Consultorio 306","Consultorio 307","Consultorio 308","Consultorio 309","Consultorio 310","Consultorio 311",
+  "Consultorio 312","Consultorio L1","Consultorio L2","Consultorio L3","Consultorio L5","Consultorio L6","Consultorio L7",
+  "Consultorio L8","Consultorio PAC","Consultorio S1","Consultorio S10","Consultorio S11","Consultorio S12","Consultorio S13",
+  "Consultorio S14","Consultorio S15","Consultorio S16","Consultorio S17","Consultorio S2","Consultorio S3","Consultorio S4",
+  "Consultorio S5","Consultorio S6","Consultorio S7","Consultorio S8","Consultorio S9","Consultorio101","Contingencia",
+  "Contingencia Sede 1","Contingencia Sede 2","Crecimiento y desarrollo","Cuarto de aseo","Cuarto de planta","Cuarto de tanques",
+  "Enfermería","Entrevista enfermera 1","Entrevista enfermera 2","Esterilización","Gerencia","Gestión documental","Inmunología",
+  "Laboratorio","Lavado de material","Microbiología","Microelisa","Microscopía","Módulos Autorizaciones","Modulo 1","Modulo 10",
+  "Modulo 11","Modulo 12","Modulo 13","Modulo 14","Modulo 15","Modulo 2","Modulo 3","Modulo 4","Modulo 5","Modulo 6","Modulo 7",
+  "Modulo 8","Modulo 9","Módulo PAC","Mueble Instrumental general","Odontología","Oficina compartida","Oficina contabilidad",
+  "Oficina Coworking","Oficina de riesgo cardiovascular","Oficina líder Consulta externa","Oficina Líder de Desarrollo Humano",
+  "Oficina líder PYM","Oficina líder salud oral","Oficina SIAU","Pasillo","PBX","Procedimientos Enfermería 1",
+  "Procedimientos Enfermería 2","Procedimientos menores","Puerta principal","Química","RCV","Sala de espera","Sala de lactancia",
+  "Sala eda","Sala ERA","Salud oral","Seroteca","Toma de electrocardiograma","Toma de muestras ginecológicas",
+  "Toma de muestras pediátricas","Toma de muestras piso -1","Toma de muestras piso 1","Toma de muestras piso 2",
+  "Toma de rayos x","Unidad odontológica 1","Unidad odontológica 10","Unidad odontológica 11","Unidad odontológica 2",
+  "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
+  "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad y Experiencia del Usuario","Otro"
+];
+const equipos_medicos = [
+  "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
+  "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
+  "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
+  "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
+  "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
+  "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora","Otro"
 ];
 const ubicSelect = document.getElementById('ubicacion_infra');
-
-// Cargar opciones iniciales
-ubicaciones.forEach((v,i)=>ubicSelect.add(new Option((i+1)+". "+v,v)));
-
-// 🔍 Agregar búsqueda dentro del select
-ubicSelect.addEventListener('keyup', function(e) {
-  const term = e.target.value.toLowerCase();
-  const options = Array.from(ubicSelect.options);
-  options.forEach(o => {
-    if (o.value === "") return;
-    o.style.display = o.text.toLowerCase().includes(term) ? "block" : "none";
+const ubicDatalist = document.getElementById('ubicacion_infra_list');
+const equipoSelect = document.getElementById('equipo_medico_select');
+const form = document.getElementById('reporteForm');
+const noteError = document.getElementById('noteError');
+document.addEventListener('DOMContentLoaded', () => {
+  // Llenar datalist para autocompletar de ubicación
+  ubicaciones.forEach((v, i) => {
+    const opt = document.createElement('option');
+    opt.value = v;
+    ubicDatalist.appendChild(opt);
+  });
+  // Llenar select de equipos médicos
+  equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
+  actualizarCamposTemporales();
+  const fields = form.querySelectorAll('input.input-plain, select.input-plain, textarea.input-plain');
+  fields.forEach(f => {
+    updateFilledClass(f);
+    f.addEventListener('input', ()=> updateFilledClass(f));
+    f.addEventListener('change', ()=> updateFilledClass(f));
   });
 });
-
-// Mantener estilo filled
-ubicSelect.addEventListener('change', ()=>ubicSelect.classList.add('filled'));
+function actualizarCamposTemporales(){
+  const now = new Date();
+  document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
+  document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
+  document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
+}
+function updateFilledClass(el){
+  if(!el) return;
+  const val = (el.value || "").toString().trim();
+  if(val !== ""){
+    el.classList.add('filled');
+  } else {
+    el.classList.remove('filled');
+  }
+}
+document.getElementById('tipo_reporte').addEventListener('change', (e)=>{
+  const v = e.target.value;
+  document.getElementById('section_infra').style.display = v==='infraestructura' ? 'block' : 'none';
+  document.getElementById('section_med').style.display = v==='equipo_medico' ? 'block' : 'none';
+  updateFilledClass(document.getElementById('tipo_reporte'));
+});
+document.getElementById('btnClear').addEventListener('click', ()=>{
+  if(!confirm('¿Desea limpiar el formulario?')) return;
+  form.reset();
+  form.querySelectorAll('.filled').forEach(el => el.classList.remove('filled'));
+  actualizarCamposTemporales();
+  document.getElementById('section_infra').style.display = 'none';
+  document.getElementById('section_med').style.display = 'none';
+});
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  noteError.style.display = 'none';
+  const tipo = document.getElementById('tipo_reporte').value;
+  const nombre = document.getElementById('nombre').value.trim();
+  if(!nombre){ alert('Ingrese Nombre completo'); document.getElementById('nombre').focus(); return; }
+  if(!tipo){ alert('Seleccione el tipo de reporte'); document.getElementById('tipo_reporte').focus(); return; }
+  if(tipo === 'infraestructura'){
+    if(!document.getElementById('area_infra').value){ alert('Seleccione el Área'); return; }
+    if(!document.getElementById('ubicacion_infra').value){ alert('Seleccione la Ubicación'); return; }
+    if(!document.getElementById('sede_infra').value){ alert('Seleccione la Sede'); return; }
+  } else {
+    if(!document.getElementById('equipo_medico_select').value){ alert('Seleccione el Equipo'); return; }
+    if(!document.getElementById('sede_med').value){ alert('Seleccione la Sede'); return; }
+    if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
+    if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); return; }
+  }
+  const fd = new FormData(form);
+  fd.append('timestamp', new Date().toISOString());
+  if(!fd.get('idReporte')) fd.set('idReporte', document.getElementById('idReporte').value);
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  fetch(scriptURL, { method: 'POST', body: fd })
+    .then(resp => resp.json ? resp.json() : resp.text().then(t=> { try { return JSON.parse(t); } catch(e){ return { result: 'ok' }; } }) )
+    .then(res => {
+      btn.disabled = false; btn.textContent = 'Enviar Reporte';
+      if(res && (res.result === 'success' || res.success === true || res.result === 'ok')){
+        document.getElementById('modalID').textContent = res.id || fd.get('idReporte') || document.getElementById('idReporte').value;
+        document.getElementById('modalText').textContent = "Su novedad fue registrada. ID: " + document.getElementById('modalID').textContent;
+        document.getElementById('modalExito').style.display = 'flex';
+        form.reset();
+        form.querySelectorAll('.filled').forEach(el => el.classList.remove('filled'));
+        actualizarCamposTemporales();
+        document.getElementById('section_infra').style.display = 'none';
+        document.getElementById('section_med').style.display = 'none';
+        // Recarga la página a los 2 segundos de mostrar el modal de éxito
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+      } else {
+        noteError.style.display = 'block';
+        console.error('Respuesta inesperada del servidor:', res);
+        alert('Error al enviar: respuesta inesperada del servidor.');
+      }
+    })
+    .catch(err => {
+      btn.disabled = false; btn.textContent = 'Enviar Reporte';
+      console.error('Fetch error', err);
+      noteError.style.display = 'block';
+      alert('Error de red: ' + (err.message || err));
+    });
+});
+document.getElementById('cerrarModal').addEventListener('click', ()=>{
+  document.getElementById('modalExito').style.display='none';
+  location.reload();
+});
+document.getElementById('modalExito').addEventListener('click', (e) => {
+  if(e.target === document.getElementById('modalExito')) {
+    document.getElementById('modalExito').style.display='none';
+    location.reload();
+  }
+});
 </script>
 </body>
 </html>
-
 
