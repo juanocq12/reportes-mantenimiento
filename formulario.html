@@ -81,7 +81,6 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           <p>Solicitudes a Mantenimiento (locativo y biomédico)</p>
         </div>
       </div>
-      <div style="text-align:right"><div class="small">Version 1.0 </div></div>
       <div style="text-align:right"><div class="small">Versión 1.0 </div></div>
     </div>
     <form id="reporteForm">
@@ -123,6 +122,8 @@ textarea.input-plain { min-height:84px; resize:vertical; }
         </select>
         <label>Ubicación específica *</label>
         <select class="input-plain" id="ubicacion_infra" name="ubicacion_infra"><option value="">Seleccione...</option></select>
+        <!-- 🔍 Campo de búsqueda agregado -->
+        <input type="text" id="searchUbicacion" placeholder="Buscar ubicación..." class="input-plain" style="margin-top:6px;">
         <div class="row">
           <div class="col">
             <label>Prioridad</label>
@@ -136,7 +137,7 @@ textarea.input-plain { min-height:84px; resize:vertical; }
             <select class="input-plain" id="categoria_infra" name="categoria_infra">
               <option value="">Seleccione...</option>
               <option>Equipos de cómputo</option><option>Muebles y enseres</option>
-              <option>Equipos electrónicos y eléctricos</option>option>
+              <option>Equipos electrónicos y eléctricos</option>
               <option>Infraestructura y equipos de apoyo</option>
             </select>
           </div>
@@ -235,8 +236,10 @@ const equipos_medicos = [
 ];
 const ubicSelect = document.getElementById('ubicacion_infra');
 const equipoSelect = document.getElementById('equipo_medico_select');
+const searchUbicacion = document.getElementById('searchUbicacion');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
+
 document.addEventListener('DOMContentLoaded', () => {
   ubicaciones.forEach((v,i) => ubicSelect.add(new Option((i+1)+". "+v, v)));
   equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
@@ -248,100 +251,49 @@ document.addEventListener('DOMContentLoaded', () => {
     f.addEventListener('change', ()=> updateFilledClass(f));
   });
 });
+
+// 🔍 Búsqueda de ubicaciones
+searchUbicacion.addEventListener('input', () => {
+  const term = searchUbicacion.value.toLowerCase();
+  ubicSelect.innerHTML = '<option value="">Seleccione...</option>';
+  ubicaciones
+    .filter(u => u.toLowerCase().includes(term))
+    .forEach((v,i) => ubicSelect.add(new Option((i+1)+". "+v, v)));
+});
+
 function actualizarCamposTemporales(){
   const now = new Date();
   document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
-  document.getElementById('hora').value = now.toLocaleTimeString('es-CO');
-  document.getElementById('idReporte').value = "REP-" + now.getFullYear() + "-" + String(now.getTime()).slice(-6);
+  document.getElementById('hora').value = now.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('idReporte').value = "R" + now.getFullYear().toString().slice(-2) + (now.getMonth()+1).toString().padStart(2,'0') + now.getDate().toString().padStart(2,'0') + "-" + now.getHours().toString().padStart(2,'0') + now.getMinutes().toString().padStart(2,'0');
 }
-function updateFilledClass(el){
-  if(!el) return;
-  const val = (el.value || "").toString().trim();
-  if(val !== ""){
-    el.classList.add('filled');
-  } else {
-    el.classList.remove('filled');
-  }
-}
-document.getElementById('tipo_reporte').addEventListener('change', (e)=>{
-  const v = e.target.value;
-  document.getElementById('section_infra').style.display = v==='infraestructura' ? 'block' : 'none';
-  document.getElementById('section_med').style.display = v==='equipo_medico' ? 'block' : 'none';
-  updateFilledClass(document.getElementById('tipo_reporte'));
+function updateFilledClass(el){ el.classList.toggle('filled', el.value.trim()!==''); }
+
+document.getElementById('tipo_reporte').addEventListener('change', e=>{
+  document.getElementById('section_infra').style.display = e.target.value==="infraestructura"?"block":"none";
+  document.getElementById('section_med').style.display = e.target.value==="equipo_medico"?"block":"none";
 });
-document.getElementById('btnClear').addEventListener('click', ()=>{
-  if(!confirm('¿Desea limpiar el formulario?')) return;
-  form.reset();
-  form.querySelectorAll('.filled').forEach(el => el.classList.remove('filled'));
-  actualizarCamposTemporales();
-  document.getElementById('section_infra').style.display = 'none';
-  document.getElementById('section_med').style.display = 'none';
-});
-form.addEventListener('submit', function(e){
+
+form.addEventListener('submit', e=>{
   e.preventDefault();
-  noteError.style.display = 'none';
-  const tipo = document.getElementById('tipo_reporte').value;
-  const nombre = document.getElementById('nombre').value.trim();
-  if(!nombre){ alert('Ingrese Nombre completo'); document.getElementById('nombre').focus(); return; }
-  if(!tipo){ alert('Seleccione el tipo de reporte'); document.getElementById('tipo_reporte').focus(); return; }
-  if(tipo === 'infraestructura'){
-    if(!document.getElementById('area_infra').value){ alert('Seleccione el Área'); return; }
-    if(!document.getElementById('ubicacion_infra').value){ alert('Seleccione la Ubicación'); return; }
-    if(!document.getElementById('sede_infra').value){ alert('Seleccione la Sede'); return; }
-  } else {
-    if(!document.getElementById('equipo_medico_select').value){ alert('Seleccione el Equipo'); return; }
-    if(!document.getElementById('sede_med').value){ alert('Seleccione la Sede'); return; }
-    if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
-    if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); return; }
-  }
-  const fd = new FormData(form);
-  fd.append('timestamp', new Date().toISOString());
-  if(!fd.get('idReporte')) fd.set('idReporte', document.getElementById('idReporte').value);
   const btn = document.getElementById('submitBtn');
-  btn.disabled = true; btn.textContent = 'Enviando...';
-  fetch(scriptURL, { method: 'POST', body: fd })
-    .then(resp => resp.json ? resp.json() : resp.text().then(t=> { try { return JSON.parse(t); } catch(e){ return { result: 'ok' }; } }) )
-    .then(res => {
-      btn.disabled = false; btn.textContent = 'Enviar Reporte';
-      if(res && (res.result === 'success' || res.success === true || res.result === 'ok')){
-        document.getElementById('modalID').textContent = res.id || fd.get('idReporte') || document.getElementById('idReporte').value;
-        document.getElementById('modalText').textContent = "Su novedad fue registrada. ID: " + document.getElementById('modalID').textContent;
-        document.getElementById('modalExito').style.display = 'flex';
-        form.reset();
-        form.querySelectorAll('.filled').forEach(el => el.classList.remove('filled'));
-        actualizarCamposTemporales();
-        document.getElementById('section_infra').style.display = 'none';
-        document.getElementById('section_med').style.display = 'none';
-        // Recarga la página a los 2 segundos de mostrar el modal de éxito
-        setTimeout(function() {
-          location.reload();
-        }, 2000);
-      } else {
-        noteError.style.display = 'block';
-        console.error('Respuesta inesperada del servidor:', res);
-        alert('Error al enviar: respuesta inesperada del servidor.');
-      }
-    })
-    .catch(err => {
-      btn.disabled = false; btn.textContent = 'Enviar Reporte';
-      console.error('Fetch error', err);
-      noteError.style.display = 'block';
-      alert('Error de red: ' + (err.message || err));
-    });
+  btn.disabled=true; btn.textContent="Enviando...";
+  fetch(scriptURL,{method:'POST',body:new FormData(form)})
+  .then(res=>res.text())
+  .then(()=>{ 
+    document.getElementById('modalID').textContent=document.getElementById('idReporte').value;
+    document.getElementById('modalExito').style.display='flex';
+    form.reset(); actualizarCamposTemporales();
+    document.querySelectorAll('.input-plain').forEach(f=>f.classList.remove('filled'));
+    btn.disabled=false; btn.textContent="Enviar Reporte";
+  })
+  .catch(()=>{ noteError.style.display='block'; btn.disabled=false; btn.textContent="Enviar Reporte"; });
 });
-document.getElementById('cerrarModal').addEventListener('click', ()=>{
-  document.getElementById('modalExito').style.display='none';
-  location.reload();
-});
-document.getElementById('modalExito').addEventListener('click', (e) => {
-  if(e.target === document.getElementById('modalExito')) {
-    document.getElementById('modalExito').style.display='none';
-    location.reload();
-  }
-});
+
+document.getElementById('cerrarModal').addEventListener('click',()=>{ document.getElementById('modalExito').style.display='none'; });
+document.getElementById('btnClear').addEventListener('click',()=>{ form.reset(); actualizarCamposTemporales(); document.querySelectorAll('.input-plain').forEach(f=>f.classList.remove('filled')); });
 </script>
 </body>
 </html>
-
 
 
