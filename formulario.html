@@ -94,14 +94,14 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <input class="input-plain" type="text" id="nombre" name="nombre" placeholder="Ej: Juan Manuel Correa" required>
       <div class="row">
         <div class="col">
-          <label>Correo (opcional)</label>
-          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com">
+          <label>Correo *</label>
+          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com" required>
         </div>
         <div class="col">
           <label>El reporte se relaciona con *</label>
           <select class="input-plain" id="tipo_reporte" name="tipo_reporte" required>
             <option value="">Seleccione...</option>
-            <option value="infraestructura">Infraestructura</option>
+            <option value="infraestructura">Infraestructura y Dotación</option>
             <option value="equipo_medico">Equipo Médico</option>
           </select>
         </div>
@@ -109,7 +109,7 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <!-- Sección INFRA -->
       <div id="section_infra" style="display:none;margin-top:8px">
         <label>Área específica *</label>
-        <select class="input-plain" id="area_infra" name="area_infra">
+        <select class="input-plain" id="area_infra" name="area_infra" required>
           <option value="">Seleccione...</option>
           <option>Laboratorio</option><option>Enfermería</option>
           <option>Consulta externa</option><option>Odontología</option>
@@ -117,25 +117,24 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           <option>Áreas Comunes</option>
         </select>
         <label>Sede *</label>
-        <select class="input-plain" id="sede_infra" name="sede_infra">
+        <select class="input-plain" id="sede_infra" name="sede_infra" required>
           <option value="">Seleccione...</option>
           <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
         </select>
         <label>Ubicación específica *</label>
-        <!-- Cambia aquí a input con list -->
-        <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_infra" name="ubicacion_infra" placeholder="Escriba o seleccione..." autocomplete="off">
+        <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_infra" name="ubicacion_infra" placeholder="Escriba o seleccione..." autocomplete="off" required>
         <datalist id="ubicacion_infra_list"></datalist>
         <div class="row">
           <div class="col">
-            <label>Prioridad</label>
-            <select class="input-plain" id="prioridad_infra" name="prioridad_infra">
+            <label>Prioridad *</label>
+            <select class="input-plain" id="prioridad_infra" name="prioridad_infra" required>
               <option value="">Seleccione...</option>
               <option>Urgente (12 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
             </select>
           </div>
           <div class="col">
-            <label>Categoría</label>
-            <select class="input-plain" id="categoria_infra" name="categoria_infra">
+            <label>Categoría *</label>
+            <select class="input-plain" id="categoria_infra" name="categoria_infra" required>
               <option value="">Seleccione...</option>
               <option>Equipos de cómputo</option><option>Muebles y enseres</option>
               <option>Equipos electrónicos y eléctricos</option>
@@ -143,24 +142,24 @@ textarea.input-plain { min-height:84px; resize:vertical; }
             </select>
           </div>
         </div>
-        <label>Descripción (breve)</label>
-        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
+        <label>Descripción (breve) *</label>
+        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..." required></textarea>
       </div>
       <!-- Sección MED -->
       <div id="section_med" style="display:none;margin-top:8px">
         <label>Equipo a reportar *</label>
-        <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select"><option value="">Seleccione...</option></select>
+        <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select" required><option value="">Seleccione...</option></select>
         <div class="row">
           <div class="col">
             <label>Sede *</label>
-            <select class="input-plain" id="sede_med" name="sede_med">
+            <select class="input-plain" id="sede_med" name="sede_med" required>
               <option value="">Seleccione...</option>
               <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
             </select>
           </div>
           <div class="col">
             <label>Área *</label>
-            <select class="input-plain" id="area_med" name="area_med">
+            <select class="input-plain" id="area_med" name="area_med" required>
               <option value="">Seleccione...</option>
               <option>Administración</option><option>Consulta externa</option><option>Enfermería</option>
               <option>Laboratorio</option><option>Salud oral</option><option>Áreas comunes</option>
@@ -168,11 +167,11 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Ubicación específica *</label>
-        <input class="input-plain" type="text" id="ubicacion_med" name="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
+        <input class="input-plain" type="text" id="ubicacion_med" name="ubicacion_med" placeholder='Ej: "Consultorio 101"' required>
         <label>Daño / falla *</label>
-        <textarea class="input-plain" id="danio_med" name="danio_med" placeholder="Describa el daño..."></textarea>
-        <label>Prioridad</label>
-        <select class="input-plain" id="prioridad_med" name="prioridad_med">
+        <textarea class="input-plain" id="danio_med" name="danio_med" placeholder="Describa el daño..." required></textarea>
+        <label>Prioridad *</label>
+        <select class="input-plain" id="prioridad_med" name="prioridad_med" required>
           <option value="">Seleccione...</option>
           <option>Urgente (12 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
         </select>
@@ -351,4 +350,3 @@ document.getElementById('modalExito').addEventListener('click', (e) => {
 </script>
 </body>
 </html>
-
