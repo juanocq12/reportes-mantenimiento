@@ -94,8 +94,8 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <input class="input-plain" type="text" id="nombre" name="nombre" placeholder="Ej: Juan Manuel Correa" required>
       <div class="row">
         <div class="col">
-          <label>Correo (opcional)</label>
-          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com">
+          <label>Correo *</label>
+          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com" required>
         </div>
         <div class="col">
           <label>El reporte se relaciona con *</label>
@@ -300,6 +300,8 @@ function actualizarRequired() {
     let input = document.getElementById(id);
     if(input) input.required = (tipo === 'equipo_medico');
   });
+  // Correo SIEMPRE requerido
+  document.getElementById('email').required = true;
 }
 
 document.getElementById('btnClear').addEventListener('click', ()=>{
@@ -316,7 +318,9 @@ form.addEventListener('submit', function(e){
   noteError.style.display = 'none';
   const tipo = document.getElementById('tipo_reporte').value;
   const nombre = document.getElementById('nombre').value.trim();
+  const correo = document.getElementById('email').value.trim();
   if(!nombre){ alert('Ingrese Nombre completo'); document.getElementById('nombre').focus(); return; }
+  if(!correo){ alert('Ingrese el correo'); document.getElementById('email').focus(); return; }
   if(!tipo){ alert('Seleccione el tipo de reporte'); document.getElementById('tipo_reporte').focus(); return; }
   if(tipo === 'infraestructura'){
     if(!document.getElementById('area_infra').value){ alert('Seleccione el Área'); return; }
@@ -352,7 +356,6 @@ form.addEventListener('submit', function(e){
         document.getElementById('section_infra').style.display = 'none';
         document.getElementById('section_med').style.display = 'none';
         actualizarRequired();
-        // Recarga la página a los 2 segundos de mostrar el modal de éxito
         setTimeout(function() {
           location.reload();
         }, 2000);
