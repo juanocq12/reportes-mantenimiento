@@ -94,8 +94,8 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <input class="input-plain" type="text" id="nombre" name="nombre" placeholder="Ej: Juan Manuel Correa" required>
       <div class="row">
         <div class="col">
-          <label>Correo *</label>
-          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com" required>
+          <label>Correo (opcional)</label>
+          <input class="input-plain" type="email" id="email" name="email" placeholder="ejemplo@interconsultas.com">
         </div>
         <div class="col">
           <label>El reporte se relaciona con *</label>
@@ -109,7 +109,7 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <!-- Sección INFRA -->
       <div id="section_infra" style="display:none;margin-top:8px">
         <label>Área específica *</label>
-        <select class="input-plain" id="area_infra" name="area_infra" required>
+        <select class="input-plain" id="area_infra" name="area_infra">
           <option value="">Seleccione...</option>
           <option>Laboratorio</option><option>Enfermería</option>
           <option>Consulta externa</option><option>Odontología</option>
@@ -117,24 +117,24 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           <option>Áreas Comunes</option>
         </select>
         <label>Sede *</label>
-        <select class="input-plain" id="sede_infra" name="sede_infra" required>
+        <select class="input-plain" id="sede_infra" name="sede_infra">
           <option value="">Seleccione...</option>
           <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
         </select>
         <label>Ubicación específica *</label>
-        <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_infra" name="ubicacion_infra" placeholder="Escriba o seleccione..." autocomplete="off" required>
+        <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_infra" name="ubicacion_infra" placeholder="Escriba o seleccione..." autocomplete="off">
         <datalist id="ubicacion_infra_list"></datalist>
         <div class="row">
           <div class="col">
             <label>Prioridad *</label>
-            <select class="input-plain" id="prioridad_infra" name="prioridad_infra" required>
+            <select class="input-plain" id="prioridad_infra" name="prioridad_infra">
               <option value="">Seleccione...</option>
               <option>Urgente (12 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
             </select>
           </div>
           <div class="col">
             <label>Categoría *</label>
-            <select class="input-plain" id="categoria_infra" name="categoria_infra" required>
+            <select class="input-plain" id="categoria_infra" name="categoria_infra">
               <option value="">Seleccione...</option>
               <option>Equipos de cómputo</option><option>Muebles y enseres</option>
               <option>Equipos electrónicos y eléctricos</option>
@@ -143,23 +143,23 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Descripción (breve) *</label>
-        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..." required></textarea>
+        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
       </div>
       <!-- Sección MED -->
       <div id="section_med" style="display:none;margin-top:8px">
         <label>Equipo a reportar *</label>
-        <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select" required><option value="">Seleccione...</option></select>
+        <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select"><option value="">Seleccione...</option></select>
         <div class="row">
           <div class="col">
             <label>Sede *</label>
-            <select class="input-plain" id="sede_med" name="sede_med" required>
+            <select class="input-plain" id="sede_med" name="sede_med">
               <option value="">Seleccione...</option>
               <option>Sede 1</option><option>Sede 2</option><option>Sede 3</option><option>Sede 4</option><option>Sede 5</option>
             </select>
           </div>
           <div class="col">
             <label>Área *</label>
-            <select class="input-plain" id="area_med" name="area_med" required>
+            <select class="input-plain" id="area_med" name="area_med">
               <option value="">Seleccione...</option>
               <option>Administración</option><option>Consulta externa</option><option>Enfermería</option>
               <option>Laboratorio</option><option>Salud oral</option><option>Áreas comunes</option>
@@ -167,11 +167,11 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Ubicación específica *</label>
-        <input class="input-plain" type="text" id="ubicacion_med" name="ubicacion_med" placeholder='Ej: "Consultorio 101"' required>
+        <input class="input-plain" type="text" id="ubicacion_med" name="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
         <label>Daño / falla *</label>
-        <textarea class="input-plain" id="danio_med" name="danio_med" placeholder="Describa el daño..." required></textarea>
+        <textarea class="input-plain" id="danio_med" name="danio_med" placeholder="Describa el daño..."></textarea>
         <label>Prioridad *</label>
-        <select class="input-plain" id="prioridad_med" name="prioridad_med" required>
+        <select class="input-plain" id="prioridad_med" name="prioridad_med">
           <option value="">Seleccione...</option>
           <option>Urgente (12 h)</option><option>Prioritario (48 h)</option><option>Programado (192 h)</option>
         </select>
@@ -255,6 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
     f.addEventListener('input', ()=> updateFilledClass(f));
     f.addEventListener('change', ()=> updateFilledClass(f));
   });
+  actualizarRequired();
 });
 function actualizarCamposTemporales(){
   const now = new Date();
@@ -276,7 +277,31 @@ document.getElementById('tipo_reporte').addEventListener('change', (e)=>{
   document.getElementById('section_infra').style.display = v==='infraestructura' ? 'block' : 'none';
   document.getElementById('section_med').style.display = v==='equipo_medico' ? 'block' : 'none';
   updateFilledClass(document.getElementById('tipo_reporte'));
+  actualizarRequired();
 });
+
+// Solo los campos visibles deben ser required
+function actualizarRequired() {
+  // Campos de infra
+  const infraInputs = [
+    'area_infra', 'sede_infra', 'ubicacion_infra', 'prioridad_infra', 'categoria_infra', 'detalle_infra'
+  ];
+  // Campos de med
+  const medInputs = [
+    'equipo_medico_select', 'sede_med', 'area_med', 'ubicacion_med', 'danio_med', 'prioridad_med'
+  ];
+  const tipo = document.getElementById('tipo_reporte').value;
+
+  infraInputs.forEach(id => {
+    let input = document.getElementById(id);
+    if(input) input.required = (tipo === 'infraestructura');
+  });
+  medInputs.forEach(id => {
+    let input = document.getElementById(id);
+    if(input) input.required = (tipo === 'equipo_medico');
+  });
+}
+
 document.getElementById('btnClear').addEventListener('click', ()=>{
   if(!confirm('¿Desea limpiar el formulario?')) return;
   form.reset();
@@ -284,6 +309,7 @@ document.getElementById('btnClear').addEventListener('click', ()=>{
   actualizarCamposTemporales();
   document.getElementById('section_infra').style.display = 'none';
   document.getElementById('section_med').style.display = 'none';
+  actualizarRequired();
 });
 form.addEventListener('submit', function(e){
   e.preventDefault();
@@ -296,11 +322,16 @@ form.addEventListener('submit', function(e){
     if(!document.getElementById('area_infra').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_infra').value){ alert('Seleccione la Ubicación'); return; }
     if(!document.getElementById('sede_infra').value){ alert('Seleccione la Sede'); return; }
+    if(!document.getElementById('prioridad_infra').value){ alert('Seleccione la Prioridad'); return; }
+    if(!document.getElementById('categoria_infra').value){ alert('Seleccione la Categoría'); return; }
+    if(!document.getElementById('detalle_infra').value){ alert('Describa brevemente el daño'); return; }
   } else {
     if(!document.getElementById('equipo_medico_select').value){ alert('Seleccione el Equipo'); return; }
     if(!document.getElementById('sede_med').value){ alert('Seleccione la Sede'); return; }
     if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); return; }
+    if(!document.getElementById('danio_med').value.trim()){ alert('Describa el daño'); return; }
+    if(!document.getElementById('prioridad_med').value){ alert('Seleccione la Prioridad'); return; }
   }
   const fd = new FormData(form);
   fd.append('timestamp', new Date().toISOString());
@@ -320,6 +351,7 @@ form.addEventListener('submit', function(e){
         actualizarCamposTemporales();
         document.getElementById('section_infra').style.display = 'none';
         document.getElementById('section_med').style.display = 'none';
+        actualizarRequired();
         // Recarga la página a los 2 segundos de mostrar el modal de éxito
         setTimeout(function() {
           location.reload();
