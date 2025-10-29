@@ -17,7 +17,6 @@ body{
   -webkit-font-smoothing:antialiased;
   padding:24px;
 }
-#particles-js { position: fixed; inset:0; z-index:-1; }
 .wrap { max-width:980px;margin: 24px auto; }
 .card {
   background: rgba(255,255,255,0.06);
@@ -73,7 +72,6 @@ textarea.input-plain { min-height:84px; resize:vertical; }
 </style>
 </head>
 <body>
-<div id="particles-js"></div>
 <div class="wrap">
   <div class="card">
     <div class="header">
@@ -195,13 +193,8 @@ textarea.input-plain { min-height:84px; resize:vertical; }
     </div>
   </div>
 </div>
-<!-- particles -->
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
 const scriptURL = "https://script.google.com/macros/s/AKfycbxfVVdI0Dd-OSZMZhO2anRzXJ_G0VrU39SWXHENhTbxxpwyZa43qYAA-EqOaU_985Ck/exec";
-particlesJS("particles-js", {
-  particles: { number:{value:40}, size:{value:2.6}, move:{speed:1.6}, line_linked:{enable:true,color:"#06b6d4"} }
-});
 const ubicaciones = [
   "Administrativo y áreas comúnes","Atención domiciliaria","Auditorio","Baño discapacitados","Baño hombres","Baño mujeres",
   "Bodega enfermería 1","Bodega enfermería 2","Bodega insumos salud oral","Bodega laboratorio","Bodega mantenimiento",
@@ -243,13 +236,11 @@ const equipoSelect = document.getElementById('equipo_medico_select');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
 document.addEventListener('DOMContentLoaded', () => {
-  // Llenar datalist para autocompletar de ubicación
   ubicaciones.forEach((v, i) => {
     const opt = document.createElement('option');
     opt.value = v;
     ubicDatalist.appendChild(opt);
   });
-  // Llenar select de equipos médicos
   equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
   actualizarCamposTemporales();
   const fields = form.querySelectorAll('input.input-plain, select.input-plain, textarea.input-plain');
@@ -282,19 +273,14 @@ document.getElementById('tipo_reporte').addEventListener('change', (e)=>{
   updateFilledClass(document.getElementById('tipo_reporte'));
   actualizarRequired();
 });
-
-// Solo los campos visibles deben ser required
 function actualizarRequired() {
-  // Campos de infra
   const infraInputs = [
     'area_infra', 'sede_infra', 'ubicacion_infra', 'prioridad_infra', 'categoria_infra', 'detalle_infra'
   ];
-  // Campos de med
   const medInputs = [
     'equipo_medico_select', 'sede_med', 'area_med', 'ubicacion_med', 'danio_med', 'prioridad_med'
   ];
   const tipo = document.getElementById('tipo_reporte').value;
-
   infraInputs.forEach(id => {
     let input = document.getElementById(id);
     if(input) input.required = (tipo === 'infraestructura');
@@ -303,10 +289,8 @@ function actualizarRequired() {
     let input = document.getElementById(id);
     if(input) input.required = (tipo === 'equipo_medico');
   });
-  // Correo SIEMPRE requerido
   document.getElementById('email').required = true;
 }
-
 document.getElementById('btnClear').addEventListener('click', ()=>{
   if(!confirm('¿Desea limpiar el formulario?')) return;
   form.reset();
