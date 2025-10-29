@@ -10,7 +10,6 @@ html,body{height:100%}
 body{
   font-family: Arial, sans-serif;
   min-height: 100vh;
-  /* Fondo: degradado azul oscuro a cyan, sin patrón de rayas */
   background: linear-gradient(125deg, #0e223a 0%, #1681c1 70%, #24c4e4 100%);
   color:#fff;
   -webkit-font-smoothing:antialiased;
@@ -124,6 +123,9 @@ textarea.input-plain { min-height:84px; resize:vertical; }
         <label>Ubicación específica *</label>
         <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_infra" name="ubicacion_infra" placeholder="Escriba o seleccione..." autocomplete="off">
         <datalist id="ubicacion_infra_list"></datalist>
+        <div style="font-size:0.92em; color:#fed07a; margin:6px 0 0 0; display:none;" id="otroUbicacionMsg">
+          Si selecciona "Otro", por favor deje la ubicación detallada en la descripción de abajo.
+        </div>
         <div class="row">
           <div class="col">
             <label>Prioridad *</label>
@@ -143,7 +145,7 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Descripción (breve) *</label>
-        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración..."></textarea>
+        <textarea class="input-plain" id="detalle_infra" name="detalle_infra" placeholder="Ej: Grieta en pared, filtración...&#10;Si selecciona 'Otro' en ubicación, escriba la ubicación aquí." required></textarea>
       </div>
       <!-- Sección MED -->
       <div id="section_med" style="display:none;margin-top:8px">
@@ -219,28 +221,37 @@ const ubicaciones = [
   "Toma de muestras pediátricas","Toma de muestras piso -1","Toma de muestras piso 1","Toma de muestras piso 2",
   "Toma de rayos x","Unidad odontológica 1","Unidad odontológica 10","Unidad odontológica 11","Unidad odontológica 2",
   "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
-  "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad y Experiencia del Usuario","Otro"
+  "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad y Experiencia del Usuario"
 ];
-const equipos_medicos = [
-  "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
-  "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
-  "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
-  "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
-  "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
-  "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora","Otro"
-];
-const ubicSelect = document.getElementById('ubicacion_infra');
 const ubicDatalist = document.getElementById('ubicacion_infra_list');
+const ubicInput = document.getElementById('ubicacion_infra');
+const otroUbicacionMsg = document.getElementById('otroUbicacionMsg');
 const equipoSelect = document.getElementById('equipo_medico_select');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
+
+// Agrega "Otro" al final del datalist
 document.addEventListener('DOMContentLoaded', () => {
   ubicaciones.forEach((v, i) => {
     const opt = document.createElement('option');
     opt.value = v;
     ubicDatalist.appendChild(opt);
   });
+  const optOtro = document.createElement('option');
+  optOtro.value = "Otro";
+  ubicDatalist.appendChild(optOtro);
+
+  // Equipos médicos
+  const equipos_medicos = [
+    "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
+    "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
+    "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
+    "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
+    "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
+    "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora","Otro"
+  ];
   equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
+
   actualizarCamposTemporales();
   const fields = form.querySelectorAll('input.input-plain, select.input-plain, textarea.input-plain');
   fields.forEach(f => {
@@ -250,6 +261,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   actualizarRequired();
 });
+
+// Mostrar mensaje si se selecciona "Otro" en ubicación
+ubicInput.addEventListener('input', function() {
+  if (ubicInput.value.trim().toLowerCase() === "otro") {
+    otroUbicacionMsg.style.display = "block";
+  } else {
+    otroUbicacionMsg.style.display = "none";
+  }
+});
+
 function actualizarCamposTemporales(){
   const now = new Date();
   document.getElementById('fecha').value = now.toLocaleDateString('es-CO');
@@ -298,6 +319,7 @@ document.getElementById('btnClear').addEventListener('click', ()=>{
   document.getElementById('section_infra').style.display = 'none';
   document.getElementById('section_med').style.display = 'none';
   actualizarRequired();
+  otroUbicacionMsg.style.display = "none";
 });
 form.addEventListener('submit', function(e){
   e.preventDefault();
@@ -315,6 +337,15 @@ form.addEventListener('submit', function(e){
     if(!document.getElementById('prioridad_infra').value){ alert('Seleccione la Prioridad'); return; }
     if(!document.getElementById('categoria_infra').value){ alert('Seleccione la Categoría'); return; }
     if(!document.getElementById('detalle_infra').value){ alert('Describa brevemente el daño'); return; }
+    // Si la ubicación es "Otro", verificar que se deje ubicación en la descripción
+    if(document.getElementById('ubicacion_infra').value.trim().toLowerCase() === "otro") {
+      const detalle = document.getElementById('detalle_infra').value.trim();
+      if(!detalle || detalle.length < 5) {
+        alert('Por favor deje la ubicación detallada en la descripción.');
+        document.getElementById('detalle_infra').focus();
+        return;
+      }
+    }
   } else {
     if(!document.getElementById('equipo_medico_select').value){ alert('Seleccione el Equipo'); return; }
     if(!document.getElementById('sede_med').value){ alert('Seleccione la Sede'); return; }
@@ -342,6 +373,7 @@ form.addEventListener('submit', function(e){
         document.getElementById('section_infra').style.display = 'none';
         document.getElementById('section_med').style.display = 'none';
         actualizarRequired();
+        otroUbicacionMsg.style.display = "none";
         setTimeout(function() {
           location.reload();
         }, 2000);
