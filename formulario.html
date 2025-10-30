@@ -169,7 +169,11 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Ubicación específica *</label>
-        <input class="input-plain" type="text" id="ubicacion_med" name="ubicacion_med" placeholder='Ej: "Consultorio 101"'>
+        <!-- Cambiado a usar el mismo datalist que INFRA para mantener las mismas condiciones -->
+        <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_med" name="ubicacion_med" placeholder='Escriba o seleccione... Ej: "Consultorio 101"' autocomplete="off">
+        <div style="font-size:0.92em; color:#fed07a; margin:6px 0 0 0; display:none;" id="otroUbicacionMsgMed">
+          Si selecciona "Otro", por favor deje la ubicación detallada en la descripción (daño/falla) de abajo.
+        </div>
         <label>Daño / falla *</label>
         <textarea class="input-plain" id="danio_med" name="danio_med" placeholder="Describa el daño..."></textarea>
         <label>Prioridad *</label>
@@ -225,7 +229,9 @@ const ubicaciones = [
 ];
 const ubicDatalist = document.getElementById('ubicacion_infra_list');
 const ubicInput = document.getElementById('ubicacion_infra');
+const ubicMedInput = document.getElementById('ubicacion_med');
 const otroUbicacionMsg = document.getElementById('otroUbicacionMsg');
+const otroUbicacionMsgMed = document.getElementById('otroUbicacionMsgMed');
 const equipoSelect = document.getElementById('equipo_medico_select');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
@@ -262,12 +268,21 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarRequired();
 });
 
-// Mostrar mensaje si se selecciona "Otro" en ubicación
+// Mostrar mensaje si se selecciona "Otro" en ubicación (INFRA)
 ubicInput.addEventListener('input', function() {
   if (ubicInput.value.trim().toLowerCase() === "otro") {
     otroUbicacionMsg.style.display = "block";
   } else {
     otroUbicacionMsg.style.display = "none";
+  }
+});
+
+// Mostrar mensaje si se selecciona "Otro" en ubicación (MED) - ahora tiene las mismas condiciones que INFRA
+ubicMedInput.addEventListener('input', function() {
+  if (ubicMedInput.value.trim().toLowerCase() === "otro") {
+    otroUbicacionMsgMed.style.display = "block";
+  } else {
+    otroUbicacionMsgMed.style.display = "none";
   }
 });
 
@@ -320,6 +335,7 @@ document.getElementById('btnClear').addEventListener('click', ()=>{
   document.getElementById('section_med').style.display = 'none';
   actualizarRequired();
   otroUbicacionMsg.style.display = "none";
+  otroUbicacionMsgMed.style.display = "none";
 });
 form.addEventListener('submit', function(e){
   e.preventDefault();
@@ -347,12 +363,22 @@ form.addEventListener('submit', function(e){
       }
     }
   } else {
+    // Ahora la sección MED tiene las mismas condiciones relacionadas a ubicación que INFRA:
     if(!document.getElementById('equipo_medico_select').value){ alert('Seleccione el Equipo'); return; }
     if(!document.getElementById('sede_med').value){ alert('Seleccione la Sede'); return; }
     if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
-    if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); return; }
-    if(!document.getElementById('danio_med').value.trim()){ alert('Describa el daño'); return; }
+    if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); document.getElementById('ubicacion_med').focus(); return; }
+    if(!document.getElementById('danio_med').value.trim()){ alert('Describa el daño'); document.getElementById('danio_med').focus(); return; }
     if(!document.getElementById('prioridad_med').value){ alert('Seleccione la Prioridad'); return; }
+    // Si la ubicación es "Otro", verificar que se deje ubicación en la descripción (daño/falla)
+    if(document.getElementById('ubicacion_med').value.trim().toLowerCase() === "otro") {
+      const detalleMed = document.getElementById('danio_med').value.trim();
+      if(!detalleMed || detalleMed.length < 5) {
+        alert('Por favor deje la ubicación detallada en la descripción del daño/falla.');
+        document.getElementById('danio_med').focus();
+        return;
+      }
+    }
   }
   const fd = new FormData(form);
   fd.append('timestamp', new Date().toISOString());
@@ -374,6 +400,7 @@ form.addEventListener('submit', function(e){
         document.getElementById('section_med').style.display = 'none';
         actualizarRequired();
         otroUbicacionMsg.style.display = "none";
+        otroUbicacionMsgMed.style.display = "none";
         setTimeout(function() {
           location.reload();
         }, 2000);
