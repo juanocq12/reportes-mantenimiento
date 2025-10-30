@@ -150,7 +150,12 @@ textarea.input-plain { min-height:84px; resize:vertical; }
       <!-- Sección MED -->
       <div id="section_med" style="display:none;margin-top:8px">
         <label>Equipo a reportar *</label>
-        <select class="input-plain" id="equipo_medico_select" name="equipo_medico_select"><option value="">Seleccione...</option></select>
+        <!-- Ahora Equipo a reportar usa datalist (igual que Ubicación) y muestra mensaje "Otro" si se selecciona -->
+        <input class="input-plain" list="equipos_medicos_list" id="equipo_medico_select" name="equipo_medico_select" placeholder="Escriba o seleccione..." autocomplete="off">
+        <datalist id="equipos_medicos_list"></datalist>
+        <div style="font-size:0.92em; color:#fed07a; margin:6px 0 0 0; display:none;" id="otroEquipoMsg">
+          Si selecciona "Otro", por favor especifique el equipo en la descripción (daño/falla).
+        </div>
         <div class="row">
           <div class="col">
             <label>Sede *</label>
@@ -169,7 +174,7 @@ textarea.input-plain { min-height:84px; resize:vertical; }
           </div>
         </div>
         <label>Ubicación específica *</label>
-        <!-- Cambiado a usar el mismo datalist que INFRA para mantener las mismas condiciones -->
+        <!-- Usa el mismo datalist que INFRA para mantener las mismas condiciones -->
         <input class="input-plain" list="ubicacion_infra_list" id="ubicacion_med" name="ubicacion_med" placeholder='Escriba o seleccione... Ej: "Consultorio 101"' autocomplete="off">
         <div style="font-size:0.92em; color:#fed07a; margin:6px 0 0 0; display:none;" id="otroUbicacionMsgMed">
           Si selecciona "Otro", por favor deje la ubicación detallada en la descripción (daño/falla) de abajo.
@@ -227,36 +232,44 @@ const ubicaciones = [
   "Unidad odontológica 3","Unidad odontológica 4","Unidad odontológica 5","Unidad odontológica 6","Unidad odontológica 7",
   "Unidad odontológica 8","Unidad odontológica 9","Vacunación","Baño privado","Cuarto de locker privado","Líder de Calidad y Experiencia del Usuario"
 ];
+const equipos_medicos = [
+  "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
+  "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
+  "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
+  "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
+  "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
+  "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora"
+];
 const ubicDatalist = document.getElementById('ubicacion_infra_list');
+const equiposDatalist = document.getElementById('equipos_medicos_list');
 const ubicInput = document.getElementById('ubicacion_infra');
 const ubicMedInput = document.getElementById('ubicacion_med');
+const equipoInput = document.getElementById('equipo_medico_select');
 const otroUbicacionMsg = document.getElementById('otroUbicacionMsg');
 const otroUbicacionMsgMed = document.getElementById('otroUbicacionMsgMed');
-const equipoSelect = document.getElementById('equipo_medico_select');
+const otroEquipoMsg = document.getElementById('otroEquipoMsg');
 const form = document.getElementById('reporteForm');
 const noteError = document.getElementById('noteError');
 
-// Agrega "Otro" al final del datalist
+// Agrega opciones a los datalists
 document.addEventListener('DOMContentLoaded', () => {
-  ubicaciones.forEach((v, i) => {
+  ubicaciones.forEach((v) => {
     const opt = document.createElement('option');
     opt.value = v;
     ubicDatalist.appendChild(opt);
   });
-  const optOtro = document.createElement('option');
-  optOtro.value = "Otro";
-  ubicDatalist.appendChild(optOtro);
+  const optOtroUbic = document.createElement('option');
+  optOtroUbic.value = "Otro";
+  ubicDatalist.appendChild(optOtroUbic);
 
-  // Equipos médicos
-  const equipos_medicos = [
-    "Fonendoscopio","Tensiómetro","Lámpara cuello de cisne","Tallímetro adulto","Equipo de órganos","Báscula tallímetro",
-    "Diapasón","Termohigrómetro","Negatoscopio","Contra Ángulo","Báscula digital","Micromotor","Unidad odontológica","Scaler",
-    "Lámpara de fotocurado","Pieza de alta","Pulsoxímetro Pediátrico","Glucómetro","Pulsoxímetro","Tensiómetro Pediátrico",
-    "Doppler fetal","Regulador de oxígeno","Infantómetro","Silla de ruedas","Pulsoxímetro","Báscula Pediátrica digital",
-    "Báscula de residuos","Pipeta automática","Termómetro","Desfibrilador","Electrocardiógrafo","Termo para transporte de vacunas",
-    "Centrífuga","Nebulizador","Autoclave","Microscopio","Monitor de signos vitales","Refrigerador modelo MK304","Incubadora","Otro"
-  ];
-  equipos_medicos.forEach((v,i) => equipoSelect.add(new Option((i+1)+". "+v, v)));
+  equipos_medicos.forEach((v,i) => {
+    const opt = document.createElement('option');
+    opt.value = v;
+    equiposDatalist.appendChild(opt);
+  });
+  const optOtroEquipo = document.createElement('option');
+  optOtroEquipo.value = "Otro";
+  equiposDatalist.appendChild(optOtroEquipo);
 
   actualizarCamposTemporales();
   const fields = form.querySelectorAll('input.input-plain, select.input-plain, textarea.input-plain');
@@ -277,12 +290,21 @@ ubicInput.addEventListener('input', function() {
   }
 });
 
-// Mostrar mensaje si se selecciona "Otro" en ubicación (MED) - ahora tiene las mismas condiciones que INFRA
+// Mostrar mensaje si se selecciona "Otro" en ubicación (MED)
 ubicMedInput.addEventListener('input', function() {
   if (ubicMedInput.value.trim().toLowerCase() === "otro") {
     otroUbicacionMsgMed.style.display = "block";
   } else {
     otroUbicacionMsgMed.style.display = "none";
+  }
+});
+
+// Mostrar mensaje si se selecciona "Otro" en equipo (MED) — ahora es igual que INFRA pero para equipo
+equipoInput.addEventListener('input', function() {
+  if (equipoInput.value.trim().toLowerCase() === "otro") {
+    otroEquipoMsg.style.display = "block";
+  } else {
+    otroEquipoMsg.style.display = "none";
   }
 });
 
@@ -336,6 +358,7 @@ document.getElementById('btnClear').addEventListener('click', ()=>{
   actualizarRequired();
   otroUbicacionMsg.style.display = "none";
   otroUbicacionMsgMed.style.display = "none";
+  otroEquipoMsg.style.display = "none";
 });
 form.addEventListener('submit', function(e){
   e.preventDefault();
@@ -363,8 +386,9 @@ form.addEventListener('submit', function(e){
       }
     }
   } else {
-    // Ahora la sección MED tiene las mismas condiciones relacionadas a ubicación que INFRA:
-    if(!document.getElementById('equipo_medico_select').value){ alert('Seleccione el Equipo'); return; }
+    // Ahora la sección MED tiene las mismas condiciones relacionadas a equipo y ubicación que INFRA:
+    const equipoVal = document.getElementById('equipo_medico_select').value.trim();
+    if(!equipoVal){ alert('Seleccione o escriba el Equipo'); document.getElementById('equipo_medico_select').focus(); return; }
     if(!document.getElementById('sede_med').value){ alert('Seleccione la Sede'); return; }
     if(!document.getElementById('area_med').value){ alert('Seleccione el Área'); return; }
     if(!document.getElementById('ubicacion_med').value.trim()){ alert('Ingrese la ubicación específica'); document.getElementById('ubicacion_med').focus(); return; }
@@ -375,6 +399,15 @@ form.addEventListener('submit', function(e){
       const detalleMed = document.getElementById('danio_med').value.trim();
       if(!detalleMed || detalleMed.length < 5) {
         alert('Por favor deje la ubicación detallada en la descripción del daño/falla.');
+        document.getElementById('danio_med').focus();
+        return;
+      }
+    }
+    // Si el equipo es "Otro", verificar que se describa en el campo daño/falla
+    if(equipoVal.toLowerCase() === "otro") {
+      const detalleMed2 = document.getElementById('danio_med').value.trim();
+      if(!detalleMed2 || detalleMed2.length < 5) {
+        alert('Ha seleccionado "Otro" en Equipo. Por favor detalle el equipo en la descripción del daño/falla.');
         document.getElementById('danio_med').focus();
         return;
       }
@@ -401,6 +434,7 @@ form.addEventListener('submit', function(e){
         actualizarRequired();
         otroUbicacionMsg.style.display = "none";
         otroUbicacionMsgMed.style.display = "none";
+        otroEquipoMsg.style.display = "none";
         setTimeout(function() {
           location.reload();
         }, 2000);
